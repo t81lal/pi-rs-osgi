@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Serimpl
+Bundle-SymbolicName: org.nullbool.pi.core.hook.serimpl
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.nullbool.pi.core.hook.serimpl.Activator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.nullbool.pi.core.hook.api,
+ org.nullbool.pi.core.hook.api.serialisation,
+ org.objectweb.asm;version="[1.0.0,1.0.0]",
+ org.objectweb.asm.tree;version="[1.0.0,1.0.0]",
+ org.osgi.framework

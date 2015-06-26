@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: PiUI-api
+Bundle-SymbolicName: org.nullbool.pi.core.ui.api
+Bundle-Version: 0.0.1.alpha
+Bundle-Vendor: NullBool
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.nullbool.pi.core.engine.api,
+ org.nullbool.piexternal.game.api,
+ org.osgi.framework;version="1.8.0"
+Export-Package: org.nullbool.pi.core.ui.api

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Singleimpl
+Bundle-SymbolicName: org.nullbool.topdank.eventbus.singleimpl
+Bundle-Version: 1.0.0.alpha
+Bundle-Vendor: NullBool
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Activator: org.nullbool.topdank.eventbus.singleimpl.Activator
+Import-Package: org.nullbool.topdank.eventbus.api,
+ org.osgi.framework;version="1.8.0"

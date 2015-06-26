@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Registryimpl
+Bundle-SymbolicName: org.nullbool.pi.core.engine.registryimpl
+Bundle-Version: 0.0.1.alpha
+Bundle-Vendor: NullBool
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Activator: org.nullbool.pi.core.engine.registryimpl.Activator
+Import-Package: org.nullbool.pi.core.engine.api,
+ org.nullbool.piexternal.game.api,
+ org.osgi.framework;version="1.8.0"

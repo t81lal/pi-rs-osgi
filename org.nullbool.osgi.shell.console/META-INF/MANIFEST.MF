@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ConsoleShell
+Bundle-SymbolicName: org.nullbool.osgi.shell.console
+Bundle-Version: 0.0.1.alpha
+Bundle-Vendor: NullBool
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Activator: org.nullbool.osgi.shell.console.Activator
+Import-Package: org.osgi.framework;version="1.3.0",org.nullbool.osgi.shell.api,org.nullbool.osgi.shell.api.handlers
+Export-Package: org.nullbool.osgi.shell.console
