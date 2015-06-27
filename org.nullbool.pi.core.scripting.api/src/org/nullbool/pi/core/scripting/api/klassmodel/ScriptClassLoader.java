@@ -17,13 +17,15 @@ public class ScriptClassLoader extends ClassLoader {
 
 	// private final MasterScriptLoader parentClassLoader;
 	// private final JarContents<ClassNode> contents;
+	protected final ClassLoader parent;
 	private final IAggregateFilter<String> classFilter;
 	private final Map<String, ClassNode> classNodes;
 	private final Map<String, Class<?>> loadedClasses;
 	private final ClassTree classTree;
 
-	public ScriptClassLoader(JarContents<ClassNode> contents) {
+	public ScriptClassLoader(ClassLoader parent, JarContents<ClassNode> contents) {
 		// this.contents = contents;
+		this.parent = parent;
 		classFilter = new AggregateFilter<String>();
 		classNodes = new HashMap<String, ClassNode>();
 		loadedClasses = new HashMap<String, Class<?>>();
@@ -48,11 +50,26 @@ public class ScriptClassLoader extends ClassLoader {
 	public Class<?> loadClass(String name) throws ClassNotFoundException {
 		// standardise name
 		name = name.replace("/", ".");
+		
+		try {
+			Class<?> klass = super.loadClass(name);
+			if(klass != null) {
+				loadedClasses.put(name, klass);
+				return klass;
+			}
+		} catch(ClassNotFoundException e) {
+			// e.printStackTrace();
+		}
+		
 		if(loadedClasses.containsKey(name))
 			return loadedClasses.get(name);
 		
 		if(classNodes.containsKey(name)) {
 			ClassNode cn = classNodes.get(name);
+			if(name.startsWith("org.nullbool.pi")) {
+				System.out.println("ScriptClassLoader.loadClass()");
+				System.out.println("cn: " + cn);
+			}
 			Class<?> klass = define(cn);
 			if(klass != null) {
 				loadedClasses.put(name, klass);
@@ -60,21 +77,20 @@ public class ScriptClassLoader extends ClassLoader {
 			}
 		}
 		
-		Class<?> klass = super.loadClass(name);
-		if(klass != null) {
-			loadedClasses.put(name, klass);
-			return klass;
-		}
-		
-		return null;
+		return parent.loadClass(name);
 		// throw new ClassNotFoundException("Couldn't find " + name + " from " + this);
 	}
 	
+	public Map<String, ClassNode> getClassNodes() {
+		return classNodes;
+	}
+
 	protected Class<?> define(ClassNode cn) {
 		// has to be created every define
 		ClassWriter classWriter = new CacheLookupClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS, classTree);
 		cn.accept(classWriter);
 		byte[] bytes = classWriter.toByteArray();
-		return defineClass(cn.name.replace("/", "."), bytes, 0, bytes.length);
+		System.out.println("Defining " + cn.name + " from " + getClass().getSimpleName() + " " + bytes.length);
+		return defineClass(null, bytes, 0, bytes.length);
 	}
 }

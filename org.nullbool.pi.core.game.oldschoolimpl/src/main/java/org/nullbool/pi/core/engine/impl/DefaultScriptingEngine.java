@@ -50,7 +50,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 	@Override
 	public Task startTask(ResourceDefinition taskData) {
 		try {
-			ScriptClassLoader classLoader = new ScriptClassLoader(taskData.getContents());
+			ScriptClassLoader classLoader = new ScriptClassLoader(context.classloader(), taskData.getContents());
 			context.classloader().children().add(classLoader);
 
 			Class<Task> klass = taskData.getClass(classLoader, Task.class, taskData.getKlassName());

@@ -19,14 +19,28 @@ import org.topdank.byteengineer.commons.data.JarContents;
  */
 public class MasterScriptLoader extends ScriptClassLoader {
 
-	private final ClassLoader osgiParent;
 	private final List<ScriptClassLoader> children;
 	
 	public MasterScriptLoader(JarContents<ClassNode> contents, ClassLoader osgiParent) {
-		super(contents);
+		super(osgiParent, contents);
 		
-		this.osgiParent = osgiParent;
 		children = new ArrayList<ScriptClassLoader>();
+		
+		filter().connect(new DefaultClassFilter());
+		filter().connect(new IFilter<String>() {
+
+			@Override
+			public boolean accept(String t) {
+				return t.startsWith("org.nullbool");
+			}
+		});
+		filter().connect(new IFilter<String>() {
+			
+			@Override
+			public boolean accept(String t) {
+				return getClassNodes().containsKey(t.replace("/", "."));
+			}
+		});
 	}
 	
 	public List<ScriptClassLoader> children() {
@@ -37,9 +51,17 @@ public class MasterScriptLoader extends ScriptClassLoader {
 	public Class<?> loadClass(String name) throws ClassNotFoundException {
 		name = name.replace("/", ".");
 		
-		Class<?> klass = super.loadClass(name);
-		if(klass != null) {
-			return klass;
+		Class<?> klass;
+		try {
+			IAggregateFilter<String> filter = filter();
+			if(filter.accept(name)) {
+				klass = super.loadClass(name);
+				if(klass != null) {
+					return klass;
+				}
+			}
+		} catch(ClassNotFoundException e) {
+			System.err.println(e.getMessage() + " in master.");
 		}
 		
 		// check the other children
@@ -58,13 +80,6 @@ public class MasterScriptLoader extends ScriptClassLoader {
 			}
 		}
 		
-		IAggregateFilter<String> filter = filter();
-		synchronized (filter) {
-			if(!filter.accept(name)) {
-				throw new ClassNotFoundException("Cannot load " + name + " from master class loader.");
-			}
-		}
-		
 		return findClass(name);
 	}
 	
@@ -72,7 +87,7 @@ public class MasterScriptLoader extends ScriptClassLoader {
 	public Class<?> findClass(String name) throws ClassNotFoundException {
 		name = name.replace("/", ".");
 		
-		Class<?> klass = osgiParent.loadClass(name);
+		Class<?> klass = parent.loadClass(name);
 		if(klass != null) {
 			cacheClass(name, klass);
 			return klass;

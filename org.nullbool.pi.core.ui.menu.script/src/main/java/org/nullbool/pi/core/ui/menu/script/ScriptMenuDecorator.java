@@ -11,6 +11,9 @@ import javax.swing.JOptionPane;
 
 import org.nullbool.pi.core.engine.api.IClientContext;
 import org.nullbool.pi.core.engine.api.IContextRegistry;
+import org.nullbool.pi.core.scripting.api.loader.RefreshableResourcePool;
+import org.nullbool.pi.core.scripting.api.loader.ResourceDefinition;
+import org.nullbool.pi.core.scripting.api.loader.RunnableResourceLocation;
 import org.nullbool.pi.core.scripting.api.loader.finder.FinderStrategy;
 import org.nullbool.pi.core.scripting.api.loader.finder.FixedFinderStrategy;
 import org.nullbool.pi.core.scripting.api.loader.finder.JarInfoFolderSearchFinderStrategy;
@@ -89,14 +92,31 @@ public class ScriptMenuDecorator implements IMenuDecorator {
 		});
 				
 		script.add(locationsMenuItem);
-		
+
+		ScriptViewer viewer = new ScriptViewer();
 		JMenuItem viewMenuItem = new JMenuItem("View");		
 		viewMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+//				viewer.show();
+				
+				// FIXME: Viewer
+				BundleContext bundleContext = FrameworkUtil.getBundle(ScriptMenuDecorator.class).getBundleContext();
+				ServiceReference<IContextRegistry> cxtSvcRef = bundleContext.getServiceReference(IContextRegistry.class);
+				IContextRegistry contextRegistry = bundleContext.getService(cxtSvcRef);
+				
+				Set<IClientContext<IGameClient>> contexts = contextRegistry.retrieveAll();
+				for(IClientContext<IGameClient> cxt : contexts) {
+					RefreshableResourcePool<ResourceDefinition,RunnableResourceLocation<ResourceDefinition>> pool = cxt.scriptingEngine().getScriptPool();
+					cxt.scriptingEngine().startScript(pool.iterator().next().getValue().iterator().next());
+				}
+				
+				bundleContext.ungetService(cxtSvcRef);
 			}
 		});
+		
+		script.add(viewMenuItem);
 	}
 	
 	public void error(String msg) {

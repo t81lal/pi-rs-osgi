@@ -76,7 +76,20 @@ public class ResourceDefinition implements Comparable<ResourceDefinition> {
 		}
 		return null;
 	}
-
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(authors);
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((klassName == null) ? 0 : klassName.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + priority;
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
+	
 	@Override
 	public String toString() {
 		return "ResourceDefinition [priority=" + priority + ", jarInfo=" + jarInfo + ", klassName=" + klassName + ", name=" + name + ", description="

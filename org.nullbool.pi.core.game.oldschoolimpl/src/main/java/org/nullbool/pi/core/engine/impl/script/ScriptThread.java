@@ -25,7 +25,7 @@ public class ScriptThread extends Thread {
 		this.engine = engine;
 		this.scriptData = scriptData;
 		
-		classLoader = new ScriptClassLoader(scriptData.getContents());
+		classLoader = new ScriptClassLoader(getClass().getClassLoader(), scriptData.getContents());
 		
 		Class<Script> klass = scriptData.getClass(classLoader, Script.class, scriptData.getKlassName());
 		activeScript = (Script) klass.newInstance();

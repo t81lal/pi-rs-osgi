@@ -16,11 +16,18 @@ public class AggregateFilter<T> implements IAggregateFilter<T> {
 	 */
 	@Override
 	public boolean accept(T t) {
-		for(IFilter<T> f : filters) {
-			if(!f.accept(t))
-				return false;
+		if(filters.size() == 0) {
+			return true;
+		} else {
+			for(IFilter<T> f : filters) {
+				if(f.accept(t))
+					return true;
+				//if(!f.accept(t))
+				//	return false;
+			}
 		}
-		return true;
+		return false;
+		//return true;
 	}
 
 	/* (non-Javadoc)
