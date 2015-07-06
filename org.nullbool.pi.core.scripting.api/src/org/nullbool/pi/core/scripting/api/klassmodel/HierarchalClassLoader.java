@@ -50,7 +50,7 @@ public class HierarchalClassLoader extends ClassLoader {
 		if(classCache.containsKey(byte_name))
 			return classCache.get(byte_name);
 		
-		if(nodeCache.containsKey(byte_name) && byte_name.indexOf('/') == -1) {
+		if(nodeCache.containsKey(byte_name)) {
 			Class<?> klass = defineNode(nodeCache.get(byte_name));
 			if(klass != null) {
 				return cache(klass);
@@ -70,8 +70,8 @@ public class HierarchalClassLoader extends ClassLoader {
 			System.out.println("HierarchalClassLoader.loadClass() " + id);
 		}
 		
-		//Exception e1 = null;
-		//Exception e2 = null;
+		Exception e1 = null;
+		Exception e2 = null;
 		
 		Class<?> klass = null;
 		try {
@@ -79,7 +79,8 @@ public class HierarchalClassLoader extends ClassLoader {
 			if(klass != null)
 				return klass;
 		} catch(Exception e) {
-			e.printStackTrace();
+			e1 = e;
+//			e.printStackTrace();
 		}
 		
 		try {
@@ -87,8 +88,8 @@ public class HierarchalClassLoader extends ClassLoader {
 			if(klass != null)
 				return cache(klass);
 		} catch(Exception e) {
-//			e2 = e;
-			e.printStackTrace();
+			e2 = e;
+//			e.printStackTrace();
 		}
 
 		try {
@@ -97,11 +98,11 @@ public class HierarchalClassLoader extends ClassLoader {
 				return cache(klass);
 		} catch(Exception e) {
 			e.printStackTrace();
-//			if(e1 != null)
-//				e1.printStackTrace();
-//			if(e2 != null)
-//				e2.printStackTrace();
-//			e.printStackTrace();
+			if(e1 != null)
+				e1.printStackTrace();
+			if(e2 != null)
+				e2.printStackTrace();
+			e.printStackTrace();
 		}
 		
 		return null;

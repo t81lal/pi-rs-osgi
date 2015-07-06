@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.nullbool.pi.core.engine.api.transform.IAPIHelper;
 import org.nullbool.pi.core.hook.api.ClassHook;
-import org.nullbool.pi.core.hook.api.FieldHook;
+import org.nullbool.pi.core.hook.api.Constants;
 import org.nullbool.pi.core.hook.api.HookMap;
 import org.nullbool.pi.core.hook.api.MethodHook;
 import org.objectweb.asm.Type;
@@ -29,20 +29,19 @@ public class CallbackTransformer extends AbstractTransformer {
 		ClassHook callbackOwnerHook = hook;
 
 		for(MethodHook mh : hook.methods()) {
-			String type = mh.val(MethodHook.TYPE);
-			if(MethodHook.CALLBACK.equals(type))
+			String type = mh.val(Constants.METHOD_TYPE);
+			if(Constants.CALLBACK.equals(type))
 				continue;
 
-			String _desc = mh.val(MethodHook.DESC);
+			String _desc = mh.val(Constants.DESC);
 			String desc = DescUtil.convertMultiBytecodeStyle(hooks, helper, _desc);
-			ClassHook originalMethodOwnerHook = mh.owner();
-			ClassNode originalMethodOwner = classes.get(originalMethodOwnerHook.obfuscated());
+			ClassNode originalMethodOwner = classes.get(mh.val(Constants.REAL_OWNER));
 			ClassNode callbackOwner = classes.get(callbackOwnerHook.obfuscated());
 			MethodNode method = new MethodNode(callbackOwner, ACC_PUBLIC, mh.refactored(), desc, null, null);
 						
 			InsnList insns = new InsnList();
 			Type[] args = Type.getArgumentTypes(_desc);
-			boolean isStatic = Boolean.valueOf(mh.val(FieldHook.STATIC));
+			boolean isStatic = Boolean.valueOf(mh.val(Constants.STATIC));
 			// int varOffset = isStatic ? 0 : 1;
 			// int varOffset = 0; // caller is always virtual
 			/*

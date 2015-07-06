@@ -221,13 +221,13 @@ public class Buffer<T extends IBuffer> extends Node<T> implements IBuffer {
 		_node.writeJagexString(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.network.IBuffer#readBytesB(byte[], int, int)
-	 */
-	@Override
-	public void readBytesB(byte[] var1, int var2, int var3) {
-		_node.readBytesB(var1, var2, var3);
-	}
+//	/* (non-Javadoc)
+//	 * @see org.nullbool.piexternal.game.api.accessors.network.IBuffer#readBytesB(byte[], int, int)
+//	 */
+//	@Override
+//	public void readBytesB(byte[] var1, int var2, int var3) {
+//		_node.readBytesB(var1, var2, var3);
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.nullbool.piexternal.game.api.accessors.network.IBuffer#write8Neg128(int)
@@ -237,11 +237,11 @@ public class Buffer<T extends IBuffer> extends Node<T> implements IBuffer {
 		_node.write8Neg128(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.network.IBuffer#readBytesA(byte[], int, int)
-	 */
-	@Override
-	public void readBytesA(byte[] var1, int var2, int var3) {
-		_node.readBytesA(var1, var2, var3);
-	}
+//	/* (non-Javadoc)
+//	 * @see org.nullbool.piexternal.game.api.accessors.network.IBuffer#readBytesA(byte[], int, int)
+//	 */
+//	@Override
+//	public void readBytesA(byte[] var1, int var2, int var3) {
+//		_node.readBytesA(var1, var2, var3);
+//	}
 }

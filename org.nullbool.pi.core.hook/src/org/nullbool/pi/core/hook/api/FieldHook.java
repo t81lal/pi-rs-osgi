@@ -4,9 +4,6 @@ package org.nullbool.pi.core.hook.api;
 public class FieldHook extends ObfuscatedData {
 
 	private static final long serialVersionUID = 5858100799382432079L;
-	public static final String DESC = "desc.obfuscated";
-	public static final String STATIC = "attr.static";
-	public static final String MUTLI = "attr.multi";
 
 	private ClassHook owner;
 

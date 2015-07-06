@@ -15,7 +15,7 @@ public class TransformationEngineImpl extends TransformationEngine {
 		
 		registerTransformers(new ITransformer[]{				
 				new GetterTransformer(classes, hooks, helper), 
-				// new CallbackTransformer(classes, hooks, helper), 
+//				 new CallbackTransformer(classes, hooks, helper), 
 				new ImplementorTransformer(classes, hooks, helper)
 		});
 	}

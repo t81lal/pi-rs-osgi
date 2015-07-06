@@ -18,14 +18,15 @@ import java.util.Set;
 // this doesn't feel like a good idea. -Bibl
 public enum FileSet {
 	// TODO: Fix custom jars
-	API         (new Builder(1).relativeName("api.jar").actor(new InstallerActor())),
+	@Deprecated
+	API         (new Builder(1).relativeName("api.jar").priority(Integer.MIN_VALUE)),
 	LOG         (new Builder(2).relativeName("log.ser")),
 	TRANSLATION (new Builder(3).relativeName("translate.json")),
 	REFACTOR    (new Builder(4).relativeName("refactor.jar").priority(5).runnable(true).actor(new SimpleInjectionActor(true))),
-	DEOB        (new Builder(5).relativeName("deob.jar").priority(4).runnable(true).require(1, 2, 3).actor(new SimpleInjectionActor(true))),
+	DEOB        (new Builder(5).relativeName("deob.jar").priority(4).runnable(true).require(/*1,*/ 2, 3).actor(new SimpleInjectionActor(true))),
 	/* Highest */
 	TRANSFORMED (new Builder(6).relativeName("transformed.jar").priority(10).runnable(true).actor(new InstallerActor())),
-	VANILLA     (new Builder(7).relativeName("vanilla.jar").priority(2).runnable(true).require(1, 2, 3).actor(new SimpleInjectionActor(true)));
+	VANILLA     (new Builder(7).relativeName("vanilla.jar").priority(2).runnable(true).require(/*1,*/ 2, 3).actor(new SimpleInjectionActor(true)));
 	
 	private static final Comparator<FileSet> PRIORITY_COMPARATOR = new Comparator<FileSet>() {
 		

@@ -51,7 +51,7 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 //		}
 		
 		// FIXME: Revision checking
-		int latestVer = 79;
+		int latestVer = 81;
 		
 		/* First we see if there is a straight load 
 		 * and run jar (refactor, deob or transformed).*/

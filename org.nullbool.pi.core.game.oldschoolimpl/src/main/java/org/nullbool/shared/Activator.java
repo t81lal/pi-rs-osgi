@@ -1,4 +1,4 @@
-package org.nullbool.pi.core.engine.impl;
+package org.nullbool.shared;
 
 import org.nullbool.pi.core.engine.api.IContextFactory;
 import org.nullbool.pi.core.engine.api.IVirtualGameBrowserFactory;
@@ -9,10 +9,12 @@ import org.osgi.framework.BundleContext;
 
 /**
  * @author Bibl (don't ban me pls)
- * @created 15 Jun 2015 01:34:50
+ * @created 6 Jul 2015 07:02:47
  */
 public class Activator implements BundleActivator {
 
+	public static BundleContext instance;
+	
 	/* (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
@@ -20,6 +22,8 @@ public class Activator implements BundleActivator {
 	public void start(BundleContext context) throws Exception {
 		context.registerService(IVirtualGameBrowserFactory.class, new VirtualRunescapeGameBrowserFactory(), null);
 		context.registerService(IContextFactory.class, new OldschoolContextFactory(), null);
+		
+		instance = context;
 	}
 
 	/* (non-Javadoc)

@@ -19,7 +19,7 @@ public interface IHashTable {
 
    INode next();
 
-   void clear();
-
    INode get(long var1);
+
+   void clear();
 }

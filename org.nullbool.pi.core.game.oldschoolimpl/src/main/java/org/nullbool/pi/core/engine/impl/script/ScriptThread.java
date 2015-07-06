@@ -28,7 +28,7 @@ public class ScriptThread extends Thread {
 		
 		classLoader = new HierarchalClassLoader(context.classloader(), scriptData.getContents());
 //		 classLoader = new ScriptClassLoader(getClass().getClassLoader(), scriptData.getContents());
-		
+				
 		Class<Script> klass = scriptData.getClass(classLoader, Script.class, scriptData.getDefinition().getKlassName());
 		activeScript = (Script) klass.newInstance();
 		running = true;

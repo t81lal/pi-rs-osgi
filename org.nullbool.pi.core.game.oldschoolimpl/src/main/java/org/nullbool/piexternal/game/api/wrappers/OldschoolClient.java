@@ -10,7 +10,6 @@ import java.util.Set;
 import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.core.engine.api.IClientContext;
 import org.nullbool.pi.core.engine.api.IContextRegistry;
-import org.nullbool.piexternal.game.api.Activator;
 import org.nullbool.piexternal.game.api.accessors.IOldschoolClient;
 import org.nullbool.piexternal.game.api.accessors.IWrappedException;
 import org.nullbool.piexternal.game.api.accessors.collections.IDeque;
@@ -27,6 +26,7 @@ import org.nullbool.piexternal.game.api.wrappers.definition.ObjectDefinition;
 import org.nullbool.piexternal.game.api.wrappers.entity.NPC;
 import org.nullbool.piexternal.game.api.wrappers.entity.Player;
 import org.nullbool.piexternal.game.api.wrappers.world.Region;
+import org.nullbool.shared.Activator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -39,7 +39,7 @@ public class OldschoolClient {
 	private static IContextRegistry registry;
 	
 	private static void init() {
-		BundleContext context = Activator.bundleInstance;
+		BundleContext context = Activator.instance;
 		//BundleContext context = FrameworkUtil.getBundle(OldschoolClient.class).getBundleContext();
 		System.out.println("Context: " + context);
 		System.out.println("Instance hash: " + Activator.class.hashCode());
@@ -54,7 +54,7 @@ public class OldschoolClient {
 		
 		ThreadGroup tg = Thread.currentThread().getThreadGroup();
 		IClientContext<IGameClient> cxt = registry.retrieve(tg);
-		return (IOldschoolClient) cxt;
+		return (IOldschoolClient) cxt.client();
 	}
 	
 	public static NPC[] getNPCs() {

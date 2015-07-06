@@ -4,9 +4,11 @@ import org.nullbool.piexternal.game.api.accessors.network.IBuffer;
 import org.nullbool.piexternal.game.api.accessors.network.IIsaacCipher;
 
 public interface IPacket extends IBuffer {
+   int getBitCaret();
+
    IIsaacCipher getCipher();
 
-   int getBitCaret();
+   void finishBitAccess();
 
    void initCipher(int[] var1);
 
@@ -15,6 +17,4 @@ public interface IPacket extends IBuffer {
    int readBits(int var1);
 
    int readableBytes(int var1);
-
-   void finishBitAccess();
 }

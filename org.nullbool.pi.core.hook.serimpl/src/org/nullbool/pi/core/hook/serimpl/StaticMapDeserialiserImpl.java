@@ -62,6 +62,7 @@ public class StaticMapDeserialiserImpl implements IMapDeserialiser<HookMap> {
 					.obfuscated(fn[0])
 					.refactored(fn[1]);
 				fh.variables().putAll(deserialiseMap(dis, pool));
+				ch.fields().add(fh);
 			}
 			
 			int m_count = dis.readUnsignedShort();
