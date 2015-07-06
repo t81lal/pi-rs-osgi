@@ -3,7 +3,7 @@ package org.nullbool.pi.core.scripting.api;
 import java.util.List;
 
 import org.nullbool.pi.core.scripting.api.loader.RefreshableResourcePool;
-import org.nullbool.pi.core.scripting.api.loader.ResourceDefinition;
+import org.nullbool.pi.core.scripting.api.loader.ResolvedDefinition;
 import org.nullbool.pi.core.scripting.api.loader.RunnableResourceLocation;
 
 /**
@@ -12,7 +12,7 @@ import org.nullbool.pi.core.scripting.api.loader.RunnableResourceLocation;
  */
 public abstract interface IScriptingEngine {
 
-	public abstract Task startTask(ResourceDefinition taskData);
+	public abstract Task startTask(ResolvedDefinition taskData);
 	
 	public abstract void stopTask(Task task);
 	
@@ -20,7 +20,7 @@ public abstract interface IScriptingEngine {
 	
 	public abstract boolean tasksRunning();
 	
-	public abstract Script startScript(ResourceDefinition scriptData);
+	public abstract Script startScript(ResolvedDefinition scriptData);
 	
 	public abstract boolean isScriptRunning();
 	
@@ -36,9 +36,9 @@ public abstract interface IScriptingEngine {
 	
 	public abstract List<Task> getActiveTasks();
 	
-	public abstract RefreshableResourcePool<ResourceDefinition, RunnableResourceLocation<ResourceDefinition>> getScriptPool();
+	public abstract RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> getScriptPool();
 	
-	public abstract RefreshableResourcePool<ResourceDefinition, RunnableResourceLocation<ResourceDefinition>> getTaskPool();
+	public abstract RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> getTaskPool();
 	
 	public abstract void refresh();
 }

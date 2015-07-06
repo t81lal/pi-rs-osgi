@@ -7,9 +7,10 @@ import java.awt.Canvas;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.core.engine.api.IClientContext;
 import org.nullbool.pi.core.engine.api.IContextRegistry;
-import org.nullbool.piexternal.game.api.IGameClient;
+import org.nullbool.piexternal.game.api.Activator;
 import org.nullbool.piexternal.game.api.accessors.IOldschoolClient;
 import org.nullbool.piexternal.game.api.accessors.IWrappedException;
 import org.nullbool.piexternal.game.api.accessors.collections.IDeque;
@@ -27,7 +28,6 @@ import org.nullbool.piexternal.game.api.wrappers.entity.NPC;
 import org.nullbool.piexternal.game.api.wrappers.entity.Player;
 import org.nullbool.piexternal.game.api.wrappers.world.Region;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
 /**
@@ -39,7 +39,10 @@ public class OldschoolClient {
 	private static IContextRegistry registry;
 	
 	private static void init() {
-		BundleContext context = FrameworkUtil.getBundle(OldschoolClient.class).getBundleContext();
+		BundleContext context = Activator.bundleInstance;
+		//BundleContext context = FrameworkUtil.getBundle(OldschoolClient.class).getBundleContext();
+		System.out.println("Context: " + context);
+		System.out.println("Instance hash: " + Activator.class.hashCode());
 		ServiceReference<IContextRegistry> cxtRefSvcRef = context.getServiceReference(IContextRegistry.class);
 		registry = context.getService(cxtRefSvcRef);
 		context.ungetService(cxtRefSvcRef);

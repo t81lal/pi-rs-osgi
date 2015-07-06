@@ -3,13 +3,13 @@ package org.nullbool.pi.core.scripting.api.loader;
 import java.util.Map;
 import java.util.Set;
 
-public class BasicResourcePool extends RefreshableResourcePool<ResourceDefinition, RunnableResourceLocation<ResourceDefinition>> {
+public class BasicResourcePool extends RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> {
 
 	public BasicResourcePool() {
 		super();
 	}
 
-	public BasicResourcePool(Map<RunnableResourceLocation<ResourceDefinition>, Set<ResourceDefinition>> load) {
+	public BasicResourcePool(Map<RunnableResourceLocation<ResolvedDefinition>, Set<ResolvedDefinition>> load) {
 		super(load);
 	}
 }

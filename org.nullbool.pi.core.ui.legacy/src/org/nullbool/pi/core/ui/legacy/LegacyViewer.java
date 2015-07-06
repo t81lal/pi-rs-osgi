@@ -23,12 +23,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 
+import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.osgi.util.ShutdownHelper;
 import org.nullbool.pi.core.engine.api.IClientContext;
 import org.nullbool.pi.core.ui.api.IMenu;
 import org.nullbool.pi.core.ui.api.IMenuDecorator;
 import org.nullbool.pi.core.ui.api.IViewer;
-import org.nullbool.piexternal.game.api.IGameClient;
 import org.nullbool.taskqueue.TaskQueue;
 import org.nullbool.taskqueue.TaskQueueImpl;
 import org.osgi.framework.BundleContext;

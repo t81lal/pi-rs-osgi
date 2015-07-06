@@ -6,10 +6,10 @@ Bundle-Version: 1.0.0.release
 Bundle-Vendor: NullBool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: org.nullbool.pi.core.ui.legacy.Activator
-Import-Package: org.nullbool.osgi.shell.api,
+Import-Package: org.nullbool.core.piexternal.game.api,
+ org.nullbool.osgi.shell.api,
  org.nullbool.osgi.util,
  org.nullbool.pi.core.engine.api,
  org.nullbool.pi.core.ui.api,
- org.nullbool.piexternal.game.api,
  org.nullbool.taskqueue,
  org.osgi.framework

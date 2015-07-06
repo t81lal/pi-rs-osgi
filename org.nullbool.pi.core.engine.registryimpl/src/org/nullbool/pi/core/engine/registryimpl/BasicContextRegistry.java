@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.core.engine.api.IClientContext;
 import org.nullbool.pi.core.engine.api.IContextRegistry;
-import org.nullbool.piexternal.game.api.IGameClient;
 
 /**
  * @author Bibl (don't ban me pls)

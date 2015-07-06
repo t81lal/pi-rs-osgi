@@ -11,13 +11,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created 5 Jun 2015 09:25:00
+ */
+// this doesn't feel like a good idea. -Bibl
 public enum FileSet {
-	API         (new Builder(1).relativeName("api.jar")),
+	// TODO: Fix custom jars
+	API         (new Builder(1).relativeName("api.jar").actor(new InstallerActor())),
 	LOG         (new Builder(2).relativeName("log.ser")),
 	TRANSLATION (new Builder(3).relativeName("translate.json")),
-	REFACTOR    (new Builder(4).relativeName("refactor.jar").priority(5).runnable(true).actor(new SimpleInjectionActor(false))),
+	REFACTOR    (new Builder(4).relativeName("refactor.jar").priority(5).runnable(true).actor(new SimpleInjectionActor(true))),
 	DEOB        (new Builder(5).relativeName("deob.jar").priority(4).runnable(true).require(1, 2, 3).actor(new SimpleInjectionActor(true))),
-	TRANSFORMED (new Builder(6).relativeName("transformed.jar").priority(3).runnable(true).actor(new SimpleInjectionActor(false))),
+	/* Highest */
+	TRANSFORMED (new Builder(6).relativeName("transformed.jar").priority(10).runnable(true).actor(new InstallerActor())),
 	VANILLA     (new Builder(7).relativeName("vanilla.jar").priority(2).runnable(true).require(1, 2, 3).actor(new SimpleInjectionActor(true)));
 	
 	private static final Comparator<FileSet> PRIORITY_COMPARATOR = new Comparator<FileSet>() {

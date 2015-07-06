@@ -2,7 +2,7 @@ package org.nullbool.pi.core.engine.api;
 
 import java.util.Set;
 
-import org.nullbool.piexternal.game.api.IGameClient;
+import org.nullbool.core.piexternal.game.api.IGameClient;
 
 /**
  * @author Bibl (don't ban me pls)

@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Game
-Bundle-SymbolicName: org.nullbool.piexternal.game.api
-Bundle-Version: 1.0.0.qualifier
+Bundle-Name: game-api
+Bundle-SymbolicName: org.nullbool.core.piexternal.game.api
+Bundle-Version: 1.0.0.alpha
 Bundle-Vendor: NullBool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.osgi.framework;version="1.3.0"
-Export-Package: org.nullbool.piexternal.game.api
+Export-Package: org.nullbool.core.piexternal.game.api
+Import-Package: org.osgi.framework;version="1.8.0"

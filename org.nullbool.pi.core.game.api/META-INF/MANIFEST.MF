@@ -6,9 +6,9 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: NullBool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.nullbool.api.obfuscation.refactor,
+ org.nullbool.core.piexternal.game.api,
  org.nullbool.pi.core.scripting.api,
  org.nullbool.pi.core.scripting.api.klassmodel,
- org.nullbool.piexternal.game.api,
  org.nullbool.topdank.eventbus.api,
  org.objectweb.asm;version="[1.0.0,1.0.0]",
  org.objectweb.asm.tree;version="[1.0.0,1.0.0]",

@@ -1,4 +1,4 @@
-package org.nullbool.piexternal.game.api;
+package org.nullbool.core.piexternal.game.api;
 
 /**
  * @author Bibl (don't ban me pls) <br>

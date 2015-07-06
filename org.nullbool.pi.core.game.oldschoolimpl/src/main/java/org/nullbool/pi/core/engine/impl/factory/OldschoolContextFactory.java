@@ -5,9 +5,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.constants.IOHelper;
 import org.nullbool.pi.constants.ResourceConstants;
 import org.nullbool.pi.core.engine.api.IContextFactory;
@@ -17,9 +19,8 @@ import org.nullbool.pi.core.engine.impl.AppletClientContext;
 import org.nullbool.pi.core.engine.impl.DefaultScriptingEngine;
 import org.nullbool.pi.core.engine.impl.factory.ext.FileSet;
 import org.nullbool.pi.core.engine.impl.factory.ext.IActor;
-import org.nullbool.pi.core.scripting.api.klassmodel.MasterScriptLoader;
+import org.nullbool.pi.core.scripting.api.klassmodel.HierarchalClassLoader;
 import org.nullbool.pi.core.scripting.api.loader.BasicResourcePool;
-import org.nullbool.piexternal.game.api.IGameClient;
 import org.nullbool.topdank.eventbus.api.EventBus;
 import org.objectweb.asm.tree.ClassNode;
 import org.osgi.framework.BundleContext;
@@ -43,6 +44,12 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 	@Override
 	public AppletClientContext<IGameClient> create(IVirtualGameBrowser browser) throws Exception {
 
+//		if(shared_cache == null) {
+//			shared_cache = new LoadedLibraryCache();
+//			System.out.println("Loading api providers.");
+//			loadProviders0(ResourceConstants.API_PROVIDER_DIR, shared_cache);
+//		}
+		
 		// FIXME: Revision checking
 		int latestVer = 79;
 		
@@ -137,11 +144,12 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 		
 		LocateableJarContents<ClassNode> contents = downloader.getJarContents();
 		
+		Map<Class<?>, Object> executed = new HashMap<Class<?>, Object>();
 		for(FileSet f : fsets) {
-			IActor actor = f.actor();
+			IActor<?> actor = f.actor();
 			if(actor != null) {
 				try {
-					actor.act(contents, dir);
+					executed.put(actor.type(), actor.act(fs, contents, dir));
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.err.printf("Actor #%d failed.%n", f.id());
@@ -161,7 +169,8 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 		
 		// set classloader
 		// TODO: verify
-		MasterScriptLoader classLoader = new MasterScriptLoader(contents, getClass().getClassLoader());
+		
+		HierarchalClassLoader classLoader = new HierarchalClassLoader(notNull((ClassLoader) executed.get(ClassLoader.class), getClass().getClassLoader()), contents);
 		LookupFilter<String> filter = new LookupFilter<String>();
 		for(ClassNode cn : contents.getClassContents()) {
 			filter.add(cn.name.replace("/", "."));
@@ -192,7 +201,6 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 		ServiceReference<EventBus> svcRef = bundleContext.getServiceReference(EventBus.class);
 		EventBus bus = bundleContext.getService(svcRef);
 		
-		
 		BasicResourcePool scriptpool = new BasicResourcePool();
 		BasicResourcePool taskpool = new BasicResourcePool();
 		DefaultScriptingEngine scriptingEngine = new DefaultScriptingEngine(scriptpool, taskpool);
@@ -201,6 +209,12 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 		scriptingEngine.initContext(context);
 		
 		return context;
+	}
+	
+	private static <T> T notNull(T t1, T t2) {
+		if(t1 == null)
+			return t2;
+		return t1;
 	}
 	
 	private static void clean(List<FileSet> fsets, File dir) {

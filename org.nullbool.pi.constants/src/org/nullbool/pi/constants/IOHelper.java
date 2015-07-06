@@ -19,11 +19,39 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 
 public class IOHelper {
 
+	public static abstract class FileFilter {
+		public abstract boolean accept(File f);
+	}
+	
+	public static Set<File> lstRec(File dir, FileFilter filter) {
+		Set<File> set = new HashSet<File>();
+		for(File f : dir.listFiles()) {
+			if(f.isDirectory()) {
+				if(filter.accept(f))
+					set.add(f);
+			} else {
+				set.addAll(lstRec(f, filter));
+			}
+		}
+		return set;
+	}
+	
+	public static Set<File> lstFlat(File dir, FileFilter filter) {
+		Set<File> set = new HashSet<File>();
+		for(File f : dir.listFiles()) {
+			if(filter.accept(dir))
+				set.add(f);
+		}
+		return set;
+	}
+	
 	public static URL makeURL(String url) throws IOException {
 		return new URL(url);
 	}

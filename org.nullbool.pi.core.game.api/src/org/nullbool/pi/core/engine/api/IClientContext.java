@@ -2,9 +2,9 @@ package org.nullbool.pi.core.engine.api;
 
 import java.applet.Applet;
 
+import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.core.scripting.api.IScriptingEngine;
-import org.nullbool.pi.core.scripting.api.klassmodel.MasterScriptLoader;
-import org.nullbool.piexternal.game.api.IGameClient;
+import org.nullbool.pi.core.scripting.api.klassmodel.HierarchalClassLoader;
 import org.nullbool.topdank.eventbus.api.EventBus;
 
 /**
@@ -21,7 +21,7 @@ public abstract interface IClientContext<T extends IGameClient> {
 	
 	public abstract Applet applet();
 	
-	public abstract MasterScriptLoader classloader();
+	public abstract HierarchalClassLoader classloader();
 	
 	public abstract IScriptingEngine scriptingEngine();
 	

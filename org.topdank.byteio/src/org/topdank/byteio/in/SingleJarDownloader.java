@@ -42,7 +42,7 @@ public class SingleJarDownloader<C extends ClassNode> extends AbstractJarDownloa
 				C cn = factory.create(bytes, entry.getName());
 				contents.getClassContents().add(cn);
 			} else {
-				JarResource resource = new JarResource(entry.getName(), bytes);
+				JarResource resource = new JarResource(entry, entry.getName(), bytes);
 				contents.getResourceContents().add(resource);
 			}
 		}

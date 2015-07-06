@@ -7,8 +7,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.nullbool.pi.core.engine.api.transform.DefaultAPIHelper;
 import org.nullbool.pi.core.engine.api.transform.IAPIHelper;
@@ -24,7 +33,8 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.topdank.byteengineer.commons.data.JarContents;
-import org.topdank.byteio.out.NonMetaJarDumper;
+import org.topdank.byteengineer.commons.data.JarResource;
+import org.topdank.byteio.out.CompleteJarDumper;
 
 import com.google.gson.Gson;
 
@@ -32,7 +42,7 @@ import com.google.gson.Gson;
  * @author Bibl (don't ban me pls)
  * @created 24 Jun 2015 01:10:53
  */
-public class SimpleInjectionActor implements IActor {
+public class SimpleInjectionActor implements IActor<Void> {
 	
 	private final boolean force;
 	
@@ -45,14 +55,14 @@ public class SimpleInjectionActor implements IActor {
 	}
 	
 	@Override
-	public void act(JarContents<ClassNode> contents, File baseDir) throws Exception {
+	public Void act(FileSet runningJar, JarContents<ClassNode> contents, File baseDir) throws Exception {
 		File log = FileSet.LOG.getAbsoluteLocation(baseDir);
 		File translation = FileSet.TRANSLATION.getAbsoluteLocation(baseDir);
 		
 		// TODO: Resolve
 		
 		if(!force) {
-			return;
+			return null;
 		}
 		
 		InputStream is = new FileInputStream(log);
@@ -69,7 +79,51 @@ public class SimpleInjectionActor implements IActor {
 			throw new Exception("Error transforming classes.", e);
 		}
 		
-		new NonMetaJarDumper(contents).dump(FileSet.TRANSFORMED.getAbsoluteLocation(baseDir));
+		// Remove duplicate name entries since we're merging the api jar with
+		// the gamepack jar. The META-INF/MANIFEST.MF is needed for the OSGi
+		// bundle but is also put there by the rs compiler, so we get the newest
+		// one, which is the api one.
+		Map<String, Set<JarResource>> duplicates = new HashMap<String, Set<JarResource>>();
+		ListIterator<JarResource> it = contents.getResourceContents().listIterator();
+		while(it.hasNext()) {
+			JarResource res = it.next();
+			String name = res.getName();
+			if(name.startsWith("META-INF/")) {
+				if(name.endsWith(".SF") || name.endsWith(".RSA")) {
+					it.remove();
+					continue;
+				}
+			}
+			
+			Set<JarResource> set = duplicates.get(name);
+			if(set == null) {
+				set = new HashSet<JarResource>();
+				duplicates.put(name, set);
+			}
+			set.add(res);
+		}
+		
+		for(Entry<String, Set<JarResource>> e : duplicates.entrySet()) {
+			Set<JarResource> val = e.getValue();
+			if(val.size() > 1) {
+				List<JarResource> ordered = new ArrayList<JarResource>();
+				ordered.addAll(val);
+				Collections.sort(ordered, new Comparator<JarResource>() {
+					@Override
+					public int compare(JarResource o1, JarResource o2) {
+						return Long.compare(o1.getEntry().getTime(), o2.getEntry().getTime());
+					}
+				});
+				
+				JarResource last = ordered.get(ordered.size() - 1);
+				val.remove(last);
+				contents.getResourceContents().removeAll(val);
+			}
+		}
+		
+		new CompleteJarDumper(contents).dump(FileSet.TRANSFORMED.getAbsoluteLocation(baseDir));
+		
+		return null;
 	}
 	
 	public void transform(Map<String, ClassNode> classes, HookMap hooks, IAPIHelper helper) throws Throwable {
@@ -140,5 +194,13 @@ public class SimpleInjectionActor implements IActor {
 		}
 		
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.pi.core.engine.impl.factory.ext.IActor#type()
+	 */
+	@Override
+	public Class<Void> type() {
+		return Void.TYPE;
 	}
 }

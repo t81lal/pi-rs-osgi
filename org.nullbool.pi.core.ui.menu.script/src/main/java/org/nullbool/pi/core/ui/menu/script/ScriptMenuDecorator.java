@@ -9,17 +9,18 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.core.engine.api.IClientContext;
 import org.nullbool.pi.core.engine.api.IContextRegistry;
+import org.nullbool.pi.core.scripting.api.loader.DescribedManifestResourceLocation;
 import org.nullbool.pi.core.scripting.api.loader.RefreshableResourcePool;
-import org.nullbool.pi.core.scripting.api.loader.ResourceDefinition;
+import org.nullbool.pi.core.scripting.api.loader.ResolvedDefinition;
 import org.nullbool.pi.core.scripting.api.loader.RunnableResourceLocation;
 import org.nullbool.pi.core.scripting.api.loader.finder.FinderStrategy;
 import org.nullbool.pi.core.scripting.api.loader.finder.FixedFinderStrategy;
 import org.nullbool.pi.core.scripting.api.loader.finder.JarInfoFolderSearchFinderStrategy;
 import org.nullbool.pi.core.ui.api.IMenu;
 import org.nullbool.pi.core.ui.api.IMenuDecorator;
-import org.nullbool.piexternal.game.api.IGameClient;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -108,7 +109,7 @@ public class ScriptMenuDecorator implements IMenuDecorator {
 				
 				Set<IClientContext<IGameClient>> contexts = contextRegistry.retrieveAll();
 				for(IClientContext<IGameClient> cxt : contexts) {
-					RefreshableResourcePool<ResourceDefinition,RunnableResourceLocation<ResourceDefinition>> pool = cxt.scriptingEngine().getScriptPool();
+					RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> pool = cxt.scriptingEngine().getScriptPool();
 					cxt.scriptingEngine().startScript(pool.iterator().next().getValue().iterator().next());
 				}
 				

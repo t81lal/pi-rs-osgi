@@ -1,8 +1,8 @@
 package org.nullbool.piexternal.game.api.accessors;
 
 import java.awt.Canvas;
-import org.nullbool.piexternal.game.api.IGameClient;
-import org.nullbool.piexternal.game.api.accessors.IWrappedException;
+
+import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.piexternal.game.api.accessors.collections.IDeque;
 import org.nullbool.piexternal.game.api.accessors.collections.IHashTable;
 import org.nullbool.piexternal.game.api.accessors.definitions.IItemDefinition;

@@ -22,8 +22,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.nullbool.pi.core.scripting.api.loader.ExternalResourceDefinition;
 import org.nullbool.pi.core.scripting.api.loader.RefreshableResourcePool;
-import org.nullbool.pi.core.scripting.api.loader.ResourceDefinition;
+import org.nullbool.pi.core.scripting.api.loader.ResolvedDefinition;
 import org.nullbool.pi.core.scripting.api.loader.RunnableResourceLocation;
 
 /**
@@ -140,12 +141,12 @@ public class ScriptViewer {
 	
 	private class ScriptsView extends JPanel implements ActionListener {
 		
-		private final List<ResourceDefinition> definitions;
+		private final List<ResolvedDefinition> definitions;
 		private final DefaultTableModel model;
 		private final JTable table;
 		
 		public ScriptsView() {
-			definitions = new ArrayList<ResourceDefinition>();
+			definitions = new ArrayList<ResolvedDefinition>();
 			model = new DefaultTableModel(new String[]{"Name", "Desc", "Authors", "Version"}, 0);
 			table = new JTable(model);
 			
@@ -153,13 +154,14 @@ public class ScriptViewer {
 		}
 
 		// TODO:
-		public void populate(RefreshableResourcePool<ResourceDefinition, RunnableResourceLocation<ResourceDefinition>> pool) {
+		public void populate(RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> pool) {
 			definitions.clear();
 			
-			for(Entry<RunnableResourceLocation<ResourceDefinition>, Set<ResourceDefinition>> e : pool) {
-				for(ResourceDefinition def : e.getValue()) {
+			for(Entry<RunnableResourceLocation<ResolvedDefinition>, Set<ResolvedDefinition>> e : pool) {
+				for(ResolvedDefinition _def : e.getValue()) {
+					ExternalResourceDefinition def = _def.getDefinition();
 					model.addRow(new String[]{def.getName(), def.getDescription(), Arrays.toString(def.getAuthors()), def.getVersion()});
-					definitions.add(def);
+					definitions.add(_def);
 				}
 			}
 		}
@@ -181,7 +183,7 @@ public class ScriptViewer {
 				return;
 			}
 			
-			ResourceDefinition def = definitions.get(selected);
+			ResolvedDefinition def = definitions.get(selected);
 			if(def == null) {
 				error("Null def in col " + selected);
 				return;

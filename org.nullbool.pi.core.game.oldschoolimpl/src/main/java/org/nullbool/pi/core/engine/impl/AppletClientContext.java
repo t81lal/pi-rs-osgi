@@ -2,10 +2,10 @@ package org.nullbool.pi.core.engine.impl;
 
 import java.applet.Applet;
 
+import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.core.engine.api.IClientContext;
 import org.nullbool.pi.core.scripting.api.IScriptingEngine;
-import org.nullbool.pi.core.scripting.api.klassmodel.MasterScriptLoader;
-import org.nullbool.piexternal.game.api.IGameClient;
+import org.nullbool.pi.core.scripting.api.klassmodel.HierarchalClassLoader;
 import org.nullbool.topdank.eventbus.api.EventBus;
 
 /**
@@ -15,12 +15,12 @@ import org.nullbool.topdank.eventbus.api.EventBus;
 public class AppletClientContext<T extends IGameClient> implements IClientContext<T> {
 
 	private final ThreadGroup tgroup;
-	private final MasterScriptLoader classLoader;
+	private final HierarchalClassLoader classLoader;
 	private final EventBus bus;
 	private final IScriptingEngine scriptingEngine;
 	private final T client;
 
-	public AppletClientContext(ThreadGroup tgroup, MasterScriptLoader classLoader, EventBus bus, IScriptingEngine scriptingEngine, T client) {
+	public AppletClientContext(ThreadGroup tgroup, HierarchalClassLoader classLoader, EventBus bus, IScriptingEngine scriptingEngine, T client) {
 		this.tgroup = tgroup;
 		this.classLoader = classLoader;
 		this.bus = bus;
@@ -56,7 +56,7 @@ public class AppletClientContext<T extends IGameClient> implements IClientContex
 	 * @see org.nullbool.pi.core.game.api.IClientContext#classloader()
 	 */
 	@Override
-	public MasterScriptLoader classloader() {
+	public HierarchalClassLoader classloader() {
 		return classLoader;
 	}
 

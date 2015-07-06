@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.core.engine.api.IClientContext;
+import org.nullbool.pi.core.engine.impl.script.RunningTask;
 import org.nullbool.pi.core.engine.impl.script.ScriptThread;
 import org.nullbool.pi.core.scripting.api.IScriptingEngine;
 import org.nullbool.pi.core.scripting.api.Script;
@@ -15,11 +17,10 @@ import org.nullbool.pi.core.scripting.api.event.ScriptStartEvent;
 import org.nullbool.pi.core.scripting.api.event.ScriptStopRequestEvent;
 import org.nullbool.pi.core.scripting.api.event.TaskStartEvent;
 import org.nullbool.pi.core.scripting.api.event.TaskStopEvent;
-import org.nullbool.pi.core.scripting.api.klassmodel.ScriptClassLoader;
 import org.nullbool.pi.core.scripting.api.loader.RefreshableResourcePool;
-import org.nullbool.pi.core.scripting.api.loader.ResourceDefinition;
+import org.nullbool.pi.core.scripting.api.loader.ResolvedDefinition;
+import org.nullbool.pi.core.scripting.api.loader.ResourceType;
 import org.nullbool.pi.core.scripting.api.loader.RunnableResourceLocation;
-import org.nullbool.piexternal.game.api.IGameClient;
 
 /**
  * @author Bibl (don't ban me pls)
@@ -28,19 +29,19 @@ import org.nullbool.piexternal.game.api.IGameClient;
 public class DefaultScriptingEngine implements IScriptingEngine {
 
 	private IClientContext<IGameClient> context;
-	private final RefreshableResourcePool<ResourceDefinition, RunnableResourceLocation<ResourceDefinition>> scriptpool;
-	private final RefreshableResourcePool<ResourceDefinition, RunnableResourceLocation<ResourceDefinition>> taskpool;
+	private final RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> scriptpool;
+	private final RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> taskpool;
 
 	private ScriptThread script;
-	private List<Task> activeTasks;
+	private List<RunningTask> activeTasks;
 
 	public DefaultScriptingEngine(
-			RefreshableResourcePool<ResourceDefinition, RunnableResourceLocation<ResourceDefinition>> scriptpool,
-			RefreshableResourcePool<ResourceDefinition, RunnableResourceLocation<ResourceDefinition>> taskpool) {
+			RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> scriptpool,
+			RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> taskpool) {
 		this.scriptpool = scriptpool;
 		this.taskpool = taskpool;
 
-		activeTasks = new ArrayList<Task>();
+		activeTasks = new ArrayList<RunningTask>();
 	}
 	
 	public void initContext(IClientContext<IGameClient> context) {
@@ -48,19 +49,21 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 	}
 
 	@Override
-	public Task startTask(ResourceDefinition taskData) {
+	public Task startTask(ResolvedDefinition taskData) {
+		if(taskData.getType() != ResourceType.TASK)
+			return null;
+		
 		try {
-			ScriptClassLoader classLoader = new ScriptClassLoader(context.classloader(), taskData.getContents());
-			context.classloader().children().add(classLoader);
-
-			Class<Task> klass = taskData.getClass(classLoader, Task.class, taskData.getKlassName());
-			Task task = klass.newInstance();
+			RunningTask task = new RunningTask(context, taskData);
+			context.classloader().children().add(task.getClassLoader());
+			
 			synchronized (activeTasks) {
 				activeTasks.add(task);
 			}
 			// TODO: marker for event call
-			context.eventBus().dispatch(new TaskStartEvent(task));
-			return task;
+			Task instance = task.getTaskInstance();
+			context.eventBus().dispatch(new TaskStartEvent(instance));
+			return instance;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -79,12 +82,12 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 	@Override
 	public void stopAllTasks() {
 		synchronized (activeTasks) {
-			ListIterator<Task> it = activeTasks.listIterator();
+			ListIterator<RunningTask> it = activeTasks.listIterator();
 			while (it.hasNext()) {
-				Task task = it.next();
+				RunningTask task = it.next();
 				it.remove();
 				// TODO: marker for event call
-				context.eventBus().dispatch(new TaskStopEvent(task));
+				context.eventBus().dispatch(new TaskStopEvent(task.getTaskInstance()));
 			}
 		}
 	}
@@ -95,11 +98,46 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 	}
 
 	@Override
-	public Script startScript(ResourceDefinition scriptData) {
+	public Script startScript(ResolvedDefinition scriptData) {
+		if(scriptData.getType() != ResourceType.SCRIPT)
+			return null;
+		/* 1. If there are no api dependencies, pass.
+		 * 2. If there are, verify them. */
+//		LoadedLibrary[] apis = null;
+//		
+//		String[] keys = scriptData.getDefinition().getApiKeys();
+//		if(keys != null && keys.length > 0) {
+//			apis = new LoadedLibrary[keys.length];
+//			for(int i=0; i < keys.length; i++) {
+//				String key = keys[i];
+//				try {
+//					LoadedLibrary lib = apiCache.find(key);
+//					if(lib == null) {
+//						throw new UnsupportedOperationException();
+//					}
+//					
+//					apis[i] = lib;
+//				} catch(UnsupportedOperationException e) {
+//					System.out.flush();
+//					System.err.flush();
+//					System.err.printf("Error resolving library (%s).%n", key);
+//					e.printStackTrace();
+//					return null;
+//				}
+//			}
+//		}
+//		
+//		if(apis == null)
+//			apis = new LoadedLibrary[0];
+		
 		if(script == null) {
 			Script internalScript = null;
 			try {
 				this.script = new ScriptThread(context, this, scriptData);
+//				HierarchalClassLoader classLoader = this.script.getClassLoader();
+//				for(LoadedLibrary lib : apis) {
+//					classLoader.children().add(lib.getClassLoader());
+//				}
 				this.script.start();
 
 				internalScript = this.script.getActiveScript();
@@ -190,16 +228,20 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 
 	@Override
 	public List<Task> getActiveTasks() {
-		return activeTasks;
+		List<Task> taskList = new ArrayList<Task>();
+		for(RunningTask t : activeTasks) {
+			taskList.add(t.getTaskInstance());
+		}
+		return taskList;
 	}
 
 	@Override
-	public RefreshableResourcePool<ResourceDefinition, RunnableResourceLocation<ResourceDefinition>> getScriptPool() {
+	public RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> getScriptPool() {
 		return scriptpool;
 	}
 
 	@Override
-	public RefreshableResourcePool<ResourceDefinition, RunnableResourceLocation<ResourceDefinition>> getTaskPool() {
+	public RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> getTaskPool() {
 		return taskpool;
 	}
 

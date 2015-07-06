@@ -3,7 +3,10 @@ Bundle-ManifestVersion: 2
 Bundle-Name: oldschool-api
 Bundle-SymbolicName: org.nullbool.piexternal.oldschool.api
 Bundle-Version: 1.0.0.alpha
+Bundle-Vendor: NullBool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.nullbool.pi.core.engine.api,
- org.nullbool.piexternal.game.api,
+Bundle-Activator: org.nullbool.piexternal.game.api.Activator
+Import-Package: 
+ org.nullbool.core.piexternal.game.api,
+ org.nullbool.pi.core.engine.api,
  org.osgi.framework;version="1.8.0"

@@ -3,8 +3,8 @@ package org.nullbool.pi.core.ui.api;
 import java.awt.Component;
 import java.awt.Dimension;
 
+import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.core.engine.api.IClientContext;
-import org.nullbool.piexternal.game.api.IGameClient;
 import org.osgi.framework.BundleContext;
 
 /**

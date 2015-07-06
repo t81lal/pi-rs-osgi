@@ -4,6 +4,7 @@ import java.net.URL;
 
 import javax.swing.SwingUtilities;
 
+import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.osgi.shell.api.Shell;
 import org.nullbool.osgi.util.ShutdownHelper;
 import org.nullbool.pi.core.engine.api.IClientContext;
@@ -12,7 +13,6 @@ import org.nullbool.pi.core.engine.api.IContextRegistry;
 import org.nullbool.pi.core.engine.api.IVirtualGameBrowser;
 import org.nullbool.pi.core.engine.api.IVirtualGameBrowserFactory;
 import org.nullbool.pi.core.ui.api.IViewer;
-import org.nullbool.piexternal.game.api.IGameClient;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -67,8 +67,9 @@ public class Activator implements BundleActivator {
 					createView(viewer);
 					
 					ServiceReference<IVirtualGameBrowserFactory> gbfSvcRef = context.getServiceReference(IVirtualGameBrowserFactory.class);
+					System.out.println(gbfSvcRef);
 					IVirtualGameBrowserFactory gbf = context.getService(gbfSvcRef);
-					IVirtualGameBrowser browser = gbf.create(new URL("http://oldschool58.runescape.com/"));
+					IVirtualGameBrowser browser = gbf.create(new URL("http://oldschool84.runescape.com/"));
 					
 					ServiceReference<IContextFactory> cfSvcRef = context.getServiceReference(IContextFactory.class);
 					IContextFactory<IClientContext<IGameClient>> cf = context.getService(cfSvcRef);
@@ -84,6 +85,7 @@ public class Activator implements BundleActivator {
 								IContextRegistry contextRegistry = context.getService(cxtSvcRef);
 								contextRegistry.register(clientContext);
 								context.ungetService(cxtSvcRef);
+								cacheContext(clientContext);
 								
 								browser.setApplet(clientContext.applet());
 								clientContext.init();
@@ -109,6 +111,14 @@ public class Activator implements BundleActivator {
 		this.thisThread.start();
 	}
 
+	private void cacheContext(IClientContext<IGameClient> c) {
+		ServiceReference<IContextRegistry> cxtRefSvcRef = context.getServiceReference(IContextRegistry.class);
+		IContextRegistry registry = context.getService(cxtRefSvcRef);
+		System.out.println(registry);
+		registry.register(c);
+		context.ungetService(cxtRefSvcRef);
+	}
+	
 	private void createView(IViewer viewer) throws Throwable {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override

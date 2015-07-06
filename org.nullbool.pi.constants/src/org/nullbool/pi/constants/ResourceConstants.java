@@ -40,17 +40,13 @@ public abstract interface ResourceConstants {
 		return safe_makeURL(String.format(MAPPING_URL, version));
 	}
 	
-	public static final File LOCAL_BASE_DIR = checkmkdir(new File((new File(System.getProperty("user.home")).exists() ? System.getProperty("user.home")
-			: "/root") + "/pi rs"));
-	public static final File SCREENSHOTS_DIR = checkmkdir(new File(LOCAL_BASE_DIR, "screenshots"));
-	public static final File DATA_DIR = checkmkdir(new File(LOCAL_BASE_DIR, "data"));
-	public static final File OSGI_DATA_DIR = checkmkdir(new File(DATA_DIR, "osgidata"));
-	public static final File SCRIPTS_DIR = checkmkdir(new File(DATA_DIR, "scripts"));
-	public static final File TASKS_DIR = checkmkdir(new File(DATA_DIR, "tasks"));
-	public static final File PLUGINS_DIR = checkmkdir(new File(DATA_DIR, "plugins"));
-	public static final File LAUNCHER_DIR = checkmkdir(new File(DATA_DIR, "launcher"));
-	public static final File CLIENT_DIR = checkmkdir(new File(DATA_DIR, "client"));
-	public static final File CACHE_DIR = checkmkdir(new File(DATA_DIR, "cache"));
+	public static final File LOCAL_BASE_DIR   = checkmkdir(new File((new File(System.getProperty("user.home")).exists() ? System.getProperty("user.home"): "/root") + "/pi rs"));
+	public static final File DATA_DIR         = checkmkdir(new File(LOCAL_BASE_DIR, "data"));
+	public static final File OSGI_DATA_DIR    = checkmkdir(new File(DATA_DIR, "osgi"));
+	public static final File SCRIPTS_DIR      = checkmkdir(new File(DATA_DIR, "scripts"));
+	public static final File TASKS_DIR        = checkmkdir(new File(DATA_DIR, "tasks"));
+	public static final File CACHE_DIR        = checkmkdir(new File(DATA_DIR, "game"));
+	public static final File API_PROVIDER_DIR = checkmkdir(new File(DATA_DIR, "gameapi"));
 
 	public static final File CLIENT_CONFIG = checkmkfile(new File(LOCAL_BASE_DIR, "config.json"));
 
@@ -60,17 +56,5 @@ public abstract interface ResourceConstants {
 
 	public static File getLocalDir(File base, String ver) {
 		return new File(base, ver);
-	}
-
-	public static File getLocalAssetsDir(File base, String ver) {
-		return new File(getLocalDir(base, ver), "/assets/");
-	}
-
-	public static File getLocalLibrariesDir(File base, String ver) {
-		return new File(getLocalDir(base, ver), "/libraries/");
-	}
-
-	public static File getLocalInfoFile(File base, String ver) {
-		return new File(getLocalDir(base, ver), String.format("info%s", JSON_EXTENSION));
 	}
 }

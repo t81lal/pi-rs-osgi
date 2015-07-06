@@ -2,38 +2,44 @@ package org.nullbool.pi.core.engine.impl.script;
 
 import java.util.Arrays;
 
+import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.core.engine.api.IClientContext;
 import org.nullbool.pi.core.scripting.api.IScriptingEngine;
 import org.nullbool.pi.core.scripting.api.Script;
-import org.nullbool.pi.core.scripting.api.klassmodel.ScriptClassLoader;
-import org.nullbool.pi.core.scripting.api.loader.ResourceDefinition;
-import org.nullbool.piexternal.game.api.IGameClient;
+import org.nullbool.pi.core.scripting.api.klassmodel.HierarchalClassLoader;
+import org.nullbool.pi.core.scripting.api.loader.ExternalResourceDefinition;
+import org.nullbool.pi.core.scripting.api.loader.ResolvedDefinition;
 
 public class ScriptThread extends Thread {
 
 	private final IScriptingEngine engine;
-	private final ResourceDefinition scriptData;
-	private final ScriptClassLoader classLoader;
+	private final ResolvedDefinition scriptData;
+	private final HierarchalClassLoader classLoader;
 	private volatile Script activeScript;
 	private volatile boolean running;
 	private volatile boolean stopRequested;
 	private volatile boolean interupted;
 	private long startTime;
 
-	public ScriptThread(IClientContext<IGameClient> context, IScriptingEngine engine, ResourceDefinition scriptData) throws Exception {
-		super(context.threadGroup(), String.format("script-(%s, %s)", scriptData.getName(), scriptData.getVersion()));
+	public ScriptThread(IClientContext<IGameClient> context, IScriptingEngine engine, ResolvedDefinition scriptData) throws Exception {
+		super(context.threadGroup(), String.format("script-(%s, %s)", scriptData.getDefinition().getName(), scriptData.getDefinition().getVersion()));
 		this.engine = engine;
 		this.scriptData = scriptData;
 		
-		classLoader = new ScriptClassLoader(getClass().getClassLoader(), scriptData.getContents());
+		classLoader = new HierarchalClassLoader(context.classloader(), scriptData.getContents());
+//		 classLoader = new ScriptClassLoader(getClass().getClassLoader(), scriptData.getContents());
 		
-		Class<Script> klass = scriptData.getClass(classLoader, Script.class, scriptData.getKlassName());
+		Class<Script> klass = scriptData.getClass(classLoader, Script.class, scriptData.getDefinition().getKlassName());
 		activeScript = (Script) klass.newInstance();
 		running = true;
 		interupted = false;
 		
 		// context.classloader().children().add(classLoader);
 		// hackScript();
+	}
+	
+	public HierarchalClassLoader getClassLoader() {
+		return classLoader;
 	}
 
 	/*private void hackScript() {
@@ -63,7 +69,8 @@ public class ScriptThread extends Thread {
 	public String[] getFormattedData() {
 		if (scriptData == null)
 			return new String[] { "error", "error", "error", "error" };
-		return new String[] { Arrays.toString(scriptData.getAuthors()), scriptData.getName(), scriptData.getVersion(), scriptData.getDescription() };
+		ExternalResourceDefinition def = scriptData.getDefinition();
+		return new String[] { Arrays.toString(def.getAuthors()), def.getName(), def.getVersion(), def.getDescription() };
 	}
 
 	@Override

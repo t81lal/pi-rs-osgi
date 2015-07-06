@@ -1,17 +1,24 @@
 package org.topdank.byteengineer.commons.data;
 
 import java.util.Arrays;
+import java.util.jar.JarEntry;
 
 public final class JarResource {
 	
+	private final JarEntry entry;
 	private final String name;
 	private final byte[] data;
 	
-	public JarResource(String name, byte[] data) {
+	public JarResource(JarEntry entry, String name, byte[] data) {
+		this.entry = entry;
 		this.name = name;
 		this.data = data;
 	}
 	
+	public JarEntry getEntry() {
+		return entry;
+	}
+
 	public String getName() {
 		return name;
 	}
