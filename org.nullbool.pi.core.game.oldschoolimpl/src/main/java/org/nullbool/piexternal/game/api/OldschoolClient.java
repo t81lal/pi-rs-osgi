@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.nullbool.piexternal.game.api.wrappers;
+package org.nullbool.piexternal.game.api;
 
 import java.awt.Canvas;
 import java.util.HashSet;
@@ -20,6 +20,7 @@ import org.nullbool.piexternal.game.api.accessors.entity.INPC;
 import org.nullbool.piexternal.game.api.accessors.entity.IPlayer;
 import org.nullbool.piexternal.game.api.accessors.widgets.IWidget;
 import org.nullbool.piexternal.game.api.accessors.world.IRegion;
+import org.nullbool.piexternal.game.api.wrappers.WrappedException;
 import org.nullbool.piexternal.game.api.wrappers.collection.HashTable;
 import org.nullbool.piexternal.game.api.wrappers.definition.ItemDefinition;
 import org.nullbool.piexternal.game.api.wrappers.definition.ObjectDefinition;
@@ -55,6 +56,12 @@ public class OldschoolClient {
 		ThreadGroup tg = Thread.currentThread().getThreadGroup();
 		IClientContext<IGameClient> cxt = registry.retrieve(tg);
 		return (IOldschoolClient) cxt.client();
+	}
+	
+	static IClientContext<IGameClient> current() {
+		ThreadGroup tg = Thread.currentThread().getThreadGroup();
+		IClientContext<IGameClient> cxt = registry.retrieve(tg);
+		return cxt;
 	}
 	
 	public static NPC[] getNPCs() {

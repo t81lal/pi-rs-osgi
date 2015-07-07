@@ -52,6 +52,11 @@ public class GetterTransformer extends AbstractTransformer {
 			 * System.out.println(refactoredDesc + " -> " + castType);
 			 * insns.add(new TypeInsnNode(CHECKCAST, castType)); } }
 			 */
+			
+			System.out.println("Multi for " + insns.getLast() +"  is  " + f.val(Constants.ENCODER));
+			if(desc.equalsIgnoreCase("J")) {
+				
+			}
 
 			insns.add(new InsnNode(DescUtil.getReturnOpcode(desc)));
 			method.instructions = insns;

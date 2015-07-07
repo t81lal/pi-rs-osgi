@@ -1,4 +1,4 @@
-package org.nullbool.piexternal.game.api.wrappers;
+package org.nullbool.piexternal.game.api;
 
 import java.awt.Point;
 import java.awt.Rectangle;
