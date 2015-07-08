@@ -11,7 +11,9 @@ import org.nullbool.piexternal.game.api.Utilities;
  * @created 7 Jul 2015 16:01:57
  */
 public abstract interface Interactable {
-	
+
+	Point getScreenPoint();
+
 	public default void interact() {
 		interact(0, 0);
 	}

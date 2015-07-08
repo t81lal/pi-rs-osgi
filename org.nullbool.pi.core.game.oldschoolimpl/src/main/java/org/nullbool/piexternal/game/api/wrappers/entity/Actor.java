@@ -2,6 +2,7 @@ package org.nullbool.piexternal.game.api.wrappers.entity;
 
 import java.awt.Point;
 
+import org.nullbool.piexternal.game.api.Calculations;
 import org.nullbool.piexternal.game.api.OldschoolClient;
 import org.nullbool.piexternal.game.api.accessors.entity.IActor;
 import org.nullbool.piexternal.game.api.meta.Interactable;
@@ -27,11 +28,6 @@ public class Actor<T extends IActor> extends Renderable<T> implements IActor, In
 		return _node.getHealth();
 	}
 
-	// @Override
-	// public int getHealthBarCycle() {
-	// return _node.getHealthBarCycle();
-	// }
-
 	@Override
 	public int[] getHitDamages() {
 		return _node.getHitDamages();
@@ -49,7 +45,7 @@ public class Actor<T extends IActor> extends Renderable<T> implements IActor, In
 
 	@Override
 	public int getLocalX() {
-		return _node.getInteractingId();
+		return _node.getLocalX();
 	}
 
 	@Override
@@ -67,10 +63,7 @@ public class Actor<T extends IActor> extends Renderable<T> implements IActor, In
 		return _node.getMessage();
 	}
 
-	//	public boolean isMoving() {
-	//		return this.getQueueSize() > 0;
-	//	}
-
+	
 	public int getTileX() {
 		return OldschoolClient.getBaseX() + (this.getLocalX() >> 7);
 	}
@@ -83,18 +76,16 @@ public class Actor<T extends IActor> extends Renderable<T> implements IActor, In
 		return new RSTile(this.getTileX(), this.getTileY(), OldschoolClient.getPlane());
 	}
 
-//	public int dist() {
-//		return (int)this.api.calculations.distance(this);
-//	}
-
 	@Override
 	public Point getScreenPoint() {
-		// TODO;
-//		return this.api.calculations.getCenterPoint(this.getTile());
-		return null;
+		return Calculations.getCenterPoint(this.getTile());
 	}
 
-//	public boolean isOnScreen() {
-//		return this.api.calculations.isOnScreen(this.getScreenPoint());
-//	}
+	public boolean isOnScreen() {
+		return Calculations.isOnScreen(getScreenPoint());
+	}
+
+	public int dist() {
+		return (int) Calculations.distance(this);
+	}
 }

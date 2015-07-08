@@ -17,4 +17,5 @@ public class NPC extends Actor<INPC> implements INPC {
 	public NPCDefinition getNpcDefinition() {
 		return new NPCDefinition(_node.getNpcDefinition());
 	}
+
 }
