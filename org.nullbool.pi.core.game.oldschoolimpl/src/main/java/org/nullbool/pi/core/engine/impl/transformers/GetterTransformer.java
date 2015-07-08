@@ -10,6 +10,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
+import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
@@ -53,9 +54,15 @@ public class GetterTransformer extends AbstractTransformer {
 			 * insns.add(new TypeInsnNode(CHECKCAST, castType)); } }
 			 */
 			
-			System.out.println("Multi for " + insns.getLast() +"  is  " + f.val(Constants.ENCODER));
-			if(desc.equalsIgnoreCase("J")) {
-				
+			if(desc.equalsIgnoreCase("J") || desc.equalsIgnoreCase("I")) {
+//				System.out.println("Multi for " + insns.getLast() +"  is  " + f.val(Constants.ENCODER));
+				if(desc.equalsIgnoreCase("J")) {
+					insns.add(new LdcInsnNode(Long.valueOf(f.val(Constants.ENCODER))));
+					insns.add(new InsnNode(LMUL));
+				} else {
+					insns.add(new LdcInsnNode(Integer.valueOf(f.val(Constants.ENCODER))));
+					insns.add(new InsnNode(IMUL));
+				}
 			}
 
 			insns.add(new InsnNode(DescUtil.getReturnOpcode(desc)));
