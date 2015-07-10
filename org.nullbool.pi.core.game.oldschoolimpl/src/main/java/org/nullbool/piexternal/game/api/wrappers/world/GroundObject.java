@@ -41,7 +41,47 @@ public class GroundObject implements IGroundObject {
 	}
 
 	@Override
-	public int getUID() {
-		return _obj.getUID();
+	public int getUid() {
+		return _obj.getUid();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundObject#setStrictX(int)
+	 */
+	@Override
+	public void setStrictX(int var1) {
+		_obj.setStrictX(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundObject#setStrictY(int)
+	 */
+	@Override
+	public void setStrictY(int var1) {
+		_obj.setStrictY(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundObject#setPlane(int)
+	 */
+	@Override
+	public void setPlane(int var1) {
+		_obj.setPlane(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundObject#setUid(int)
+	 */
+	@Override
+	public void setUid(int var1) {
+		_obj.setUid(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundObject#setFlags(int)
+	 */
+	@Override
+	public void setFlags(int var1) {
+		_obj.setFlags(var1);		
 	}
 }

@@ -7,11 +7,15 @@ public interface IHashTable {
 
    INode getHead();
 
-   INode getFirst();
+   INode getFirstNode();
 
    int getSize();
 
+   void setSize(int var1);
+
    int getIndex();
+
+   void setIndex(int var1);
 
    void put(INode var1, long var2);
 

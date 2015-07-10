@@ -163,4 +163,84 @@ public class Model extends Renderable<IModel> implements IModel {
 //		return this.api.calculations.isOnScreen(this.point);
 //	}
 
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IRenderable#setModelHeight(int)
+	 */
+	@Override
+	public void setModelHeight(int var1) {
+		_node.setModelHeight(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IModel#setVertexCount(int)
+	 */
+	@Override
+	public void setVertexCount(int var1) {
+		_node.setVertexCount(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IModel#setIndicesCount(int)
+	 */
+	@Override
+	public void setIndicesCount(int var1) {
+		_node.setIndicesCount(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IModel#setTriangleCount(int)
+	 */
+	@Override
+	public void setTriangleCount(int var1) {
+		_node.setTriangleCount(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IModel#setVerticesX(int[])
+	 */
+	@Override
+	public void setVerticesX(int[] var1) {
+		_node.setVerticesX(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IModel#setVerticesY(int[])
+	 */
+	@Override
+	public void setVerticesY(int[] var1) {
+		_node.setVerticesY(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IModel#setVerticesZ(int[])
+	 */
+	@Override
+	public void setVerticesZ(int[] var1) {
+		_node.setVerticesZ(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IModel#setIndicesX(int[])
+	 */
+	@Override
+	public void setIndicesX(int[] var1) {
+		_node.setIndicesX(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IModel#setIndicesY(int[])
+	 */
+	@Override
+	public void setIndicesY(int[] var1) {
+		_node.setIndicesY(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IModel#setIndicesZ(int[])
+	 */
+	@Override
+	public void setIndicesZ(int[] var1) {
+		_node.setIndicesZ(var1);		
+	}
+
 }

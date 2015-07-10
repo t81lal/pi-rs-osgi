@@ -42,8 +42,8 @@ public class OldschoolClient {
 	private static void init() {
 		BundleContext context = Activator.instance;
 		//BundleContext context = FrameworkUtil.getBundle(OldschoolClient.class).getBundleContext();
-		System.out.println("Context: " + context);
-		System.out.println("Instance hash: " + Activator.class.hashCode());
+		// System.out.println("Context: " + context);
+		// System.out.println("Instance hash: " + Activator.class.hashCode());
 		ServiceReference<IContextRegistry> cxtRefSvcRef = context.getServiceReference(IContextRegistry.class);
 		registry = context.getService(cxtRefSvcRef);
 		context.ungetService(cxtRefSvcRef);
@@ -64,9 +64,9 @@ public class OldschoolClient {
 		return cxt;
 	}
 	
-	public static NPC[] getNPCs() {
+	public static NPC[] getNpcs() {
 		Set<NPC> npcs = new HashSet<NPC>();
-		for(INPC npc : client().getNPCs()) {
+		for(INPC npc : client().getNpcs()) {
 			if(npc != null) {
 				npcs.add(new NPC(npc));
 			}
@@ -226,12 +226,11 @@ public class OldschoolClient {
 	}
 
 	public static int getBaseX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return client().getBaseX();
 	}
 
 	public static int getBaseY() {
-		return client().getBaseX();
+		return client().getBaseY();
 	}
 
 	public static IWidget[][] getWidgets() {

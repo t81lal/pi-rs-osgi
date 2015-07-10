@@ -7,11 +7,21 @@ public interface IGroundObject {
 
    int getStrictX();
 
+   void setStrictX(int var1);
+
    int getStrictY();
+
+   void setStrictY(int var1);
 
    int getPlane();
 
-   int getUID();
+   void setPlane(int var1);
+
+   int getUid();
+
+   void setUid(int var1);
 
    int getFlags();
+
+   void setFlags(int var1);
 }

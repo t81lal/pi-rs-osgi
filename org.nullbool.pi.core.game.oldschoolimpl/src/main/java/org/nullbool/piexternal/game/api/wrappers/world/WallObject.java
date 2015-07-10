@@ -56,7 +56,63 @@ public class WallObject implements IWallObject {
 	}
 
 	@Override
-	public int getUID() {
-		return _obj.getUID();
+	public int getUid() {
+		return _obj.getUid();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallObject#setStrictX(int)
+	 */
+	@Override
+	public void setStrictX(int var1) {
+		_obj.setStrictX(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallObject#setStrictY(int)
+	 */
+	@Override
+	public void setStrictY(int var1) {
+		_obj.setStrictY(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallObject#setPlane(int)
+	 */
+	@Override
+	public void setPlane(int var1) {
+		_obj.setPlane(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallObject#setUid(int)
+	 */
+	@Override
+	public void setUid(int var1) {
+		_obj.setUid(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallObject#setFlags(int)
+	 */
+	@Override
+	public void setFlags(int var1) {
+		_obj.setFlags(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallObject#setOrientation1(int)
+	 */
+	@Override
+	public void setOrientation1(int var1) {
+		_obj.setOrientation1(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallObject#setOrientation2(int)
+	 */
+	@Override
+	public void setOrientation2(int var1) {
+		_obj.setOrientation2(var1);		
 	}
 }

@@ -53,11 +53,11 @@ public class HashTable implements IHashTable, Iterable<INode> {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.collections.IHashTable#getFirst()
+	 * @see org.nullbool.piexternal.game.api.accessors.collections.IHashTable#getFirstNode()
 	 */
 	@Override
-	public INode getFirst() {
-		INode _tail = _hashTable.getFirst();
+	public INode getFirstNode() {
+		INode _tail = _hashTable.getFirstNode();
 		if (_tail == null)
 			return null;
 		return new Node<INode>(_tail);
@@ -117,5 +117,22 @@ public class HashTable implements IHashTable, Iterable<INode> {
 	@Override
 	public INode get(long hash) {
 		return _hashTable.get(hash);
+	}
+	
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.collections.IHashTable#setSize(int)
+	 */
+	@Override
+	public void setSize(int var1) {
+		_hashTable.setSize(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.collections.IHashTable#setIndex(int)
+	 */
+	@Override
+	public void setIndex(int var1) {
+		_hashTable.setIndex(var1);
 	}
 }

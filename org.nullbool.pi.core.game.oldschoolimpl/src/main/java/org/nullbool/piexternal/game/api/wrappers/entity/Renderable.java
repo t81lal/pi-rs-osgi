@@ -17,4 +17,12 @@ public class Renderable<T extends IRenderable> extends DualNode<T> implements IR
 	public int getModelHeight() {
 		return _node.getModelHeight();
 	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IRenderable#setModelHeight(int)
+	 */
+	@Override
+	public void setModelHeight(int var1) {
+		_node.setModelHeight(var1);		
+	}
 }

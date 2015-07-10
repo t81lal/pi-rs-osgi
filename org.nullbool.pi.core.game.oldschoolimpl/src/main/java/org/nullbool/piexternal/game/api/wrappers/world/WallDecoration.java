@@ -41,8 +41,8 @@ public class WallDecoration implements IWallDecoration {
 	}
 
 	@Override
-	public int getUID() {
-		return _deco.getUID();
+	public int getUid() {
+		return _deco.getUid();
 	}
 
 	@Override
@@ -58,5 +58,61 @@ public class WallDecoration implements IWallDecoration {
 	@Override
 	public IRenderable getMarkerRenderable2() {
 		return _deco.getMarkerRenderable2();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallDecoration#setStrictX(int)
+	 */
+	@Override
+	public void setStrictX(int var1) {
+		_deco.setStrictX(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallDecoration#setStrictY(int)
+	 */
+	@Override
+	public void setStrictY(int var1) {
+		_deco.setStrictY(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallDecoration#setPlane(int)
+	 */
+	@Override
+	public void setPlane(int var1) {
+		_deco.setPlane(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallDecoration#setHash(int)
+	 */
+	@Override
+	public void setHash(int var1) {
+		_deco.setHash(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallDecoration#setUid(int)
+	 */
+	@Override
+	public void setUid(int var1) {
+		_deco.setUid(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallDecoration#setOrientation1(int)
+	 */
+	@Override
+	public void setOrientation1(int var1) {
+		_deco.setOrientation1(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IWallDecoration#setOrientation2(int)
+	 */
+	@Override
+	public void setOrientation2(int var1) {
+		_deco.setOrientation2(var1);		
 	}
 }

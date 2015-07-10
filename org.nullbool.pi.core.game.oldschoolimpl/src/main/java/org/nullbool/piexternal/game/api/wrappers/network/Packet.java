@@ -77,4 +77,12 @@ public class Packet extends Buffer<IPacket> implements IPacket {
 	public void finishBitAccess() {
 		_node.finishBitAccess();
 	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.network.IPacket#setBitCaret(int)
+	 */
+	@Override
+	public void setBitCaret(int var1) {
+		_node.setBitCaret(var1);		
+	}
 }
