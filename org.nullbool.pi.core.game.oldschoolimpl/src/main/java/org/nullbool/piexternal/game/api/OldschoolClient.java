@@ -226,12 +226,11 @@ public class OldschoolClient {
 	}
 
 	public static int getBaseX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return client().getBaseX();
 	}
 
 	public static int getBaseY() {
-		return client().getBaseX();
+		return client().getBaseY();
 	}
 
 	public static IWidget[][] getWidgets() {
