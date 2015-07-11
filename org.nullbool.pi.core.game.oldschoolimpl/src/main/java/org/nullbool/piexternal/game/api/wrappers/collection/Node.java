@@ -18,7 +18,7 @@ public class Node<T extends INode> implements INode {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.collections.INode#getPrevious()
+	 * @see org.nullbool.piexternal.game.api.accessors.collections.INode#getPreviousNode()
 	 */
 	@Override
 	public Node<INode> getPrevious() {
@@ -45,6 +45,14 @@ public class Node<T extends INode> implements INode {
 	@Override
 	public long getKey() {
 		return _node.getKey();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.collections.INode#setKey(long)
+	 */
+	@Override
+	public void setKey(long var1) {
+		_node.setKey(var1);
 	}
 
 	/* (non-Javadoc)

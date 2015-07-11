@@ -57,6 +57,6 @@ public class NpcsQuery extends Query<NPC> {
 	}
 
 	public static NpcsQuery pool() {
-		return new NpcsQuery(Arrays.stream(OldschoolClient.getNPCs()));
+		return new NpcsQuery(Arrays.stream(OldschoolClient.getNpcs()));
 	}
 }

@@ -46,7 +46,39 @@ public class GroundDecoration implements IGroundDecoration {
 	}
 
 	@Override
-	public int getUID() {
-		return _deco.getUID();
+	public int getUid() {
+		return _deco.getUid();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration#setRegionX(int)
+	 */
+	@Override
+	public void setRegionX(int var1) {
+		_deco.setRegionX(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration#setRegionY(int)
+	 */
+	@Override
+	public void setRegionY(int var1) {
+		_deco.setRegionY(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration#setPlane(int)
+	 */
+	@Override
+	public void setPlane(int var1) {
+		_deco.setPlane(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration#setUid(int)
+	 */
+	@Override
+	public void setUid(int var1) {
+		_deco.setUid(var1);		
 	}
 }

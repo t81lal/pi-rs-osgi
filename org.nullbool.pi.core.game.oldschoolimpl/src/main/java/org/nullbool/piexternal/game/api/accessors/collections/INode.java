@@ -7,6 +7,8 @@ public interface INode {
 
    long getKey();
 
+   void setKey(long var1);
+
    boolean isLinked();
 
    void unlink();

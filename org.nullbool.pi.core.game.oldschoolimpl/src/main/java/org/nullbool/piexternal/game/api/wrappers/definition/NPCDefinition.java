@@ -112,4 +112,164 @@ public class NPCDefinition extends DualNode<INPCDefinition> implements INPCDefin
 	public boolean isVisible() {
 		return _node.isVisible();
 	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setActions(java.lang.String[])
+	 */
+	@Override
+	public void setActions(String[] var1) {
+		_node.setActions(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setOnMap(boolean)
+	 */
+	@Override
+	public void setOnMap(boolean var1) {
+		_node.setOnMap(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setVisible(boolean)
+	 */
+	@Override
+	public void setVisible(boolean var1) {
+		_node.setVisible(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setClickable(boolean)
+	 */
+	@Override
+	public void setClickable(boolean var1) {
+		_node.setClickable(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setName(java.lang.String)
+	 */
+	@Override
+	public void setName(String var1) {
+		_node.setName(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setCombatLevel(int)
+	 */
+	@Override
+	public void setCombatLevel(int var1) {
+		_node.setCombatLevel(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setWidth(int)
+	 */
+	@Override
+	public void setWidth(int var1) {
+		_node.setWidth(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setHeight(int)
+	 */
+	@Override
+	public void setHeight(int var1) {
+		_node.setHeight(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setBrightness(int)
+	 */
+	@Override
+	public void setBrightness(int var1) {
+		_node.setBrightness(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setContrast(int)
+	 */
+	@Override
+	public void setContrast(int var1) {
+		_node.setContrast(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setHeadIcon(int)
+	 */
+	@Override
+	public void setHeadIcon(int var1) {
+		_node.setHeadIcon(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setNpcDegToTurn(int)
+	 */
+	@Override
+	public void setNpcDegToTurn(int var1) {
+		_node.setNpcDegToTurn(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setVarpId(int)
+	 */
+	@Override
+	public void setVarpId(int var1) {
+		_node.setVarpId(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#settingId(int)
+	 */
+	@Override
+	public void setSettingId(int var1) {
+		_node.setSettingId(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setNpcBoundDim(int)
+	 */
+	@Override
+	public void setNpcBoundDim(int var1) {
+		_node.setNpcBoundDim(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setIdleAnimationId(int)
+	 */
+	@Override
+	public void setIdleAnimationId(int var1) {
+		_node.setIdleAnimationId(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setWalkAnimationId(int)
+	 */
+	@Override
+	public void setWalkAnimationId(int var1) {
+		_node.setWalkAnimationId(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setNpcTurnAround(int)
+	 */
+	@Override
+	public void setNpcTurnAround(int var1) {
+		_node.setNpcTurnAround(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setNpcTurnRight(int)
+	 */
+	@Override
+	public void setNpcTurnRight(int var1) {
+		_node.setNpcTurnRight(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.definitions.INPCDefinition#setNpcTurnLeft(int)
+	 */
+	@Override
+	public void setNpcTurnLeft(int var1) {
+		_node.setNpcTurnLeft(var1);
+	}
 }

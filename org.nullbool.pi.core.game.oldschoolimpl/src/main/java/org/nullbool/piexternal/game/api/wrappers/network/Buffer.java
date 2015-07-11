@@ -237,6 +237,22 @@ public class Buffer<T extends IBuffer> extends Node<T> implements IBuffer {
 		_node.write8Neg128(var1);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.network.IBuffer#setPayload(byte[])
+	 */
+	@Override
+	public void setPayload(byte[] var1) {
+		_node.setPayload(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.network.IBuffer#setCaret(int)
+	 */
+	@Override
+	public void setCaret(int var1) {
+		_node.setCaret(var1);		
+	}
+
 //	/* (non-Javadoc)
 //	 * @see org.nullbool.piexternal.game.api.accessors.network.IBuffer#readBytesA(byte[], int, int)
 //	 */

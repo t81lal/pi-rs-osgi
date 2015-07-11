@@ -88,4 +88,84 @@ public class Actor<T extends IActor> extends Renderable<T> implements IActor, In
 	public int dist() {
 		return (int) Calculations.distance(this);
 	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IRenderable#setModelHeight(int)
+	 */
+	@Override
+	public void setModelHeight(int var1) {
+		_node.setModelHeight(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IActor#setLocalX(int)
+	 */
+	@Override
+	public void setLocalX(int var1) {
+		_node.setLocalX(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IActor#setLocalY(int)
+	 */
+	@Override
+	public void setLocalY(int var1) {
+		_node.setLocalY(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IActor#setAnimationId(int)
+	 */
+	@Override
+	public void setAnimationId(int var1) {
+		_node.setAnimationId(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IActor#setInteractingId(int)
+	 */
+	@Override
+	public void setInteractingId(int var1) {
+		_node.setInteractingId(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IActor#setHealth(int)
+	 */
+	@Override
+	public void setHealth(int var1) {
+		_node.setHealth(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IActor#setMaxHealth(int)
+	 */
+	@Override
+	public void setMaxHealth(int var1) {
+		_node.setMaxHealth(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IActor#setHitTypes(int[])
+	 */
+	@Override
+	public void setHitTypes(int[] var1) {
+		_node.setHitTypes(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IActor#setMessage(java.lang.String)
+	 */
+	@Override
+	public void setMessage(String var1) {
+		_node.setMessage(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IActor#setHitDamages(int[])
+	 */
+	@Override
+	public void setHitDamages(int[] var1) {
+		_node.setHitDamages(var1);
+	}
 }

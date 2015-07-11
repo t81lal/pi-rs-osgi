@@ -11,9 +11,17 @@ public interface IGroundDecoration {
 
    int getRegionX();
 
+   void setRegionX(int var1);
+
    int getRegionY();
+
+   void setRegionY(int var1);
 
    int getPlane();
 
-   int getUID();
+   void setPlane(int var1);
+
+   int getUid();
+
+   void setUid(int var1);
 }

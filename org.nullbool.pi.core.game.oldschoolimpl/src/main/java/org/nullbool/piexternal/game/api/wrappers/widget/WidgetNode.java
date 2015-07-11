@@ -22,4 +22,20 @@ public class WidgetNode extends Node<IWidgetNode> implements IWidgetNode {
 	public int getWidgetId() {
 		return _node.getWidgetId();
 	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.widgets.IWidgetNode#setWidgetId(int)
+	 */
+	@Override
+	public void setWidgetId(int var1) {
+		_node.setWidgetId(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.widgets.IWidgetNode#setType(int)
+	 */
+	@Override
+	public void setType(int var1) {
+		_node.setType(var1);		
+	}
 }

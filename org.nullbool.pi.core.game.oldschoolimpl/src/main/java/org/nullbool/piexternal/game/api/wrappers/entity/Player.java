@@ -21,4 +21,20 @@ public class Player extends Actor<IPlayer> implements IPlayer {
 	public int getPlayerLevel() {
 		return _node.getPlayerLevel();
 	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IPlayer#setName(java.lang.String)
+	 */
+	@Override
+	public void setName(String var1) {
+		_node.setName(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.entity.IPlayer#setPlayerLevel(int)
+	 */
+	@Override
+	public void setPlayerLevel(int var1) {
+		_node.setPlayerLevel(var1);		
+	}
 }

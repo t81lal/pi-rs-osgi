@@ -166,4 +166,84 @@ public class GameObject implements IGameObject, Interactable, Comparable<GameObj
 		point.y += y;
 		return point;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setHash(int)
+	 */
+	@Override
+	public void setHash(int var1) {
+		_obj.setHash(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setPlane(int)
+	 */
+	@Override
+	public void setPlane(int var1) {
+		_obj.setPlane(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setStrictX(int)
+	 */
+	@Override
+	public void setStrictX(int var1) {
+		_obj.setStrictX(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setStrictY(int)
+	 */
+	@Override
+	public void setStrictY(int var1) {
+		_obj.setStrictY(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setLocalX(int)
+	 */
+	@Override
+	public void setLocalX(int var1) {
+		_obj.setLocalX(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setLocalY(int)
+	 */
+	@Override
+	public void setLocalY(int var1) {
+		_obj.setLocalY(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setWidth(int)
+	 */
+	@Override
+	public void setWidth(int var1) {
+		_obj.setWidth(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setHeight(int)
+	 */
+	@Override
+	public void setHeight(int var1) {
+		_obj.setHeight(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setOrientation(int)
+	 */
+	@Override
+	public void setOrientation(int var1) {
+		_obj.setOrientation(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setFlags(int)
+	 */
+	@Override
+	public void setFlags(int var1) {
+		_obj.setFlags(var1);		
+	}
 }

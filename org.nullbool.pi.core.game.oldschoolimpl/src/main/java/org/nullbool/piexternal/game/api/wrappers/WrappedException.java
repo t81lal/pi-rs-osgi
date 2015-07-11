@@ -8,10 +8,10 @@ import org.nullbool.piexternal.game.api.accessors.IWrappedException;
  */
 public class WrappedException implements IWrappedException {
 
-	private final IWrappedException obj;
+	private final IWrappedException _obj;
 	
 	public WrappedException(IWrappedException obj) {
-		this.obj = obj;
+		this._obj = obj;
 	}
 
 	/* (non-Javadoc)
@@ -19,7 +19,7 @@ public class WrappedException implements IWrappedException {
 	 */
 	@Override
 	public Throwable getThrowable() {
-		return obj.getThrowable();
+		return _obj.getThrowable();
 	}
 
 	/* (non-Javadoc)
@@ -27,6 +27,22 @@ public class WrappedException implements IWrappedException {
 	 */
 	@Override
 	public String getReason_() {
-		return obj.getReason_();
+		return _obj.getReason_();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.IWrappedException#setReason_(java.lang.String)
+	 */
+	@Override
+	public void setReason_(String var1) {
+		_obj.setReason_(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.IWrappedException#setThrowable(java.lang.Throwable)
+	 */
+	@Override
+	public void setThrowable(Throwable var1) {
+		_obj.setThrowable(var1);		
 	}
 }

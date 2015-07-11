@@ -35,4 +35,19 @@ public class ItemContainer extends Node<IItemContainer> implements IItemContaine
 		return _node.getItemIds();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.widgets.IItemContainer#setQuantities(int[])
+	 */
+	@Override
+	public void setQuantities(int[] var1) {
+		_node.setQuantities(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.widgets.IItemContainer#setItemIds(int[])
+	 */
+	@Override
+	public void setItemIds(int[] var1) {
+		_node.setItemIds(var1);		
+	}
 }

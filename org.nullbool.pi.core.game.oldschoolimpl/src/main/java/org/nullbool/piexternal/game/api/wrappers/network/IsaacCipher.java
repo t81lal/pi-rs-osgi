@@ -64,4 +64,28 @@ public class IsaacCipher implements IIsaacCipher {
 	public void isaac() {
 		_obj.isaac();
 	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.network.IIsaacCipher#setCount(int)
+	 */
+	@Override
+	public void setCount(int var1) {
+		_obj.setCount(var1);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.network.IIsaacCipher#setResults(int[])
+	 */
+	@Override
+	public void setResults(int[] var1) {
+		_obj.setResults(var1);		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.piexternal.game.api.accessors.network.IIsaacCipher#setMem(int[])
+	 */
+	@Override
+	public void setMem(int[] var1) {
+		_obj.setMem(var1);		
+	}
 }
