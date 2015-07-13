@@ -66,7 +66,7 @@ public class HierarchalClassLoader extends ClassLoader {
 		
 		String byte_name = name.replace(".", "/");
 		
-		if(byte_name.equals("org/nullbool/piexternal/game/api/wrappers/OldschoolClient")) {
+		if(byte_name.equals("org/nullbool/piexternal/game/api/OldschoolClient")) {
 			System.out.println("HierarchalClassLoader.loadClass() " + id);
 		}
 		
@@ -74,14 +74,6 @@ public class HierarchalClassLoader extends ClassLoader {
 		Exception e2 = null;
 		
 		Class<?> klass = null;
-		try {
-			klass = lookup(byte_name);
-			if(klass != null)
-				return klass;
-		} catch(Exception e) {
-			e1 = e;
-//			e.printStackTrace();
-		}
 		
 		try {
 			klass = parentClassLoader.loadClass(name);
@@ -91,12 +83,22 @@ public class HierarchalClassLoader extends ClassLoader {
 			e2 = e;
 //			e.printStackTrace();
 		}
+		
+		try {
+			klass = lookup(byte_name);
+			if(klass != null)
+				return klass;
+		} catch(Exception e) {
+			e1 = e;
+//			e.printStackTrace();
+		}
 
 		try {
 			klass = super.loadClass(name);
 			if(klass != null)
 				return cache(klass);
 		} catch(Exception e) {
+			System.out.println("UBER FAILURE");
 			e.printStackTrace();
 			if(e1 != null)
 				e1.printStackTrace();
@@ -106,47 +108,6 @@ public class HierarchalClassLoader extends ClassLoader {
 		}
 		
 		return null;
-
-		
-		/*synchronized (children) {
-			for(HierarchalClassLoader child : children) {
-				if(child.filter.accept(byte_name)) {
-					try {
-						klass = child.loadClass(byte_name);
-						if(klass != null) {
-							return cache(klass);
-						}
-					} catch(ClassNotFoundException | NoClassDefFoundError e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		
-		try {
-			if(parentClassLoader instanceof HierarchalClassLoader) {
-				klass = ((HierarchalClassLoader) parentClassLoader).lookup(byte_name);
-			} else {
-				klass = parentClassLoader.loadClass(name);
-			}
-		} catch(ClassNotFoundException | NoClassDefFoundError e) {
-			try {
-				klass = super.loadClass(name);
-				if(klass != null) {
-					System.out.println("Recovered " + klass);
-					return cache(klass);
-				}
-			} catch(ClassNotFoundException | NoClassDefFoundError e2) {
-				e.printStackTrace();
-				e2.printStackTrace();
-			}
-		}
-		
-		if(klass != null) {
-			return cache(klass);
-		}
-		
-		return null;*/
 	}
 	
 	protected Class<?> cache(Class<?> klass) {

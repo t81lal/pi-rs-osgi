@@ -4,7 +4,7 @@ Bundle-Name: GameEngine
 Bundle-SymbolicName: org.nullbool.pi.core.engine.oldschoolimpl
 Bundle-Version: 0.0.1.alpha
 Bundle-Vendor: NullBool
-Bundle-Activator: org.nullbool.shared.Activator
+Bundle-Activator: org.nullbool.pi.core.engine.impl.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: com.google.gson,
  org.nullbool.core.piexternal.game.api,
@@ -27,3 +27,4 @@ Import-Package: com.google.gson,
  org.topdank.byteengineer.commons.data,
  org.topdank.byteio.in,
  org.topdank.byteio.out
+DynamicImport-Package: *

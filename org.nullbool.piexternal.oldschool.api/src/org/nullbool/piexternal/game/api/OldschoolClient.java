@@ -27,7 +27,6 @@ import org.nullbool.piexternal.game.api.wrappers.definition.ObjectDefinition;
 import org.nullbool.piexternal.game.api.wrappers.entity.NPC;
 import org.nullbool.piexternal.game.api.wrappers.entity.Player;
 import org.nullbool.piexternal.game.api.wrappers.world.Region;
-import org.nullbool.shared.Activator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -40,10 +39,10 @@ public class OldschoolClient {
 	private static IContextRegistry registry;
 	
 	private static void init() {
-		BundleContext context = Activator.instance;
-		//BundleContext context = FrameworkUtil.getBundle(OldschoolClient.class).getBundleContext();
-		// System.out.println("Context: " + context);
-		// System.out.println("Instance hash: " + Activator.class.hashCode());
+		BundleContext context = Activator.getContext();
+//		BundleContext context = FrameworkUtil.getBundle(OldschoolClient.class).getBundleContext();
+		System.out.println("Context: " + context);
+		System.out.println("Instance hash: " + Activator.class.hashCode());
 		ServiceReference<IContextRegistry> cxtRefSvcRef = context.getServiceReference(IContextRegistry.class);
 		registry = context.getService(cxtRefSvcRef);
 		context.ungetService(cxtRefSvcRef);

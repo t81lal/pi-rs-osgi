@@ -18,15 +18,15 @@ import java.util.Set;
 // this doesn't feel like a good idea. -Bibl
 public enum FileSet {
 	// TODO: Fix custom jars
-	@Deprecated
-	API         (new Builder(1).relativeName("api.jar").priority(Integer.MIN_VALUE)),
+	API         (new Builder(1).relativeName("api.jar").actor(new InstallerActor())),
+	PAPI         (new Builder(-1).relativeName("papi.jar").optional(true).actor(new InstallerActor())),
 	LOG         (new Builder(2).relativeName("log.ser")),
 	TRANSLATION (new Builder(3).relativeName("translate.json")),
 	REFACTOR    (new Builder(4).relativeName("refactor.jar").priority(5).runnable(true).actor(new SimpleInjectionActor(true))),
-	DEOB        (new Builder(5).relativeName("deob.jar").priority(4).runnable(true).require(/*1,*/ 2, 3).actor(new SimpleInjectionActor(true))),
+	DEOB        (new Builder(5).relativeName("deob.jar").priority(4).runnable(true).require(-1, 1, 2, 3).actor(new SimpleInjectionActor(true))),
 	/* Highest */
 	TRANSFORMED (new Builder(6).relativeName("transformed.jar").priority(10).runnable(true).actor(new InstallerActor())),
-	VANILLA     (new Builder(7).relativeName("vanilla.jar").priority(2).runnable(true).require(/*1,*/ 2, 3).actor(new SimpleInjectionActor(true)));
+	VANILLA     (new Builder(7).relativeName("vanilla.jar").priority(2).runnable(true).require(-1, 1, 2, 3).actor(new SimpleInjectionActor(true)));
 	
 	private static final Comparator<FileSet> PRIORITY_COMPARATOR = new Comparator<FileSet>() {
 		
@@ -49,6 +49,7 @@ public enum FileSet {
 	private final int priority;
 	private final boolean runnable;
 	private final List<Integer> requires;
+	private final boolean optional;
 	private final IActor actor;
 	
 	private FileSet(Builder builder) {
@@ -56,6 +57,7 @@ public enum FileSet {
 		relativeName = builder.getRelativeName();
 		priority = builder.getPriority();
 		runnable = builder.isRunnable();
+		optional = builder.isOptional();
 		requires = builder.getRequire();
 		actor = builder.getActor();
 	}
@@ -112,6 +114,10 @@ public enum FileSet {
 	@Deprecated
 	public boolean isReachable(URL baseURL) {
 		return getRemoteLocation(baseURL) != null;
+	}
+	
+	public boolean optional() {
+		return optional;
 	}
 	
 	public static FileSet byId(int id) {

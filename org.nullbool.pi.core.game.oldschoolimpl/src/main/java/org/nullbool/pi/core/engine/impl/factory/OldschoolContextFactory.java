@@ -89,7 +89,7 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 		for(FileSet fs : FileSet.values()) {
 			if(!fs.runnable() && fs.priority() == -1) {
 				File file = fs.getAbsoluteLocation(cacheDir);
-				if(!file.exists() || (file.exists() && file.isDirectory()))
+				if(!fs.optional() && !file.exists() || (file.exists() && file.isDirectory()))
 					IOHelper.download(fs.getRemoteLocation(baseURL), file);
 			}
 		}
@@ -122,7 +122,7 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 			 * we can just add them.*/
 			FileSet fs2 = FileSet.byId(id);
 			fsets.add(fs2);
-			if(fs2.relativeName().endsWith(".jar"))
+			if(fs2.relativeName().endsWith(".jar") && fs2.getAbsoluteLocation(dir).exists())
 				jarInfos.add(new JarInfo(fs2.getAbsoluteLocation(dir)));
 		}
 		

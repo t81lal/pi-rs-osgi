@@ -8,6 +8,7 @@ public final class Builder {
 	private String relativeName;
 	private int priority;
 	private boolean runnable;
+	private boolean optional;
 	private List<Integer> require;
 	private IActor actor;
 	
@@ -66,5 +67,14 @@ public final class Builder {
 	public Builder actor(IActor actor) {
 		this.actor = actor;
 		return this;
+	}
+	
+	public Builder optional(boolean optional) {
+		this.optional = optional;
+		return this;
+	}
+	
+	public boolean isOptional() {
+		return optional;
 	}
 }

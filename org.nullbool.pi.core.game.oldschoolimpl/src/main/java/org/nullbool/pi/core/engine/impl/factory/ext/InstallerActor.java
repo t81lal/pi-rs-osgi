@@ -16,8 +16,6 @@ import org.topdank.byteengineer.commons.data.JarInfo;
 import org.topdank.byteengineer.commons.data.JarResource;
 import org.topdank.byteio.in.SingleJarDownloader;
 
-import com.google.gson.Gson;
-
 /**
  * @author Bibl (don't ban me pls)
  * @created 28 Jun 2015 09:49:56
@@ -34,15 +32,15 @@ public class InstallerActor implements IActor<ClassLoader> {
 			dler.download();
 			
 			Map<String, JarResource> resources = dler.getJarContents().getResourceContents().namedMap();
-			JarResource res = resources.get("manifest.json");
-			if(res == null) {
-				System.err.printf("  No manifest.json in %s!%n", f.getAbsolutePath());
-				return null;
-			}
-			
-			DefinedLibrary def = new Gson().fromJson(new String(res.getData()), DefinedLibrary.class);
-			if(def == null)
-				throw new NullPointerException();
+//			JarResource res = resources.get("manifest.json");
+//			if(res == null) {
+//				System.err.printf("  No manifest.json in %s!%n", f.getAbsolutePath());
+//				return null;
+//			}
+//			
+//			DefinedLibrary def = new Gson().fromJson(new String(res.getData()), DefinedLibrary.class);
+//			if(def == null)
+//				throw new NullPointerException();
 			
 			JarResource bundleRes = resources.get("META-INF/MANIFEST.MF");
 			if(bundleRes != null) {

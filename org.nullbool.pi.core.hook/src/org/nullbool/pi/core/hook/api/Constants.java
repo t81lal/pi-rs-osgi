@@ -13,6 +13,7 @@ public abstract interface Constants {
 	// Field
 	public static final String REAL_OWNER = "owner.real";
 	public static final String MUTLI = "attr.multi";
+	// TODO: RENAME
 	public static final String ENCODER = "attr.multi.encoder";
 
 	// Method
