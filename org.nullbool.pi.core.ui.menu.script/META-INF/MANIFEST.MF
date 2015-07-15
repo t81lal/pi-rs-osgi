@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: script-menu
 Bundle-SymbolicName: org.nullbool.pi.core.ui.menu.script
-Bundle-Version: 0.0.1.alpha
+Bundle-Version: 0.0.1.ALPHA
 Bundle-Activator: org.nullbool.pi.core.ui.menu.script.Activator
 Bundle-Vendor: NullBool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

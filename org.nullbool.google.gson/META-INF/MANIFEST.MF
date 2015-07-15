@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Gson
 Bundle-SymbolicName: org.nullbool.google.gson
-Bundle-Version: 1.0.0.alpha
+Bundle-Version: 1.0.0.RELEASE
 Bundle-Vendor: GOOGLE
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: com.google.gson

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Singleimpl
 Bundle-SymbolicName: org.nullbool.topdank.eventbus.singleimpl
-Bundle-Version: 1.0.0.alpha
+Bundle-Version: 1.0.0.RELEASE
 Bundle-Vendor: NullBool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: org.nullbool.topdank.eventbus.singleimpl.Activator

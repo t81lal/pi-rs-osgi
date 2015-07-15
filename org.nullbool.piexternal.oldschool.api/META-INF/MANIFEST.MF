@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: default-oldschool-api
 Bundle-SymbolicName: org.nullbool.piexternal.oldschool.api
-Bundle-Version: 1.0.0.alpha
+Bundle-Version: 0.5.1.BETA
 Bundle-Activator: org.nullbool.piexternal.game.api.Activator
 Bundle-Vendor: NullBool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

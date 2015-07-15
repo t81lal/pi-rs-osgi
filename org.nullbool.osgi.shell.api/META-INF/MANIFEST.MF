@@ -2,9 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: shell-api
 Bundle-SymbolicName: org.nullbool.osgi.shell.api
-Bundle-Version: 0.0.1.alpha
+Bundle-Version: 1.0.0.ALPHA
 Bundle-Vendor: NullBool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.nullbool.osgi.util,
  org.osgi.framework;version="1.3.0"
-Export-Package: org.nullbool.osgi.shell.api,org.nullbool.osgi.shell.api.handlers
+Export-Package: org.nullbool.osgi.shell.api,
+ org.nullbool.osgi.shell.api.handlers

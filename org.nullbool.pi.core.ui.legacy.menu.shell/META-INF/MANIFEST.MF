@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Legacy UI Shell Extension
 Bundle-SymbolicName: org.nullbool.pi.core.ui.menu.shell
-Bundle-Version: 0.0.1.alpha
+Bundle-Version: 0.0.1.ALPHA
 Bundle-Vendor: NullBool
 Bundle-Activator: org.nullbool.pi.core.ui.menu.shell.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

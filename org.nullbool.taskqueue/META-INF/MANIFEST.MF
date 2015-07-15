@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: TaskQueue
 Bundle-SymbolicName: org.nullbool.taskqueue
-Bundle-Version: 1.0.0.release
+Bundle-Version: 1.0.0.RELEASE
 Bundle-Vendor: NullBool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.nullbool.taskqueue

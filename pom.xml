@@ -1,0 +1,126 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.nullbool.piosgi</groupId>
+	<artifactId>piosgi</artifactId>
+	<name>pi OSGi</name>
+	<description>parent bundle</description>
+
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<tycho-version>0.23.0</tycho-version>
+		<manifest-location>META-INF</manifest-location>
+	</properties>
+
+	<!-- Needed for OSGi classes -->
+	<repositories>
+		<repository>
+			<id>eclipse-luna</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/releases/luna</url>
+		</repository>
+	</repositories>
+
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<outputDirectory>target/classes</outputDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<testOutputDirectory>target/test-classes</testOutputDirectory>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+
+		<plugins>
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<manifestFile>${manifest-location}/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<compilerArgument>-warn:+discouraged,forbidden</compilerArgument>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<pomDependencies>consider</pomDependencies>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>org.nullbool.google.gson</module>
+		<module>org.nullbool.modasm</module>
+		<module>org.nullbool.osgi.shell.api</module>
+		<module>org.nullbool.osgi.shell.console</module>
+		<module>org.nullbool.osgi.shell.telnet</module>
+		<module>org.nullbool.osgi.util</module>
+		<module>org.nullbool.pi.constants</module>
+		<module>org.nullbool.pi.core.engine.api</module>
+		<module>org.nullbool.pi.core.engine.oldschoolimpl</module>
+		<module>org.nullbool.pi.core.engine.registryimpl</module>
+		<module>org.nullbool.pi.core.hook</module>
+		<module>org.nullbool.pi.core.hook.serimpl</module>
+		<module>org.nullbool.pi.core.scripting.api</module>
+		<module>org.nullbool.pi.core.ui.api</module>
+		<module>org.nullbool.pi.core.ui.legacy</module>
+		<module>org.nullbool.pi.core.ui.menu.script</module>
+		<module>org.nullbool.pi.core.ui.legacy.menu.shell</module>
+		<module>org.nullbool.taskqueue</module>
+		<module>org.nullbool.topdank.eventbus.api</module>
+		<module>org.nullbool.topdank.eventbus.singleimpl</module>
+		<module>org.topdank.byteanalysis</module>
+		<module>org.topdank.bytecommons</module>
+		<module>org.topdank.byteio</module>
+		<module>org.nullbool.piexternal.oldschool.api</module>
+		<module>org.nullbool.pi.core.piexternal.game</module>
+	</modules>
+	<version>1.0.0-ALPHA</version>
+</project>

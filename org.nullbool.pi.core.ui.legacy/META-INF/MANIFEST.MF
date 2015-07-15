@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: LegacyUI
 Bundle-SymbolicName: org.nullbool.pi.core.ui.legacy
-Bundle-Version: 1.0.0.release
+Bundle-Version: 1.0.0.RELEASE
 Bundle-Vendor: NullBool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: org.nullbool.pi.core.ui.legacy.Activator
