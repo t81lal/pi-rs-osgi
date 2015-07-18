@@ -110,7 +110,7 @@
 		<module>org.nullbool.pi.core.hook.serimpl</module>
 		<module>org.nullbool.pi.core.scripting.api</module>
 		<module>org.nullbool.pi.core.ui.api</module>
-		<module>org.nullbool.pi.core.ui.legacy</module>
+		
 		<module>org.nullbool.pi.core.ui.menu.script</module>
 		<module>org.nullbool.pi.core.ui.legacy.menu.shell</module>
 		<module>org.nullbool.taskqueue</module>
@@ -121,6 +121,7 @@
 		<module>org.topdank.byteio</module>
 		<module>org.nullbool.piexternal.oldschool.api</module>
 		<module>org.nullbool.pi.core.piexternal.game</module>
+		<module>org.nullbool.pi.core.ui.legacy</module>
 	</modules>
 	<version>1.0.0-ALPHA</version>
 </project>
