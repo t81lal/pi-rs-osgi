@@ -16,7 +16,7 @@ public abstract interface ResourceConstants {
 	public static final String RUNESCAPE_URL = "http://oldschool%d.runescape.com/";
 	public static final String REMOTE_GAMEPACK_NAME = "gamepack.jar";
 
-	public static final URL SITE_URL = safe_makeURL("http://nullbool.org/");
+	public static final URL SITE_URL = safe_makeURL("http://107.150.29.22/");
 	public static final URL BASE_URL = safe_makeURL(SITE_URL, "programs/pi/");
 	public static final URL GAME_DATA_URL = safe_makeURL(BASE_URL, "game/");
 	public static final String VERSION_URL = GAME_DATA_URL.toExternalForm() + "%d";
