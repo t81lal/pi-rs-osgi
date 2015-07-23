@@ -19,8 +19,8 @@ public class Activator implements BundleActivator {
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
 		
-		System.out.println("Context: " + bundleContext);
-		System.out.println("Instance hash: " + getClass().hashCode());
+		// System.out.println("Context: " + bundleContext);
+		// System.out.println("Instance hash: " + getClass().hashCode());
 	}
 
 	/*

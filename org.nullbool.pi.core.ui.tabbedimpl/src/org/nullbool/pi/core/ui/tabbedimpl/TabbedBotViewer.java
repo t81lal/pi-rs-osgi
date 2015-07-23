@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 
 import org.nullbool.osgi.util.ShutdownHelper;
 import org.nullbool.pi.core.bot.api.IBot;
+import org.nullbool.pi.core.ui.api.IClientContext;
+import org.nullbool.pi.core.ui.api.IGameClient;
 import org.nullbool.pi.core.ui.api.IViewer;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -92,5 +94,23 @@ public class TabbedBotViewer implements IViewer {
 	@Override
 	public Dimension getSize() {
 		return frame.getSize();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.pi.core.ui.api.IViewer#acceptContext(org.nullbool.pi.core.ui.api.IClientContext)
+	 */
+	@Override
+	public void acceptContext(IClientContext<IGameClient> context) throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nullbool.pi.core.ui.api.IViewer#getActiveContext()
+	 */
+	@Override
+	public IClientContext<IGameClient> getActiveContext() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -36,13 +36,14 @@ import org.osgi.framework.ServiceReference;
  */
 public class OldschoolClient {
 
+	// FIXME: Possible memory leak/dangling service, 
+	// find a better (but fast) solution.
 	private static IContextRegistry registry;
 	
 	private static void init() {
 		BundleContext context = Activator.getContext();
-//		BundleContext context = FrameworkUtil.getBundle(OldschoolClient.class).getBundleContext();
-		System.out.println("Context: " + context);
-		System.out.println("Instance hash: " + Activator.class.hashCode());
+		// System.out.println("Context: " + context);
+		// System.out.println("Instance hash: " + Activator.class.hashCode());
 		ServiceReference<IContextRegistry> cxtRefSvcRef = context.getServiceReference(IContextRegistry.class);
 		registry = context.getService(cxtRefSvcRef);
 		context.ungetService(cxtRefSvcRef);
