@@ -9,6 +9,6 @@
   	<version>1.0.0-ALPHA</version>
   	<relativePath>..</relativePath>
   </parent>
-  <version>0.5.1.BETA</version>
+  <version>0.5.2.BETA</version>
   <packaging>eclipse-plugin</packaging>
 </project>

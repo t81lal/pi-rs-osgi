@@ -15,7 +15,12 @@ public class Activator implements BundleActivator {
 	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
-		context.registerService(IViewer.class.getName(), new LegacyViewer(context), null);
+		try {
+			context.registerService(IViewer.class.getName(), new LegacyViewer(context), null);
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -23,6 +28,6 @@ public class Activator implements BundleActivator {
 	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		
+
 	}
 }

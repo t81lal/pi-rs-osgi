@@ -53,7 +53,8 @@ public class LegacyViewer implements IViewer {
 	public LegacyViewer(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
 		
-		splashGif = new ImageIcon(bundleContext.getBundle().getEntry("images/splash.gif"));
+		// don't like this but bundlecontext.getentry isn't working.
+		splashGif = new ImageIcon(getClass().getResource("/splash.gif"));
 	}
 
 	/* (non-Javadoc)

@@ -10,3 +10,4 @@ Import-Package: org.nullbool.osgi.shell.api,
  org.nullbool.osgi.shell.api.handlers,
  org.nullbool.pi.core.ui.api,
  org.osgi.framework;version="1.8.0"
+DynamicImport-Package: javax.*
