@@ -18,7 +18,7 @@ import org.nullbool.piexternal.game.api.accessors.definitions.IItemDefinition;
 import org.nullbool.piexternal.game.api.accessors.definitions.IObjectDefinition;
 import org.nullbool.piexternal.game.api.accessors.entity.INPC;
 import org.nullbool.piexternal.game.api.accessors.entity.IPlayer;
-import org.nullbool.piexternal.game.api.accessors.widgets.IWidget;
+import org.nullbool.piexternal.game.api.accessors.widget.IWidget;
 import org.nullbool.piexternal.game.api.accessors.world.IRegion;
 import org.nullbool.piexternal.game.api.wrappers.WrappedException;
 import org.nullbool.piexternal.game.api.wrappers.collection.HashTable;

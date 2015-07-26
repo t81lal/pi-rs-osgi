@@ -7,10 +7,6 @@ public interface IModel extends IRenderable {
 
    void setVertexCount(int var1);
 
-   int getIndicesCount();
-
-   void setIndicesCount(int var1);
-
    int getTriangleCount();
 
    void setTriangleCount(int var1);

@@ -3,7 +3,7 @@
  */
 package org.nullbool.piexternal.game.api.wrappers.widget;
 
-import org.nullbool.piexternal.game.api.accessors.widgets.IItemContainer;
+import org.nullbool.piexternal.game.api.accessors.widget.IItemContainer;
 import org.nullbool.piexternal.game.api.wrappers.collection.Node;
 
 /**

@@ -38,4 +38,28 @@ public interface IActor extends IRenderable {
    int[] getHitDamages();
 
    void setHitDamages(int[] var1);
+
+   int[] getQueueX();
+
+   void setQueueX(int[] var1);
+
+   int[] getQueueY();
+
+   void setQueueY(int[] var1);
+
+   boolean[] getQueueRun();
+
+   void setQueueRun(boolean[] var1);
+
+   int getQueueLength();
+
+   void setQueueLength(int var1);
+
+   int[] getHitCycle();
+
+   void setHitCycle(int[] var1);
+
+   void queuePosition(int var1, int var2, boolean var3);
+
+   void move(int var1, boolean var2);
 }

@@ -3,14 +3,17 @@ package org.nullbool.piexternal.game.api.accessors;
 import java.awt.Canvas;
 
 import org.nullbool.core.piexternal.game.api.IGameClient;
+import org.nullbool.piexternal.game.api.accessors.IWrappedException;
 import org.nullbool.piexternal.game.api.accessors.collections.IDeque;
 import org.nullbool.piexternal.game.api.accessors.collections.IHashTable;
 import org.nullbool.piexternal.game.api.accessors.definitions.IItemDefinition;
 import org.nullbool.piexternal.game.api.accessors.definitions.IObjectDefinition;
 import org.nullbool.piexternal.game.api.accessors.entity.INPC;
 import org.nullbool.piexternal.game.api.accessors.entity.IPlayer;
-import org.nullbool.piexternal.game.api.accessors.widgets.IWidget;
+import org.nullbool.piexternal.game.api.accessors.widget.IWidget;
 import org.nullbool.piexternal.game.api.accessors.world.IRegion;
+import org.nullbool.piexternal.game.api.accessors.world.IWorld;
+import org.nullbool.piexternal.game.api.accessors.world.IWorldListDownloader;
 
 public interface IOldschoolClient extends IGameClient {
    INPC[] getNpcs();
@@ -177,6 +180,14 @@ public interface IOldschoolClient extends IGameClient {
 
    void setPassword(String var1);
 
+   IWorld[] getWorlds();
+
+   int getWorldCount();
+
+   void setWorldCount(int var1);
+
+   IWorldListDownloader getWorldListDownloader();
+
    IObjectDefinition loadObjDefinition(int var1);
 
    IItemDefinition loadItemDefinition(int var1);
@@ -184,4 +195,6 @@ public interface IOldschoolClient extends IGameClient {
    IWrappedException reportException(Throwable var1, String var2);
 
    void processAction(int var1, int var2, int var3, int var4, String var5, String var6, int var7, int var8);
+
+   boolean loadWorlds();
 }

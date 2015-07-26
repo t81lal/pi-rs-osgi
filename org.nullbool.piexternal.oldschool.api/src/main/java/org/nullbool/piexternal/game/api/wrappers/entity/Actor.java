@@ -168,4 +168,76 @@ public class Actor<T extends IActor> extends Renderable<T> implements IActor, In
 	public void setHitDamages(int[] var1) {
 		_node.setHitDamages(var1);
 	}
+
+	@Override
+	public int[] getQueueX() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setQueueX(int[] var1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int[] getQueueY() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setQueueY(int[] var1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean[] getQueueRun() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setQueueRun(boolean[] var1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getQueueLength() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setQueueLength(int var1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int[] getHitCycle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setHitCycle(int[] var1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void queuePosition(int var1, int var2, boolean var3) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void move(int var1, boolean var2) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -3,7 +3,7 @@ package org.nullbool.piexternal.game.api.wrappers.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.nullbool.piexternal.game.api.accessors.widgets.IWidget;
+import org.nullbool.piexternal.game.api.accessors.widget.IWidget;
 import org.nullbool.piexternal.game.api.wrappers.collection.Node;
 
 /**

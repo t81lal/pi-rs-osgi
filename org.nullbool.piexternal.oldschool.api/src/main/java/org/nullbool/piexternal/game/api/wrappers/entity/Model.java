@@ -25,10 +25,6 @@ public class Model extends Renderable<IModel> implements IModel {
 		super(_model);
 	}
 
-	@Override
-	public int getIndicesCount() {
-		return _node.getIndicesCount();
-	}
 
 	@Override
 	public int[] getIndicesX() {
@@ -179,13 +175,7 @@ public class Model extends Renderable<IModel> implements IModel {
 		_node.setVertexCount(var1);		
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.entity.IModel#setIndicesCount(int)
-	 */
-	@Override
-	public void setIndicesCount(int var1) {
-		_node.setIndicesCount(var1);		
-	}
+	
 
 	/* (non-Javadoc)
 	 * @see org.nullbool.piexternal.game.api.accessors.entity.IModel#setTriangleCount(int)

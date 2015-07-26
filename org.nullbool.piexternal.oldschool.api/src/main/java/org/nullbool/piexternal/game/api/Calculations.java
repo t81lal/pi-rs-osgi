@@ -12,19 +12,19 @@ import org.nullbool.piexternal.game.api.wrappers.entity.Actor;
 import org.nullbool.piexternal.game.api.wrappers.entity.Player;
 
 public class Calculations {
-	
+
 	private static int[] SIN_CURVES = new int[2048];
 	private static int[] COS_CURVES = new int[2048];
 	private static final Rectangle SCREEN = new Rectangle(4, 4, 512, 334);
 	private static final Rectangle FULL_GAME_SCREEN = new Rectangle(0, 0, 765, 496);
 
 	static {
-		 for(int i = 0; i < 2048; ++i) {
-	         SIN_CURVES[i] = (int)(65536.0D * Math.sin((double)i * 0.0030679615D));
-	         COS_CURVES[i] = (int)(65536.0D * Math.cos((double)i * 0.0030679615D));
-	      }
+		for (int i = 0; i < 2048; ++i) {
+			SIN_CURVES[i] = (int) (65536.0D * Math.sin((double) i * 0.0030679615D));
+			COS_CURVES[i] = (int) (65536.0D * Math.cos((double) i * 0.0030679615D));
+		}
 	}
-	
+
 	public static int[] getSinCurves() {
 		return SIN_CURVES;
 	}
@@ -122,13 +122,15 @@ public class Calculations {
 		int xx = x >> 7;
 		int yy = y >> 7;
 		int[][][] h = OldschoolClient.getTileHeights();
-		if (xx >= 0 && yy >= 0 && xx <= 103 && yy <= 103) {
-			int aa = h[plane][xx][yy] * (128 - (x & 127)) + h[plane][xx + 1][yy] * (x & 127) >> 7;
-			int ab = h[plane][xx][yy + 1] * (128 - (x & 127)) + h[plane][xx + 1][yy + 1] * (x & 127) >> 7;
-			return aa * (128 - (y & 127)) + ab * (y & 127) >> 7;
-		} else {
+		if (xx < 0 || yy < 0 || xx > 103 || yy > 103) {
+
 			return 0;
 		}
+
+		int planea = plane;
+		int aa = h[planea][xx][yy] * (128 - (x & 0x7F)) + h[planea][xx + 1][yy]* (x & 0x7F) >> 7;
+		int ab = h[planea][xx][yy + 1] * (128 - (x & 0x7F))+ h[planea][xx + 1][yy + 1] * (x & 0x7F) >> 7;
+		return aa * (128 - (y & 0x7F)) + ab * (y & 0x7F) >> 7;
 	}
 
 	public static Point worldToMap(RSTile rsTile) {
@@ -153,33 +155,32 @@ public class Calculations {
 	}
 
 	public static Point pointByCam(int x, int y, int height) {
-		if (x >= 128 && y >= 128 && x <= 13056 && y <= 13056) {
-			int z = getTileHeight(OldschoolClient.getPlane(), x, y) - height;
-			x -= OldschoolClient.getCameraX();
-			z -= OldschoolClient.getCameraZ();
-			y -= OldschoolClient.getCameraY();
-			int pitch_sin = SIN_CURVES[OldschoolClient.getCameraPitch()];
-			int pitch_cos = COS_CURVES[OldschoolClient.getCameraPitch()];
-			int yaw_sin = SIN_CURVES[OldschoolClient.getCameraYaw()];
-			int yaw_cos = COS_CURVES[OldschoolClient.getCameraYaw()];
-			int _angle = y * yaw_sin + x * yaw_cos >> 16;
-			y = y * yaw_cos - x * yaw_sin >> 16;
-			x = _angle;
-			_angle = z * pitch_cos - y * pitch_sin >> 16;
-			y = z * pitch_sin + y * pitch_cos >> 16;
-			if (y >= 50) {
-				Point p = new Point(260 + (x << 9) / y, (_angle << 9) / y + 171);
-				return isOnScreen(p) ? p : new Point(-1, -1);
-			} else {
-				return new Point(-1, -1);
-			}
-		} else {
+		if (x < 128 || y < 128 || x > 13056 || y > 13056) {
 			return new Point(-1, -1);
 		}
+		int z = getTileHeight(OldschoolClient.getPlane(), x, y) - height;
+		x -= OldschoolClient.getCameraX();
+		z -= OldschoolClient.getCameraZ();
+		y -= OldschoolClient.getCameraY();
+		int pitch_sin = SIN_CURVES[OldschoolClient.getCameraPitch()];
+		int pitch_cos = COS_CURVES[OldschoolClient.getCameraPitch()];
+		int yaw_sin = SIN_CURVES[OldschoolClient.getCameraYaw()];
+		int yaw_cos = COS_CURVES[OldschoolClient.getCameraYaw()];
+		int _angle = y * yaw_sin + x * yaw_cos >> 16;
+		y = y * yaw_cos - x * yaw_sin >> 16;
+		x = _angle;
+		_angle = z * pitch_cos - y * pitch_sin >> 16;
+		y = z * pitch_sin + y * pitch_cos >> 16;
+		z = _angle;
+
+		if (y >= 50) {
+			Point p = new Point(260 + (x << 9) / y, (_angle << 9) / y + 171);
+			return isOnScreen(p) ? p : new Point(-1, -1);
+		}
+		return new Point(-1, -1);
 	}
 
 	public static Point pointOnScreen(RSTile tile, double dX, double dY, int height) {
-		return pointByCam((int) (((double) (tile.getX() - OldschoolClient.getBaseX()) + dX) * 128.0D),
-				(int) (((double) (tile.getY() - OldschoolClient.getBaseY()) + dY) * 128.0D), height);
+		return pointByCam((int) (((double) (tile.getX() - OldschoolClient.getBaseX()) + dX) * 128.0D), (int) (((double) (tile.getY() - OldschoolClient.getBaseY()) + dY) * 128.0D), height);
 	}
 }

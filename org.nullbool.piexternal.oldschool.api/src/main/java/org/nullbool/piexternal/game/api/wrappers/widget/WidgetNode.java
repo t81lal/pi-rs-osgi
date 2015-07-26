@@ -1,6 +1,6 @@
 package org.nullbool.piexternal.game.api.wrappers.widget;
 
-import org.nullbool.piexternal.game.api.accessors.widgets.IWidgetNode;
+import org.nullbool.piexternal.game.api.accessors.widget.IWidgetNode;
 import org.nullbool.piexternal.game.api.wrappers.collection.Node;
 
 /**

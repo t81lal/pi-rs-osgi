@@ -1,4 +1,4 @@
-package org.nullbool.piexternal.game.api.accessors.widgets;
+package org.nullbool.piexternal.game.api.accessors.widget;
 
 import org.nullbool.piexternal.game.api.accessors.collections.INode;
 
