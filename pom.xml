@@ -122,6 +122,7 @@
 		<module>org.nullbool.piexternal.oldschool.api</module>
 		<module>org.nullbool.pi.core.piexternal.game</module>
 		<module>org.nullbool.pi.core.ui.legacy</module>
+		<module>org.nullbool.pi.core.launcher</module>
 	</modules>
 	<version>1.0.0-ALPHA</version>
 </project>

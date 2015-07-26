@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: LegacyUI
 Bundle-SymbolicName: org.nullbool.pi.core.ui.legacy
-Bundle-Version: 1.0.0.RELEASE
+Bundle-Version: 1.0.4.RELEASE
 Bundle-Vendor: NullBool
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: org.nullbool.pi.core.ui.legacy.Activator
@@ -12,4 +12,5 @@ Import-Package: org.nullbool.core.piexternal.game.api,
  org.nullbool.pi.core.engine.api,
  org.nullbool.pi.core.ui.api,
  org.nullbool.taskqueue,
- org.osgi.framework
+ org.osgi.framework,
+ javax.swing

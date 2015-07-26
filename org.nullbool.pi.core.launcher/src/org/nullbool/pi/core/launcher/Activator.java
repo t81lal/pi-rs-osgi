@@ -26,10 +26,8 @@ public class Activator implements BundleActivator {
 	private BundleContext context;
 	private Thread thisThread;
 	private ServiceReference<IViewer> viewerSvcRef;
-	private IViewer viewer;
 
 	private ServiceReference<Shell> shellSrvRef;
-	private Shell shell;
 	
 	@Override
 	public void start(BundleContext context) throws Exception {	
@@ -39,16 +37,17 @@ public class Activator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		if(viewerSvcRef != null)
-			context.ungetService(viewerSvcRef);
-		if(shellSrvRef != null)
+		if(shellSrvRef != null) {
+			Shell shell = context.getService(shellSrvRef);
 			context.ungetService(shellSrvRef);
-		
-		if(shell != null) {
 			shell.stop();
 		}
 		
-		viewer.exit();
+		if(viewerSvcRef != null) {
+			IViewer viewer = context.getService(viewerSvcRef);
+			context.ungetService(viewerSvcRef);
+			viewer.exit();
+		}
 	}
 
 	private void launchStartThread() {
@@ -63,7 +62,8 @@ public class Activator implements BundleActivator {
 						return;
 					}
 					
-					viewer = context.getService(viewerSvcRef);
+					IViewer viewer = context.getService(viewerSvcRef);
+					context.ungetService(viewerSvcRef);
 					createView(viewer);
 					
 					ServiceReference<IVirtualGameBrowserFactory> gbfSvcRef = context.getServiceReference(IVirtualGameBrowserFactory.class);
@@ -133,10 +133,10 @@ public class Activator implements BundleActivator {
 	public void fatal(String msg) {
 		System.err.printf("(Fatal): %s.%n", msg);
 		
-		if(shell == null) {
+		if(shellSrvRef == null) {
 			shellSrvRef = context.getServiceReference(Shell.class);
 			if(shellSrvRef != null) {
-				shell = context.getService(shellSrvRef);
+				Shell shell = context.getService(shellSrvRef);
 				shell.start();
 				return;
 			}
