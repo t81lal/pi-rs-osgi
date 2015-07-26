@@ -10,8 +10,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.nullbool.core.piexternal.game.api,
  org.nullbool.pi.core.engine.api,
  org.osgi.framework;version="1.3.0"
-Export-Package: org.nullbool.piexternal.game.api.accessors.widgets,
- org.nullbool.piexternal.game.api.wrappers.entity,
+Export-Package: org.nullbool.piexternal.game.api.wrappers.entity,
  org.nullbool.piexternal.game.api.accessors.world,
  org.nullbool.piexternal.game.api.accessors.network,
  org.nullbool.piexternal.game.api.wrappers.network,
