@@ -51,7 +51,9 @@ public class HierarchalClassLoader extends ClassLoader {
 			return classCache.get(byte_name);
 		
 		if(nodeCache.containsKey(byte_name)) {
+			System.out.println("Defining: " + byte_name);
 			Class<?> klass = defineNode(nodeCache.get(byte_name));
+			System.out.println("Defined: " + klass);
 			if(klass != null) {
 				return cache(klass);
 			}
@@ -99,12 +101,12 @@ public class HierarchalClassLoader extends ClassLoader {
 				return cache(klass);
 		} catch(Exception e) {
 			System.out.println("UBER FAILURE");
-			e.printStackTrace();
-			if(e1 != null)
-				e1.printStackTrace();
-			if(e2 != null)
-				e2.printStackTrace();
-			e.printStackTrace();
+//			e.printStackTrace();
+//			if(e1 != null)
+//				e1.printStackTrace();
+//			if(e2 != null)
+//				e2.printStackTrace();
+//			e.printStackTrace();
 		}
 		
 		return null;
@@ -112,6 +114,9 @@ public class HierarchalClassLoader extends ClassLoader {
 	
 	protected Class<?> cache(Class<?> klass) {
 		String name = klass.getCanonicalName();
+//		System.out.printf("name=%s, klass=%s.%n", name, klass);
+		if(name == null)
+			name = klass.getName();
 		name = name.replace(".", "/");
 		classCache.put(name, klass);
 		return klass;
