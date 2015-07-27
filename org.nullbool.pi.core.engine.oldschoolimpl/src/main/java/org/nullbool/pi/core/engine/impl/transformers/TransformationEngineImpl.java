@@ -12,10 +12,11 @@ public class TransformationEngineImpl extends TransformationEngine {
 
 	public TransformationEngineImpl(Map<String, ClassNode> classes, HookMap hooks, IAPIHelper helper) {
 		super(classes);
-		
+
 		registerTransformers(new ITransformer[]{				
+				new CanvasReplacerTransformer(classes, hooks, helper),
 				new GetterSetterTransformer(classes, hooks, helper), 
-//				 new CallbackTransformer(classes, hooks, helper), 
+				// new CallbackTransformer(classes, hooks, helper), 
 				new ImplementorTransformer(classes, hooks, helper)
 		});
 	}

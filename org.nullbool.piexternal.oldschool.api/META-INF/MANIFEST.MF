@@ -28,3 +28,4 @@ Export-Package: org.nullbool.piexternal.game.api.wrappers.entity,
  org.nullbool.piexternal.game.api.wrappers.widget,
  org.nullbool.piexternal.game.api.accessors.collections,
  org.nullbool.piexternal.game.api.wrappers.render
+DynamicImport-Package: *

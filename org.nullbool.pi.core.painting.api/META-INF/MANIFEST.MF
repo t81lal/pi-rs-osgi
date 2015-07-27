@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: painting-api
+Bundle-SymbolicName: org.nullbool.pi.core.painting.api
+Bundle-Version: 0.0.1.ALPHA
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.osgi.framework
+Export-Package: org.nullbool.pi.core.painting.api
