@@ -45,6 +45,10 @@ public class GroundItemsQuery extends Query<GroundItem> {
 	public GroundItemsQuery within(final int distance) {
 		return new GroundItemsQuery(stream().filter(i -> i.dist() <= distance));
 	}
+	
+	public GroundItemsQuery visible() {
+		return new GroundItemsQuery(stream().filter(c -> c.isOnScreen()));
+	}
 
 	@SuppressWarnings("unchecked")
 	private <T> boolean look(final T key, final T... elements) {
