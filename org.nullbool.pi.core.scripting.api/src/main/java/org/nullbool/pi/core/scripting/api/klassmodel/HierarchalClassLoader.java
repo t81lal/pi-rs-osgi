@@ -24,7 +24,7 @@ public class HierarchalClassLoader extends ClassLoader {
 	private final ClassTree classTree;
 	private final IAggregateFilter<String> filter;
 	private final List<HierarchalClassLoader> children;
-	private final int id;
+	// private final int id;
 	
 	public HierarchalClassLoader(ClassLoader parentClassLoader, JarContents<ClassNode> contents) {
 		this.parentClassLoader = parentClassLoader;
@@ -34,8 +34,8 @@ public class HierarchalClassLoader extends ClassLoader {
 		filter     = new AggregateFilter<String>();
 		children   = new ArrayList<HierarchalClassLoader>();
 		
-		id = count++;
-		System.out.println("HierarchalClassLoader.enclosing_method(): " + id + " " + nodeCache.keySet().iterator().next() + " = " + new Exception().getStackTrace()[1].getClassName() + "." + new Exception().getStackTrace()[1].getMethodName());
+		// id = count++;
+		// System.out.println("HierarchalClassLoader.enclosing_method(): " + id + " " + nodeCache.keySet().iterator().next() + " = " + new Exception().getStackTrace()[1].getClassName() + "." + new Exception().getStackTrace()[1].getMethodName());
 	}
 	
 	public IAggregateFilter<String> filter() {
@@ -51,9 +51,9 @@ public class HierarchalClassLoader extends ClassLoader {
 			return classCache.get(byte_name);
 		
 		if(nodeCache.containsKey(byte_name)) {
-			System.out.println("Defining: " + byte_name);
+			// System.out.println("Defining: " + byte_name);
 			Class<?> klass = defineNode(nodeCache.get(byte_name));
-			System.out.println("Defined: " + klass);
+			// System.out.println("Defined: " + klass);
 			if(klass != null) {
 				return cache(klass);
 			}
@@ -68,12 +68,12 @@ public class HierarchalClassLoader extends ClassLoader {
 		
 		String byte_name = name.replace(".", "/");
 		
-		if(byte_name.equals("org/nullbool/piexternal/game/api/OldschoolClient")) {
-			System.out.println("HierarchalClassLoader.loadClass() " + id);
-		}
+		// if(byte_name.equals("org/nullbool/piexternal/game/api/OldschoolClient")) {
+		// 	System.out.println("HierarchalClassLoader.loadClass() " + id);
+		// }
 		
-		Exception e1 = null;
-		Exception e2 = null;
+		Throwable e1 = null;
+		Throwable e2 = null;
 		
 		Class<?> klass = null;
 		
@@ -81,32 +81,30 @@ public class HierarchalClassLoader extends ClassLoader {
 			klass = parentClassLoader.loadClass(name);
 			if(klass != null)
 				return cache(klass);
-		} catch(Exception e) {
+		} catch(Throwable e) {
 			e2 = e;
-//			e.printStackTrace();
 		}
 		
 		try {
 			klass = lookup(byte_name);
 			if(klass != null)
 				return klass;
-		} catch(Exception e) {
+		} catch(Throwable e) {
 			e1 = e;
-//			e.printStackTrace();
 		}
 
 		try {
 			klass = super.loadClass(name);
 			if(klass != null)
 				return cache(klass);
-		} catch(Exception e) {
+		} catch(Throwable e) {
 			System.out.println("UBER FAILURE");
-//			e.printStackTrace();
-//			if(e1 != null)
-//				e1.printStackTrace();
-//			if(e2 != null)
-//				e2.printStackTrace();
-//			e.printStackTrace();
+			e.printStackTrace();
+			if(e1 != null)
+				e1.printStackTrace();
+			if(e2 != null)
+				e2.printStackTrace();
+			e.printStackTrace();
 		}
 		
 		return null;
@@ -114,7 +112,7 @@ public class HierarchalClassLoader extends ClassLoader {
 	
 	protected Class<?> cache(Class<?> klass) {
 		String name = klass.getCanonicalName();
-//		System.out.printf("name=%s, klass=%s.%n", name, klass);
+		// System.out.printf("name=%s, klass=%s.%n", name, klass);
 		if(name == null)
 			name = klass.getName();
 		name = name.replace(".", "/");

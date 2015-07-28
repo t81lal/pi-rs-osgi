@@ -15,19 +15,22 @@ public class Deque implements IDeque {
 		this._deque = _deque;
 	}
 
+	/* FIXME: Wrappers don't reflect real types. */
 	@Override
 	public INode getHead() {
 		INode _head = _deque.getHead();
-		if (_head == null)
-			return null;
-		return new Node<INode>(_head);
+		return _head;
+//		if (_head == null)
+//			return null;
+//		return new Node<INode>(_head);
 	}
 
 	@Override
 	public INode getTail() {
 		INode _tail = _deque.getTail();
-		if (_tail == null)
-			return null;
-		return new Node<INode>(_tail);
+		return _tail;
+//		if (_tail == null)
+//			return null;
+//		return new Node<INode>(_tail);
 	}
 }

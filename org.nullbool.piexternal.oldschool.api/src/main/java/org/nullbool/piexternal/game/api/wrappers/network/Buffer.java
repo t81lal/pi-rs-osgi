@@ -5,7 +5,7 @@ package org.nullbool.piexternal.game.api.wrappers.network;
 
 import java.math.BigInteger;
 
-import org.nullbool.piexternal.game.api.accessors.network.IBuffer;
+import org.nullbool.piexternal.game.api.accessors.net.IBuffer;
 import org.nullbool.piexternal.game.api.wrappers.collection.Node;
 
 /**

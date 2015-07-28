@@ -480,7 +480,7 @@ class MethodWriter extends MethodVisitor {
         }
         this.compute = computeFrames ? FRAMES : (computeMaxs ? MAXS : NOTHING);
         if (computeMaxs || computeFrames) {
-            // updates maxLocals
+        	 // updates maxLocals
             int size = Type.getArgumentsAndReturnSizes(descriptor) >> 2;
             if ((access & Opcodes.ACC_STATIC) != 0) {
                 --size;

@@ -6,18 +6,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.nullbool.piexternal.game.api.meta.RSTile;
 import org.nullbool.piexternal.game.api.OldschoolClient;
-import org.nullbool.piexternal.game.api.wrappers.entity.Player;
-import org.nullbool.piexternal.game.api.wrappers.collection.Deque;
+import org.nullbool.piexternal.game.api.accessors.collections.IDeque;
 import org.nullbool.piexternal.game.api.accessors.collections.INode;
 import org.nullbool.piexternal.game.api.accessors.world.IGroundItem;
-import org.nullbool.piexternal.game.api.accessors.collections.IDeque;
+import org.nullbool.piexternal.game.api.meta.RSTile;
+import org.nullbool.piexternal.game.api.wrappers.collection.Deque;
+import org.nullbool.piexternal.game.api.wrappers.entity.Player;
 import org.nullbool.piexternal.game.api.wrappers.world.GroundItem;
 
 public class GroundItemsQuery extends Query<GroundItem> {
 
-	public GroundItemsQuery pool() {
+	public static GroundItemsQuery pool() {
 		return pool(-1);
 	}
 
@@ -63,7 +63,7 @@ public class GroundItemsQuery extends Query<GroundItem> {
 		return new GroundItemsQuery(list.stream());
 	}
 
-	public GroundItemsQuery pool(int zoneSize) {
+	public static GroundItemsQuery pool(int zoneSize) {
 
 		INode c;
 		Deque l;
@@ -78,18 +78,20 @@ public class GroundItemsQuery extends Query<GroundItem> {
 
 			for (int y = all ? 0 : regionY - zoneSize; y < regionY + zoneSize; y++)
 
-				if ((l = new Deque(objects[z][x][y])) != null)
+				if (objects[z][x][y] != null)
 
-					if ((c = l.getHead().getNext()) != null)
+					if ((l = new Deque(objects[z][x][y])) != null)
 
-						while (c != null && c != l.getHead()) {
+						if ((c = l.getHead()) != null && ((c = c.getNext()) != null))
 
-							final int a = OldschoolClient.getBaseX() + x;
-							final int b = OldschoolClient.getBaseY() + y;
-							final RSTile tile = new RSTile(a, b, z);
-							i.add(new GroundItem((IGroundItem) c, tile));
-							c = c.getNext();
-						}
+							while (c != null && c != l.getHead()) {
+
+								final int a = OldschoolClient.getBaseX() + x;
+								final int b = OldschoolClient.getBaseY() + y;
+								final RSTile tile = new RSTile(a, b, z);
+								i.add(new GroundItem((IGroundItem) c, tile));
+								c = c.getNext();
+							}
 		return new GroundItemsQuery(i.stream());
 	}
 }

@@ -3,8 +3,8 @@
  */
 package org.nullbool.piexternal.game.api.wrappers.network;
 
-import org.nullbool.piexternal.game.api.accessors.network.IIsaacCipher;
-import org.nullbool.piexternal.game.api.accessors.network.IPacket;
+import org.nullbool.piexternal.game.api.accessors.net.IIsaacCipher;
+import org.nullbool.piexternal.game.api.accessors.net.IPacket;
 
 /**
  * @author Bibl (don't ban me pls)
@@ -84,5 +84,15 @@ public class Packet extends Buffer<IPacket> implements IPacket {
 	@Override
 	public void setBitCaret(int var1) {
 		_node.setBitCaret(var1);		
+	}
+
+	@Override
+	public int readPacketHeader() {
+		return _node.readPacketHeader();
+	}
+
+	@Override
+	public void writePacketHeader(int var1) {
+		_node.writePacketHeader(var1);
 	}
 }

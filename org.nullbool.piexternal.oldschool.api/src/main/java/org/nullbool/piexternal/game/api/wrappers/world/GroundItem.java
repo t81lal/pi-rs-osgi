@@ -3,12 +3,13 @@ package org.nullbool.piexternal.game.api.wrappers.world;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.Rectangle2D;
-import org.nullbool.piexternal.game.api.meta.RSTile;
+
 import org.nullbool.piexternal.game.api.Calculations;
 import org.nullbool.piexternal.game.api.OldschoolClient;
-import org.nullbool.piexternal.game.api.wrappers.entity.Renderable;
 import org.nullbool.piexternal.game.api.accessors.world.IGroundItem;
+import org.nullbool.piexternal.game.api.meta.RSTile;
 import org.nullbool.piexternal.game.api.wrappers.definition.ItemDefinition;
+import org.nullbool.piexternal.game.api.wrappers.entity.Renderable;
 /**
  * @author Bibl (don't ban me pls) <br>
  * @created 20 Apr 2015 at 21:27:12 <br>
@@ -21,7 +22,7 @@ public class GroundItem extends Renderable<IGroundItem> implements IGroundItem {
 	public GroundItem(IGroundItem _item, RSTile tile) {
 		super(_item);
 		this.tile = tile;
-		this.definition = new ItemDefinition(OldschoolClient.loadItemDefinition(getId()));
+		//this.definition = new ItemDefinition(OldschoolClient.loadItemDefinition(getId()));
 	}
 
 	public RSTile getTile() {

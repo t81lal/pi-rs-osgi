@@ -16,4 +16,11 @@
       </plugin>
     </plugins>
   </build>
+  <parent>
+  	<groupId>org.nullbool.piosgi</groupId>
+  	<artifactId>piosgi</artifactId>
+  	<version>1.0.0-ALPHA</version>
+  	<relativePath>..</relativePath>
+  </parent>
+  <packaging>eclipse-plugin</packaging>
 </project>

@@ -3,7 +3,7 @@
  */
 package org.nullbool.piexternal.game.api.wrappers.network;
 
-import org.nullbool.piexternal.game.api.accessors.network.IIsaacCipher;
+import org.nullbool.piexternal.game.api.accessors.net.IIsaacCipher;
 
 /**
  * @author Bibl (don't ban me pls)
