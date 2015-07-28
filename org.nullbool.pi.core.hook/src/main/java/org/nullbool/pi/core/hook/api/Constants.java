@@ -8,12 +8,12 @@ public abstract interface Constants {
 
 	// Shared
 	public static final String DESC = "desc.obfuscated";
+	public static final String REFACTORED_DESC = "desc.refactored";
 	public static final String STATIC = "attr.static";
 	
 	// Field
 	public static final String REAL_OWNER = "owner.real";
 	public static final String MUTLI = "attr.multi";
-	// TODO: RENAME
 	public static final String ENCODER = "attr.multi.encoder";
 
 	// Method
@@ -26,4 +26,5 @@ public abstract interface Constants {
 	public static final String START = "attr.type.patch.pos.start";
 	public static final String END = "attr.type.patch.pos.end";
 	public static final String SAFE_OPAQUE = "attr.safeopaque";
+	public static final String HAS_OPAQUE = "attr.hassafe";
 }

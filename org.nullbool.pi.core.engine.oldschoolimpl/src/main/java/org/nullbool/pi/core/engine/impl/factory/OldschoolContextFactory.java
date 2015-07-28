@@ -197,6 +197,24 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 			return null;
 		}
 		
+//		try {
+//			gameApplet = (Applet) clientClass.newInstance();
+//		} catch(Throwable e) {
+//			System.out.println("EROROROROROROROROROOROROROROROROOROROROROROROROR");
+//			System.out.println("EROROROROROROROROROOROROROROROROOROROROROROROROR");
+//			System.out.println("EROROROROROROROROROOROROROROROROOROROROROROROROR");
+//			System.out.println("EROROROROROROROROROOROROROROROROOROROROROROROROR");
+//			System.out.println("EROROROROROROROROROOROROROROROROOROROROROROROROR");
+//			PrintStream ps;
+//			try {
+//				ps = new PrintStream(new File("C:/Users/Bibl/Desktop/err.txt"));
+//				e.printStackTrace(ps);
+//			} catch (FileNotFoundException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//		}
+		
 		BundleContext bundleContext = FrameworkUtil.getBundle(OldschoolContextFactory.class).getBundleContext();
 		ServiceReference<EventBus> svcRef = bundleContext.getServiceReference(EventBus.class);
 		EventBus bus = bundleContext.getService(svcRef);

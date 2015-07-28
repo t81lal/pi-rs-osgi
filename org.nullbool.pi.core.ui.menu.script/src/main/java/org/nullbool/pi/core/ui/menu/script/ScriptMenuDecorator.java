@@ -13,9 +13,6 @@ import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.core.engine.api.IClientContext;
 import org.nullbool.pi.core.engine.api.IContextRegistry;
 import org.nullbool.pi.core.scripting.api.loader.DescribedManifestResourceLocation;
-import org.nullbool.pi.core.scripting.api.loader.RefreshableResourcePool;
-import org.nullbool.pi.core.scripting.api.loader.ResolvedDefinition;
-import org.nullbool.pi.core.scripting.api.loader.RunnableResourceLocation;
 import org.nullbool.pi.core.scripting.api.loader.finder.FinderStrategy;
 import org.nullbool.pi.core.scripting.api.loader.finder.FixedFinderStrategy;
 import org.nullbool.pi.core.scripting.api.loader.finder.JarInfoFolderSearchFinderStrategy;
@@ -104,19 +101,19 @@ public class ScriptMenuDecorator implements IMenuDecorator {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				 //viewer.show();
+				 viewer.show();
 
-				BundleContext bundleContext = FrameworkUtil.getBundle(ScriptMenuDecorator.class).getBundleContext();
-				ServiceReference<IContextRegistry> cxtSvcRef = bundleContext.getServiceReference(IContextRegistry.class);
-				IContextRegistry contextRegistry = bundleContext.getService(cxtSvcRef);
-
-				Set<IClientContext<IGameClient>> contexts = contextRegistry.retrieveAll();
-				for (IClientContext<IGameClient> cxt : contexts) {
-					RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> pool = cxt.scriptingEngine().getScriptPool();
-					cxt.scriptingEngine().startScript(pool.iterator().next().getValue().iterator().next());
-				}
-
-				bundleContext.ungetService(cxtSvcRef);
+//				BundleContext bundleContext = FrameworkUtil.getBundle(ScriptMenuDecorator.class).getBundleContext();
+//				ServiceReference<IContextRegistry> cxtSvcRef = bundleContext.getServiceReference(IContextRegistry.class);
+//				IContextRegistry contextRegistry = bundleContext.getService(cxtSvcRef);
+//
+//				Set<IClientContext<IGameClient>> contexts = contextRegistry.retrieveAll();
+//				for (IClientContext<IGameClient> cxt : contexts) {
+//					RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> pool = cxt.scriptingEngine().getScriptPool();
+//					cxt.scriptingEngine().startScript(pool.iterator().next().getValue().iterator().next());
+//				}
+//
+//				bundleContext.ungetService(cxtSvcRef);
 			}
 		});
 

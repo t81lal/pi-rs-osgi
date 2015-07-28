@@ -7,7 +7,14 @@ import org.nullbool.pi.core.hook.api.ClassHook;
 import org.nullbool.pi.core.hook.api.Constants;
 import org.nullbool.pi.core.hook.api.HookMap;
 import org.nullbool.pi.core.hook.api.MethodHook;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnList;
+import org.objectweb.asm.tree.InsnNode;
+import org.objectweb.asm.tree.LdcInsnNode;
+import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.VarInsnNode;
 
 public class CallbackTransformer extends AbstractTransformer {
 
@@ -17,18 +24,64 @@ public class CallbackTransformer extends AbstractTransformer {
 
 	@Override
 	public void run(ClassNode cn) {
+		ClassHook ch = hooks.forName(cn.name, true);
+		if(ch != null) {
+			for(MethodHook mh : ch.methods()) {
+				MethodNode mn = new MethodNode(cn, ACC_PUBLIC, mh.refactored(), mh.val(Constants.REFACTORED_DESC), null, null);
+				InsnList insns = mn.instructions;
+				
+				boolean isStatic = Boolean.valueOf(mh.val(Constants.STATIC));
+				if(!isStatic) {
+					insns.add(new VarInsnNode(ALOAD, 0));
+				}
+				
+				Type[] args = Type.getArgumentTypes(mn.desc);
+				for(int i=0; i < args.length; i++) {
+					Type arg = args[i];
+					String d = arg.getDescriptor();
+					int load = DescUtil.getLoadOpcode(d);
+					insns.add(new VarInsnNode(load, i + 1));
+				}
+				
+				String calleeDesc = mh.val(Constants.DESC);
+				String _hasOpaque = mh.val(Constants.HAS_OPAQUE);
+				if(_hasOpaque != null && !_hasOpaque.isEmpty()) {
+					boolean hasOpaque = Boolean.valueOf(_hasOpaque);
+					if(hasOpaque) {
+						String opaqueVal = mh.val(Constants.SAFE_OPAQUE);
+						
+						Type[] realArgs = Type.getArgumentTypes(calleeDesc);
+						String valType = realArgs[realArgs.length - 1].getDescriptor();
+						Number n = null;
+						if(valType.equals("I")) {
+							n = Integer.valueOf(opaqueVal);
+						} else if(valType.equals("S")) {
+							n = Short.valueOf(opaqueVal);
+						} else if(valType.equals("B")) {
+							n = Byte.valueOf(opaqueVal);
+						} else {
+							throw new RuntimeException();
+						}
+						
+						insns.add(new LdcInsnNode(n));
+					}
+				}
+				
+				int callOpcode = isStatic ? INVOKESTATIC : INVOKEVIRTUAL;
+				insns.add(new MethodInsnNode(callOpcode, mh.val(Constants.REAL_OWNER), mh.obfuscated(), calleeDesc, false));
+				
+				Type ret = Type.getReturnType(mn.desc);
+				String rDesc = ret.getDescriptor();
+				if(!rDesc.equals("V")) {
+					insns.add(new InsnNode(DescUtil.getReturnOpcode(rDesc)));
+				} else {
+					insns.add(new InsnNode(RETURN));
+				}
+				
+				cn.methods.add(mn);
 
-		// TODO: dynamic
-		ClassHook callbackOwnerHook = hook;
-
-		for (MethodHook mh : hook.methods()) {
-			System.out.println(mh.refactored() + " : " + mh.val(Constants.METHOD_TYPE) + " : " + mh.val(Constants.DESC));
-			switch (mh.val(Constants.METHOD_TYPE)) {
-
-			case "null":
-				System.out.println("yolo");
-				break;
-
+				// System.out.println(mn);
+				// InstructionPrinter.consolePrint(mn);
 			}
 		}
 	}

@@ -11,6 +11,10 @@ public class DefaultAPIHelper implements IAPIHelper {
 	private final String base;
 	private final Map<String, String> canons;
 	private final Map<String, List<String>> supers;
+
+	public DefaultAPIHelper() {
+		this(null);
+	}
 	
 	public DefaultAPIHelper(String base) {
 		this.base = base;

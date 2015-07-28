@@ -14,10 +14,10 @@ public class TransformationEngineImpl extends TransformationEngine {
 		super(classes);
 
 		registerTransformers(new ITransformer[]{				
-				//new CanvasReplacerTransformer(classes, hooks, helper),
-				//new GetterSetterTransformer(classes, hooks, helper), 
+				new CanvasReplacerTransformer(classes, hooks, helper),
+				new GetterSetterTransformer(classes, hooks, helper), 
 				new CallbackTransformer(classes, hooks, helper), 
-				//new ImplementorTransformer(classes, hooks, helper)
+				new ImplementorTransformer(classes, hooks, helper)
 		});
 	}
 }
