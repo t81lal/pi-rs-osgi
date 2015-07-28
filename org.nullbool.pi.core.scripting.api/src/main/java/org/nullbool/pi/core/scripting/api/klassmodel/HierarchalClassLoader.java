@@ -72,8 +72,8 @@ public class HierarchalClassLoader extends ClassLoader {
 		// 	System.out.println("HierarchalClassLoader.loadClass() " + id);
 		// }
 		
-		Throwable e1 = null;
-		Throwable e2 = null;
+		// Throwable e1 = null;
+		// Throwable e2 = null;
 		
 		Class<?> klass = null;
 		
@@ -82,7 +82,7 @@ public class HierarchalClassLoader extends ClassLoader {
 			if(klass != null)
 				return cache(klass);
 		} catch(Throwable e) {
-			e2 = e;
+			// e2 = e;
 		}
 		
 		try {
@@ -90,7 +90,7 @@ public class HierarchalClassLoader extends ClassLoader {
 			if(klass != null)
 				return klass;
 		} catch(Throwable e) {
-			e1 = e;
+			// e1 = e;
 		}
 
 		try {
@@ -98,13 +98,10 @@ public class HierarchalClassLoader extends ClassLoader {
 			if(klass != null)
 				return cache(klass);
 		} catch(Throwable e) {
-			System.out.println("UBER FAILURE");
-			e.printStackTrace();
-			if(e1 != null)
-				e1.printStackTrace();
-			if(e2 != null)
-				e2.printStackTrace();
-			e.printStackTrace();
+			System.out.println("UBER FAILURE: " + byte_name);
+			// e.printStackTrace();
+			//e1.printStackTrace();
+			//e2.printStackTrace();
 		}
 		
 		return null;

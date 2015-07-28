@@ -85,82 +85,82 @@ public class ItemDefinition extends DualNode<IItemDefinition> implements IItemDe
 
 	@Override
 	public int getModelBreadth() {
-		return getModelBreadth();
+		return _node.getModelBreadth();
 	}
 
 	@Override
 	public int getModelHeight() {
-		return getModelHeight();
+		return _node.getModelHeight();
 	}
 
 	@Override
 	public int getModelOffset() {
-		return getModelOffset();
+		return _node.getModelOffset();
 	}
 
 	@Override
 	public int getModelSine() {
-		return getModelSine();
+		return _node.getModelSine();
 	}
 
 	@Override
 	public int getModelWidth() {
-		return getModelWidth();
+		return _node.getModelWidth();
 	}
 
 	@Override
 	public int getModelZoom() {
-		return getModelZoom();
+		return _node.getModelZoom();
 	}
 
 	@Override
 	public String getName() {
-		return getName();
+		return _node.getName();
 	}
 
 	@Override
 	public int getNoteIndex() {
-		return getNoteIndex();
+		return _node.getNoteIndex();
 	}
 
 	@Override
 	public int getNoteTemplateIndex() {
-		return getNoteTemplateIndex();
+		return _node.getNoteTemplateIndex();
 	}
 
 	@Override
 	public int getRotation1() {
-		return getRotation1();
+		return _node.getRotation1();
 	}
 
 	@Override
 	public int getRotation2() {
-		return getRotation2();
+		return _node.getRotation2();
 	}
 
 	@Override
 	public int getStackedModelLightModifier() {
-		return getStackedModelLightModifier();
+		return _node.getStackedModelLightModifier();
 	}
 
 	@Override
 	public int getStackedModelShadowModifier() {
-		return getStackedModelShadowModifier();
+		return _node.getStackedModelShadowModifier();
 	}
 
 	@Override
 	public int getTeamIndex() {
-		return getTeamIndex();
+		return _node.getTeamIndex();
 	}
 
 	@Override
 	public int getValue() {
-		return getValue();
+		return _node.getValue();
 	}
 
 	@Override
 	public String[] getWidgetActions() {
-		return getWidgetActions();
+		return _node.getWidgetActions();
 	}
 
 	/* (non-Javadoc)

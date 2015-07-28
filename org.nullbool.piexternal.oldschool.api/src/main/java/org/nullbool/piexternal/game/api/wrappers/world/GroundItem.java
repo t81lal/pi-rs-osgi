@@ -22,7 +22,7 @@ public class GroundItem extends Renderable<IGroundItem> implements IGroundItem {
 	public GroundItem(IGroundItem _item, RSTile tile) {
 		super(_item);
 		this.tile = tile;
-		//this.definition = new ItemDefinition(OldschoolClient.loadItemDefinition(getId()));
+		this.definition = new ItemDefinition(OldschoolClient.loadItemDefinition(getId()));
 	}
 
 	public RSTile getTile() {
