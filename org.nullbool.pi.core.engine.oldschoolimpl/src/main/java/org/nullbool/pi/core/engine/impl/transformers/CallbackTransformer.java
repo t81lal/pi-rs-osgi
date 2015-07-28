@@ -78,11 +78,50 @@ public class CallbackTransformer extends AbstractTransformer {
 					insns.add(new InsnNode(RETURN));
 				}
 				
+				String stripped = rDesc.replace("[", "");
+				int arrs = rDesc.length() - stripped.length();
+				if(!DescUtil.isVoid(stripped) && !DescUtil.isPrimitive(stripped)) {
+					StringBuilder sb = new StringBuilder();
+					sb.append("(");
+					for(Type arg : args) {
+						sb.append(arg.getDescriptor());
+					}
+					sb.append(")");
+					for(int i=0; i < arrs; i++) {
+						sb.append("[");
+					}
+					
+					String newRet = stripped;
+					newRet = newRet.substring(1);
+					newRet = newRet.substring(0, newRet.length() - 1);
+					String r = interfaceType(newRet);
+					r = ("L" + r + ";");
+					sb.append(r);
+					
+					mn.desc = sb.toString();
+					System.out.println("newdesc: " + mn.desc);
+				}
+				
+				
 				cn.methods.add(mn);
 
 				// System.out.println(mn);
 				// InstructionPrinter.consolePrint(mn);
 			}
 		}
+	}
+	
+	private String interfaceType(String real) {
+		ClassHook ch = hooks.forName(real, true);
+		if(ch == null)
+			return real;
+		String name = ch.refactored();
+		
+		String interfaceName = helper.canonicalName(name);
+		if (interfaceName != null) {
+			String fullName = (interfaceName.startsWith(helper.accessorBase()) ? "" : helper.accessorBase()) + interfaceName;
+			return fullName;
+		}
+		return real;
 	}
 }
