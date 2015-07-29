@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 
 import org.nullbool.piexternal.game.api.Calculations;
-import org.nullbool.piexternal.game.api.DefinitionLoader;
 import org.nullbool.piexternal.game.api.OldschoolClient;
 import org.nullbool.piexternal.game.api.accessors.entity.IRenderable;
 import org.nullbool.piexternal.game.api.accessors.world.IGameObject;
@@ -24,10 +23,11 @@ public class GameObject implements IGameObject, Interactable, Comparable<GameObj
 
 	public GameObject(IGameObject _obj) {
 		this._obj = _obj;
-		definition = DefinitionLoader.get().getObjectdefinition(getId());
-		initDistance = Calculations.distance(getTile());
+		initDistance = Calculations.distance(getPosition());
+		definition = new ObjectDefinition(OldschoolClient.loadObjDefinition(getId()));
 	}
 
+	@Override
 	public int getId() {
 		return getHash() >> 14 & 32767;
 	}
@@ -87,10 +87,6 @@ public class GameObject implements IGameObject, Interactable, Comparable<GameObj
 		return _obj.getWidth();
 	}
 
-	public boolean isOnScreen() {
-		return Calculations.isOnScreen(getScreenPoint());
-	}
-
 	public boolean isWalkable() {
 		return definition != null && definition.isWalkable();
 	}
@@ -103,10 +99,12 @@ public class GameObject implements IGameObject, Interactable, Comparable<GameObj
 		return definition != null ? definition.getObjMapScene() : 0;
 	}
 
+	@Override
 	public String getName() {
 		return definition != null ? definition.getName() : "";
 	}
 
+	@Override
 	public String[] getActions() {
 		return definition != null ? definition.getActions() : new String[0];
 	}
@@ -127,10 +125,6 @@ public class GameObject implements IGameObject, Interactable, Comparable<GameObj
 		return getY() + OldschoolClient.getBaseY();
 	}
 
-	public RSTile getTile() {
-		return new RSTile(getTileX(), getTileY(), getPlane());
-	}
-
 	public int getWidth1() {
 		return definition != null ? definition.getWidth() - 1 : 1;
 	}
@@ -140,16 +134,12 @@ public class GameObject implements IGameObject, Interactable, Comparable<GameObj
 	}
 
 	public Rectangle2D getRectangle() {
-		return Calculations.getRectangle2d(getTile(), getWidth1(), getHeight1());
-	}
-
-	public int dist() {
-		return (int) Calculations.distance(getTile());
+		return Calculations.getRectangle2d(getPosition(), getWidth1(), getHeight1());
 	}
 
 	@Override
 	public Point getScreenPoint() {
-		return Calculations.getCenterPoint(getTile(), 1.0D);
+		return Calculations.getCenterPoint(getPosition(), 1.0D);
 	}
 
 	@Override
@@ -159,91 +149,66 @@ public class GameObject implements IGameObject, Interactable, Comparable<GameObj
 
 	@Override
 	public Point getActionPoint(int x, int y) {
-//		Model m = getModel();
-//		Point point = m != null ? m.getPoint() : getScreenPoint();
+		// Model m = getModel();
+		// Point point = m != null ? m.getPoint() : getScreenPoint();
 		Point point = getScreenPoint();
 		point.x += x;
 		point.y += y;
 		return point;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setHash(int)
-	 */
 	@Override
 	public void setHash(int var1) {
-		_obj.setHash(var1);		
+		_obj.setHash(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setPlane(int)
-	 */
 	@Override
 	public void setPlane(int var1) {
-		_obj.setPlane(var1);		
+		_obj.setPlane(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setStrictX(int)
-	 */
 	@Override
 	public void setStrictX(int var1) {
-		_obj.setStrictX(var1);		
+		_obj.setStrictX(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setStrictY(int)
-	 */
 	@Override
 	public void setStrictY(int var1) {
-		_obj.setStrictY(var1);		
+		_obj.setStrictY(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setLocalX(int)
-	 */
 	@Override
 	public void setLocalX(int var1) {
-		_obj.setLocalX(var1);		
+		_obj.setLocalX(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setLocalY(int)
-	 */
 	@Override
 	public void setLocalY(int var1) {
-		_obj.setLocalY(var1);		
+		_obj.setLocalY(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setWidth(int)
-	 */
 	@Override
 	public void setWidth(int var1) {
-		_obj.setWidth(var1);		
+		_obj.setWidth(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setHeight(int)
-	 */
 	@Override
 	public void setHeight(int var1) {
-		_obj.setHeight(var1);		
+		_obj.setHeight(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setOrientation(int)
-	 */
 	@Override
 	public void setOrientation(int var1) {
-		_obj.setOrientation(var1);		
+		_obj.setOrientation(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGameObject#setFlags(int)
-	 */
 	@Override
 	public void setFlags(int var1) {
-		_obj.setFlags(var1);		
+		_obj.setFlags(var1);
+	}
+
+	@Override
+	public RSTile getPosition() {
+		return new RSTile(getTileX(), getTileY(), getPlane());
 	}
 }

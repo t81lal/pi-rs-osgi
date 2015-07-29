@@ -2,36 +2,36 @@ package org.nullbool.piexternal.game.api.accessors.world;
 
 import org.nullbool.piexternal.game.api.accessors.entity.IRenderable;
 
-public interface IWallDecoration {
-   IRenderable getMarkerRenderable1();
+public interface IWallDecoration extends ISceneComponent {
+	IRenderable getMarkerRenderable1();
 
-   IRenderable getMarkerRenderable2();
+	IRenderable getMarkerRenderable2();
 
-   int getStrictX();
+	int getStrictX();
 
-   void setStrictX(int var1);
+	void setStrictX(int var1);
 
-   int getStrictY();
+	int getStrictY();
 
-   void setStrictY(int var1);
+	void setStrictY(int var1);
 
-   int getPlane();
+	int getPlane();
 
-   void setPlane(int var1);
+	void setPlane(int var1);
 
-   int getHash();
+	int getHash();
 
-   void setHash(int var1);
+	void setHash(int var1);
 
-   int getUid();
+	int getUid();
 
-   void setUid(int var1);
+	void setUid(int var1);
 
-   int getOrientation1();
+	int getOrientation1();
 
-   void setOrientation1(int var1);
+	void setOrientation1(int var1);
 
-   int getOrientation2();
+	int getOrientation2();
 
-   void setOrientation2(int var1);
+	void setOrientation2(int var1);
 }

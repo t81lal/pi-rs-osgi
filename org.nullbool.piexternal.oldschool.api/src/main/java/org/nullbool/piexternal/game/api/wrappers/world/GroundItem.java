@@ -56,15 +56,15 @@ public class GroundItem extends Renderable<IGroundItem> implements IGroundItem {
 	}
 
 	public String getName() {
-		return definition != null ? definition.getName() : null;
+		return definition.instance() != null ? definition.getName() : "";
 	}
 
 	public String[] getGroundActions() {
-		return this.definition != null ? definition.getGroundActions() : null;
+		return this.definition.instance() != null ? definition.getGroundActions() : new String [0];
 	}
 
 	public String[] getWidgetActions() {
-		return this.definition != null ? definition.getWidgetActions() : null;
+		return this.definition.instance() != null ? definition.getWidgetActions() : new String [0];
 	}
 
 	public Polygon getBounds() {

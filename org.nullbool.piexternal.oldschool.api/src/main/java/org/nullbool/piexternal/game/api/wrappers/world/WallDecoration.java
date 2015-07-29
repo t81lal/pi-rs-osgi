@@ -1,7 +1,10 @@
 package org.nullbool.piexternal.game.api.wrappers.world;
 
+import org.nullbool.piexternal.game.api.OldschoolClient;
 import org.nullbool.piexternal.game.api.accessors.entity.IRenderable;
 import org.nullbool.piexternal.game.api.accessors.world.IWallDecoration;
+import org.nullbool.piexternal.game.api.meta.RSTile;
+import org.nullbool.piexternal.game.api.wrappers.definition.ObjectDefinition;
 
 /**
  * @author Bibl (don't ban me pls) <br>
@@ -10,9 +13,11 @@ import org.nullbool.piexternal.game.api.accessors.world.IWallDecoration;
 public class WallDecoration implements IWallDecoration {
 
 	private final IWallDecoration _deco;
+	private ObjectDefinition objectDefinition;
 
 	public WallDecoration(IWallDecoration _deco) {
 		this._deco = _deco;
+		this.objectDefinition = new ObjectDefinition(OldschoolClient.loadObjDefinition(getId()));
 	}
 
 	@Override
@@ -114,5 +119,33 @@ public class WallDecoration implements IWallDecoration {
 	@Override
 	public void setOrientation2(int var1) {
 		_deco.setOrientation2(var1);		
+	}
+
+	@Override
+	public int getId() {
+		return this.getUid() >> 14 & 32767;
+	}
+
+	@Override
+	public String getName() {
+		return objectDefinition.instance() != null ? objectDefinition.getName() : "";
+	}
+
+	@Override
+	public String[] getActions() {
+		return objectDefinition.instance() != null ? objectDefinition.getActions() : new String[0];
+	}
+	
+	public int getTileX() {
+		return getStrictX() + OldschoolClient.getBaseX();
+	}
+
+	public int getTileY() {
+		return getStrictY()  + OldschoolClient.getBaseY();
+	}
+
+	@Override
+	public RSTile getPosition() {
+		return new RSTile(getTileX(), getTileY(), getPlane());
 	}
 }

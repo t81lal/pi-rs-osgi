@@ -1,7 +1,10 @@
 package org.nullbool.piexternal.game.api.wrappers.world;
 
+import org.nullbool.piexternal.game.api.OldschoolClient;
 import org.nullbool.piexternal.game.api.accessors.entity.IRenderable;
 import org.nullbool.piexternal.game.api.accessors.world.IGroundObject;
+import org.nullbool.piexternal.game.api.meta.RSTile;
+import org.nullbool.piexternal.game.api.wrappers.definition.ObjectDefinition;
 
 /**
  * @author Bibl (don't ban me pls) <br>
@@ -10,9 +13,11 @@ import org.nullbool.piexternal.game.api.accessors.world.IGroundObject;
 public class GroundObject implements IGroundObject {
 
 	private final IGroundObject _obj;
-
+	private final ObjectDefinition objectDefinition;
+	
 	public GroundObject(IGroundObject _obj) {
 		this._obj = _obj;
+		this.objectDefinition = new ObjectDefinition(OldschoolClient.loadObjDefinition(getId()));
 	}
 
 	@Override
@@ -83,5 +88,33 @@ public class GroundObject implements IGroundObject {
 	@Override
 	public void setFlags(int var1) {
 		_obj.setFlags(var1);		
+	}
+
+	@Override
+	public int getId() {
+		return this.getUid()  >> 14 & 32767;
+	}
+
+	@Override
+	public String getName() {
+		return objectDefinition.instance() != null ? objectDefinition.getName() : "";
+	}
+
+	@Override
+	public String[] getActions() {
+		return objectDefinition.instance() != null ? objectDefinition.getActions() : new String[0];
+	}
+	
+	public int getTileX() {
+		return getStrictX() + OldschoolClient.getBaseX();
+	}
+
+	public int getTileY() {
+		return getStrictY()  + OldschoolClient.getBaseY();
+	}
+
+	@Override
+	public RSTile getPosition() {
+		return new RSTile(getTileX(), getTileY(), getPlane());
 	}
 }

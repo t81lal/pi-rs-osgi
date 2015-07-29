@@ -2,26 +2,26 @@ package org.nullbool.piexternal.game.api.accessors.world;
 
 import org.nullbool.piexternal.game.api.accessors.entity.IRenderable;
 
-public interface IGroundObject {
-   IRenderable getMarkedRenderable();
+public interface IGroundObject extends ISceneComponent {
+	IRenderable getMarkedRenderable();
 
-   int getStrictX();
+	int getStrictX();
 
-   void setStrictX(int var1);
+	void setStrictX(int var1);
 
-   int getStrictY();
+	int getStrictY();
 
-   void setStrictY(int var1);
+	void setStrictY(int var1);
 
-   int getPlane();
+	int getPlane();
 
-   void setPlane(int var1);
+	void setPlane(int var1);
 
-   int getUid();
+	int getUid();
 
-   void setUid(int var1);
+	void setUid(int var1);
 
-   int getFlags();
+	int getFlags();
 
-   void setFlags(int var1);
+	void setFlags(int var1);
 }

@@ -1,7 +1,10 @@
 package org.nullbool.piexternal.game.api.wrappers.world;
 
+import org.nullbool.piexternal.game.api.OldschoolClient;
 import org.nullbool.piexternal.game.api.accessors.entity.IRenderable;
 import org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration;
+import org.nullbool.piexternal.game.api.meta.RSTile;
+import org.nullbool.piexternal.game.api.wrappers.definition.ObjectDefinition;
 
 /**
  * @author Bibl (don't ban me pls) <br>
@@ -10,9 +13,11 @@ import org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration;
 public class GroundDecoration implements IGroundDecoration {
 
 	private final IGroundDecoration _deco;
+	private final ObjectDefinition objectDefinition;
 
 	public GroundDecoration(IGroundDecoration _deco) {
 		this._deco = _deco;
+		this.objectDefinition = new ObjectDefinition(OldschoolClient.loadObjDefinition(getId()));
 	}
 
 	@Override
@@ -50,35 +55,79 @@ public class GroundDecoration implements IGroundDecoration {
 		return _deco.getUid();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration#setRegionX(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration#setRegionX
+	 * (int)
 	 */
 	@Override
 	public void setRegionX(int var1) {
-		_deco.setRegionX(var1);		
+		_deco.setRegionX(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration#setRegionY(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration#setRegionY
+	 * (int)
 	 */
 	@Override
 	public void setRegionY(int var1) {
-		_deco.setRegionY(var1);		
+		_deco.setRegionY(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration#setPlane(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration#setPlane
+	 * (int)
 	 */
 	@Override
 	public void setPlane(int var1) {
-		_deco.setPlane(var1);		
+		_deco.setPlane(var1);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration#setUid(int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.nullbool.piexternal.game.api.accessors.world.IGroundDecoration#setUid
+	 * (int)
 	 */
 	@Override
 	public void setUid(int var1) {
-		_deco.setUid(var1);		
+		_deco.setUid(var1);
+	}
+
+	@Override
+	public int getId() {
+		return this.getUid() >> 14 & 32767;
+	}
+
+	@Override
+	public String getName() {
+		return objectDefinition.instance() != null ? objectDefinition.getName() : "";
+	}
+
+	@Override
+	public String[] getActions() {
+		return objectDefinition.instance() != null ? objectDefinition.getActions() : new String[0];
+	}
+
+	public int getTileX() {
+		return getRegionX() + OldschoolClient.getBaseX();
+	}
+
+	public int getTileY() {
+		return getRegionY() + OldschoolClient.getBaseY();
+	}
+
+	@Override
+	public RSTile getPosition() {
+		return new RSTile(getTileX(), getTileY(), getPlane());
 	}
 }

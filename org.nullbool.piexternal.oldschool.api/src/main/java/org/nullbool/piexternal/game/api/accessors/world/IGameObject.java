@@ -2,46 +2,46 @@ package org.nullbool.piexternal.game.api.accessors.world;
 
 import org.nullbool.piexternal.game.api.accessors.entity.IRenderable;
 
-public interface IGameObject {
-   int getHash();
+public interface IGameObject extends ISceneComponent {
+	int getHash();
 
-   void setHash(int var1);
+	void setHash(int var1);
 
-   int getPlane();
+	int getPlane();
 
-   void setPlane(int var1);
+	void setPlane(int var1);
 
-   int getStrictX();
+	int getStrictX();
 
-   void setStrictX(int var1);
+	void setStrictX(int var1);
 
-   int getStrictY();
+	int getStrictY();
 
-   void setStrictY(int var1);
+	void setStrictY(int var1);
 
-   int getLocalX();
+	int getLocalX();
 
-   void setLocalX(int var1);
+	void setLocalX(int var1);
 
-   int getLocalY();
+	int getLocalY();
 
-   void setLocalY(int var1);
+	void setLocalY(int var1);
 
-   int getWidth();
+	int getWidth();
 
-   void setWidth(int var1);
+	void setWidth(int var1);
 
-   int getHeight();
+	int getHeight();
 
-   void setHeight(int var1);
+	void setHeight(int var1);
 
-   int getOrientation();
+	int getOrientation();
 
-   void setOrientation(int var1);
+	void setOrientation(int var1);
 
-   int getFlags();
+	int getFlags();
 
-   void setFlags(int var1);
+	void setFlags(int var1);
 
-   IRenderable getMarkedRenderable();
+	IRenderable getMarkedRenderable();
 }

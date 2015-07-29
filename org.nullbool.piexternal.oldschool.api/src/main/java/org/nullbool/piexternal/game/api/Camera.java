@@ -21,7 +21,7 @@ public class Camera {
 	}
 
 	public void turnAngleTo(GameObject object) {
-		this.turnAngleTo(object.getTile());
+		this.turnAngleTo(object.getPosition());
 	}
 
 	public void turnAngleTo(Actor<?> actor) {
