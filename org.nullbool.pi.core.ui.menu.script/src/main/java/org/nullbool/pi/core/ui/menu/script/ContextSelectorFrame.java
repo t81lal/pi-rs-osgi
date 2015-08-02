@@ -5,24 +5,19 @@ import java.awt.Dimension;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.core.engine.api.IClientContext;
-import org.nullbool.pi.core.engine.api.IContextRegistry;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Bibl (don't ban me pls)
@@ -34,12 +29,14 @@ public class ContextSelectorFrame extends JFrame {
 	private final JPanel contentPane;
 	private final DefaultTableModel model;
 	private final JTable table;
+	private SelectorCallback callback;
 
-	public ContextSelectorFrame() {
+	public ContextSelectorFrame(SelectorCallback callback) {
+		this.callback = callback;
 		setResizable(false);
 		setTitle("Context Selector");
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
-		setPreferredSize(new Dimension(450, 300));
+		setPreferredSize(new Dimension(650, 300));
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -48,10 +45,26 @@ public class ContextSelectorFrame extends JFrame {
 		menuBar.add(mnDebug);
 
 		JMenuItem mntmRefresh = new JMenuItem("Refresh");
+		mntmRefresh.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				repopulate();
+			}
+		});
 		mnDebug.add(mntmRefresh);
 
 		JMenuItem mntmSelectAll = new JMenuItem("Select All");
+		mntmSelectAll.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int rows = table.getRowCount();
+				if(rows > 0) {
+					table.setRowSelectionInterval(0, rows - 1);
+				}
+			}
+		});
 		mnDebug.add(mntmSelectAll);
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.menu);
 		contentPane.setBorder(null);
@@ -60,7 +73,7 @@ public class ContextSelectorFrame extends JFrame {
 		model = new DefaultTableModel(new String[] { "Thread Group", "Context Instance" }, 0);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		table = new JTable(model);
-		contentPane.add(table);
+		contentPane.add(new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
@@ -71,68 +84,65 @@ public class ContextSelectorFrame extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				try {
+					int[] selected = table.getSelectedRows();
+					if(selected != null) {
+						IClientContext<?>[] contexts = new IClientContext<?>[selected.length];
+						for(int i=0; i < selected.length; i++) {
+							int row = table.convertRowIndexToModel(selected[i]);
+							Object o = model.getValueAt(row, 1);
+							if(o != null) {
+								contexts[i] = (IClientContext<?>) o;
+							} else {
+								System.err.println("null context at row " + i + ", wtf...");
+							}
+						}
+						ContextSelectorFrame.this.callback.complete(contexts, table.getRowCount() == selected.length);
+					} else {
+						error("No contexts selected?");
+					}
+				} finally {
+					ContextSelectorFrame.this.callback = null;
+					setVisible(false);
+				}
 			}
 		});
 
 		pack();
 		setLocationRelativeTo(null);
+	}	
+	
+	public void setCallback(SelectorCallback callback) {
+		this.callback = callback;
+	}
+	
+	public void error(String msg) {
+		JOptionPane.showMessageDialog(this, msg, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
-	private void populate() {
+	private void repopulate() {
 		table.clearSelection();
 		for (int i = model.getRowCount() - 1; i >= 0; i++) {
 			model.removeRow(i);
 		}
-		for (IClientContext<?> cxt : contexts()) {
-			model.addRow(new Object[] { cxt.threadGroup(), cxt });
+		for (IClientContext<?> cxt : callback != null ? callback.getContexts() : Util.contexts()) {
+			model.addRow(new Object[] { cxt.getThreadGroup(), cxt });
 		}
 	}
 	
-//	private int eventType = -1;
-//
-//	public List<IClientContext<?>> get() {
-//		eventType = -1;
-//		
-//		populate();
-//		SwingUtilities.invokeAndWait(new Runnable() {
-//			@Override
-//			public void run() {
-//				setVisible(true);
-//			}
-//		});
-//		wait();
-//		
-//		if(eventType == -1) {
-//			throw new 
-//		}
-//		
-//		SwingUtilities.invokeAndWait(new Runnable() {
-//			@Override
-//			public void run() {
-//				setVisible(false);
-//			}
-//		});
-//		
-//		return null;
-//	}
-
-	public IClientContext<?>[] contexts() {
-		BundleContext bundleContext = FrameworkUtil.getBundle(ScriptMenuDecorator.class).getBundleContext();
-		ServiceReference<IContextRegistry> cxtSvcRef = bundleContext.getServiceReference(IContextRegistry.class);
-		IContextRegistry contextRegistry = bundleContext.getService(cxtSvcRef);
-
-		Set<IClientContext<IGameClient>> contexts = contextRegistry.retrieveAll();
-		IClientContext<?>[] engines = new IClientContext[contexts.size()];
-		Iterator<IClientContext<IGameClient>> it = contexts.iterator();
-
-		int i = 0;
-		while (it.hasNext()) {
-			engines[i++] = it.next();
+	@Override
+	public void setVisible(boolean b) {
+		if(b) {
+			repopulate();
 		}
-
-		bundleContext.ungetService(cxtSvcRef);
-
-		return engines;
+		super.setVisible(b);
+	}
+	
+	public static interface SelectorCallback {
+		public void complete(IClientContext<?>[] contexts, boolean all);
+		
+		public default IClientContext<?>[] getContexts() {
+			return Util.contexts();
+		}
 	}
 }

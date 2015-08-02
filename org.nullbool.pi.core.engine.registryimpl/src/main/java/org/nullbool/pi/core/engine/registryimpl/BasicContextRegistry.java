@@ -22,7 +22,7 @@ public class BasicContextRegistry implements IContextRegistry {
 	 */
 	@Override
 	public synchronized void register(IClientContext<IGameClient> context) {
-		registered.put(context.threadGroup(), context);
+		registered.put(context.getThreadGroup(), context);
 	}
 
 	/* (non-Javadoc)

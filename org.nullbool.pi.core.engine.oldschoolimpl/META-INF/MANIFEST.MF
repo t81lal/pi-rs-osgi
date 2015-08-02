@@ -28,4 +28,5 @@ Import-Package: com.google.gson,
  org.topdank.byteengineer.commons.data,
  org.topdank.byteio.in,
  org.topdank.byteio.out
-DynamicImport-Package: *
+DynamicImport-Package: ".",
+ *

@@ -55,7 +55,7 @@ public class OldschoolClient {
 		
 		ThreadGroup tg = Thread.currentThread().getThreadGroup();
 		IClientContext<IGameClient> cxt = registry.retrieve(tg);
-		return (IOldschoolClient) cxt.client();
+		return (IOldschoolClient) cxt.getClient();
 	}
 	
 	static IClientContext<IGameClient> current() {

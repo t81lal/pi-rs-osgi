@@ -32,7 +32,7 @@ public class AppletClientContext<T extends IGameClient> implements IClientContex
 	 * @see org.nullbool.pi.core.game.api.IClientContext#threadGroup()
 	 */
 	@Override
-	public ThreadGroup threadGroup() {
+	public ThreadGroup getThreadGroup() {
 		return tgroup;
 	}
 
@@ -40,7 +40,7 @@ public class AppletClientContext<T extends IGameClient> implements IClientContex
 	 * @see org.nullbool.pi.core.game.api.IClientContext#client()
 	 */
 	@Override
-	public T client() {
+	public T getClient() {
 		return client;
 	}
 
@@ -48,7 +48,7 @@ public class AppletClientContext<T extends IGameClient> implements IClientContex
 	 * @see org.nullbool.pi.core.game.api.IClientContext#applet()
 	 */
 	@Override
-	public Applet applet() {
+	public Applet getApplet() {
 		return (Applet) client;
 	}
 	
@@ -56,7 +56,7 @@ public class AppletClientContext<T extends IGameClient> implements IClientContex
 	 * @see org.nullbool.pi.core.game.api.IClientContext#classloader()
 	 */
 	@Override
-	public HierarchalClassLoader classloader() {
+	public HierarchalClassLoader getContextClassLoader() {
 		return classLoader;
 	}
 
@@ -64,7 +64,7 @@ public class AppletClientContext<T extends IGameClient> implements IClientContex
 	 * @see org.nullbool.pi.core.game.api.IClientContext#eventBus()
 	 */
 	@Override
-	public EventBus eventBus() {
+	public EventBus getEventBus() {
 		return bus;
 	}
 
@@ -72,7 +72,7 @@ public class AppletClientContext<T extends IGameClient> implements IClientContex
 	 * @see org.nullbool.pi.core.engine.api.IClientContext#scriptingEngine()
 	 */
 	@Override
-	public IScriptingEngine scriptingEngine() {
+	public IScriptingEngine getScriptingEngine() {
 		return scriptingEngine;
 	}
 	
@@ -81,8 +81,8 @@ public class AppletClientContext<T extends IGameClient> implements IClientContex
 	 */
 	@Override
 	public void init() throws Throwable {
-		applet().init();
-		applet().start();
+		getApplet().init();
+		getApplet().start();
 	}
 	
 	/* (non-Javadoc)
@@ -90,8 +90,8 @@ public class AppletClientContext<T extends IGameClient> implements IClientContex
 	 */
 	@Override
 	public void shutdown() {
-		applet().stop();
-		applet().destroy();
+		getApplet().stop();
+		getApplet().destroy();
 	}
 
 	/* (non-Javadoc)
@@ -99,6 +99,6 @@ public class AppletClientContext<T extends IGameClient> implements IClientContex
 	 */
 	@Override
 	public boolean active() {
-		return applet().isActive();
+		return getApplet().isActive();
 	}
 }

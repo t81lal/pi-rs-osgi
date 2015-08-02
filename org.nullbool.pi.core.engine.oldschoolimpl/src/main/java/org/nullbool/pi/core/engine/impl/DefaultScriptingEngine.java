@@ -17,10 +17,13 @@ import org.nullbool.pi.core.scripting.api.event.ScriptStartEvent;
 import org.nullbool.pi.core.scripting.api.event.ScriptStopRequestEvent;
 import org.nullbool.pi.core.scripting.api.event.TaskStartEvent;
 import org.nullbool.pi.core.scripting.api.event.TaskStopEvent;
-import org.nullbool.pi.core.scripting.api.loader.RefreshableResourcePool;
+import org.nullbool.pi.core.scripting.api.loader.IScriptingPoolModel;
 import org.nullbool.pi.core.scripting.api.loader.ResolvedDefinition;
 import org.nullbool.pi.core.scripting.api.loader.ResourceType;
-import org.nullbool.pi.core.scripting.api.loader.RunnableResourceLocation;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Bibl (don't ban me pls)
@@ -29,18 +32,10 @@ import org.nullbool.pi.core.scripting.api.loader.RunnableResourceLocation;
 public class DefaultScriptingEngine implements IScriptingEngine {
 
 	private IClientContext<IGameClient> context;
-	private final RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> scriptpool;
-	private final RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> taskpool;
-
 	private ScriptThread script;
 	private List<RunningTask> activeTasks;
 
-	public DefaultScriptingEngine(
-			RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> scriptpool,
-			RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> taskpool) {
-		this.scriptpool = scriptpool;
-		this.taskpool = taskpool;
-
+	public DefaultScriptingEngine() {
 		activeTasks = new ArrayList<RunningTask>();
 	}
 	
@@ -55,14 +50,14 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 		
 		try {
 			RunningTask task = new RunningTask(context, taskData);
-			context.classloader().children().add(task.getClassLoader());
+			context.getContextClassLoader().children().add(task.getClassLoader());
 			
 			synchronized (activeTasks) {
 				activeTasks.add(task);
 			}
 			// TODO: marker for event call
 			Task instance = task.getTaskInstance();
-			context.eventBus().dispatch(new TaskStartEvent(instance));
+			context.getEventBus().dispatch(new TaskStartEvent(instance));
 			return instance;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,7 +71,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 			activeTasks.remove(task);
 		}
 		// TODO: marker for event call
-		context.eventBus().dispatch(new TaskStopEvent(task));
+		context.getEventBus().dispatch(new TaskStopEvent(task));
 	}
 
 	@Override
@@ -87,7 +82,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 				RunningTask task = it.next();
 				it.remove();
 				// TODO: marker for event call
-				context.eventBus().dispatch(new TaskStopEvent(task.getTaskInstance()));
+				context.getEventBus().dispatch(new TaskStopEvent(task.getTaskInstance()));
 			}
 		}
 	}
@@ -147,7 +142,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 				return null;
 			} finally {
 				// TODO: marker for event call
-				context.eventBus().dispatch(new ScriptStartEvent(internalScript));
+				context.getEventBus().dispatch(new ScriptStartEvent(internalScript));
 			}
 		} else {
 			return null;
@@ -175,7 +170,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 					e.printStackTrace();
 				} finally {
 					// TODO: marker for event call
-					context.eventBus().dispatch(new ScriptInteruptEvent(internalScript, state));
+					context.getEventBus().dispatch(new ScriptInteruptEvent(internalScript, state));
 				}
 			} else {
 				this.script = null;
@@ -195,7 +190,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 					e.printStackTrace();
 				} finally {
 					// TODO: marker for event call
-					context.eventBus().dispatch(new ScriptInteruptEvent(internalScript, state));
+					context.getEventBus().dispatch(new ScriptInteruptEvent(internalScript, state));
 				}
 			} else {
 				this.script = null;
@@ -215,7 +210,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 			} catch (RuntimeException e) {
 				e.printStackTrace();
 			} finally {
-				context.eventBus().dispatch(new ScriptStopRequestEvent(internalScript));
+				context.getEventBus().dispatch(new ScriptStopRequestEvent(internalScript));
 				this.script = null;
 			}
 		}
@@ -236,23 +231,20 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 	}
 
 	@Override
-	public RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> getScriptPool() {
-		return scriptpool;
-	}
-
-	@Override
-	public RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> getTaskPool() {
-		return taskpool;
-	}
-
-	@Override
 	public void refresh() {
+		// TODO: stop exceptions propogating upwards.
 		try {
-			scriptpool.refresh();
-			taskpool.refresh();
+			Bundle bundle = FrameworkUtil.getBundle(getClass());
+			BundleContext cxt = bundle.getBundleContext();
+			ServiceReference<IScriptingPoolModel> modelSvcRef = cxt.getServiceReference(IScriptingPoolModel.class);
+			IScriptingPoolModel model = cxt.getService(modelSvcRef);
+			cxt.ungetService(modelSvcRef);
+			
+			model.getPersistentScriptPool().refresh();
+			model.getPersistentTaskPool().refresh();
 		} finally {
 			// TODO: marker for event call
-			context.eventBus().dispatch(new ScriptEngineRefresh(this));
+			context.getEventBus().dispatch(new ScriptEngineRefresh(this));
 		}
 	}
 }

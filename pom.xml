@@ -124,6 +124,7 @@
 		<module>org.nullbool.pi.core.ui.legacy</module>
 		<module>org.nullbool.pi.core.launcher</module>
 		<module>org.nullbool.pi.core.painting.api</module>
+		<module>org.nullbool.pi.core.scripting.poolmodelimpl</module>
 	</modules>
 	<version>1.0.0-ALPHA</version>
 </project>

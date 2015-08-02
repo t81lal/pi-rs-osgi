@@ -6,6 +6,7 @@ public class ExternalResourceDefinition {
 
 	private final int priority;
 	private final String type; //script or task
+	@Deprecated
 	private final String[] api_keys;
 	private final String klassName;
 	private final String name;
@@ -13,11 +14,24 @@ public class ExternalResourceDefinition {
 	private final String version;
 	private final String[] authors;
 
+	@Deprecated
 	public ExternalResourceDefinition(int priority, String type, String[] api_keys, String klassName, String name, String description, String version,
 			String[] authors) {
 		this.priority = priority;
 		this.type = type;
 		this.api_keys = api_keys;
+		this.klassName = klassName;
+		this.name = name;
+		this.description = description;
+		this.version = version;
+		this.authors = authors;
+	}
+	
+	public ExternalResourceDefinition(int priority, String type, String klassName, String name, String description, String version,
+			String[] authors) {
+		this.priority = priority;
+		this.type = type;
+		this.api_keys = null;
 		this.klassName = klassName;
 		this.name = name;
 		this.description = description;

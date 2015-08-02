@@ -93,8 +93,13 @@ public class ResolvedDefinition {
 		return true;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "ScriptDefinition [definition=" + definition + ", type=" + type + ", jarInfo=" + jarInfo + ", contents=" + contents + "]";
+//	}
+	
 	@Override
 	public String toString() {
-		return "ScriptDefinition [definition=" + definition + ", type=" + type + ", jarInfo=" + jarInfo + ", contents=" + contents + "]";
+		return definition.getName();
 	}
 }

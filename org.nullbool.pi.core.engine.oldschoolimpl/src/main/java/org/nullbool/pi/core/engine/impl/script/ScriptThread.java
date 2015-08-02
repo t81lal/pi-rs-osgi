@@ -22,11 +22,11 @@ public class ScriptThread extends Thread {
 	private long startTime;
 
 	public ScriptThread(IClientContext<IGameClient> context, IScriptingEngine engine, ResolvedDefinition scriptData) throws Exception {
-		super(context.threadGroup(), String.format("script-(%s, %s)", scriptData.getDefinition().getName(), scriptData.getDefinition().getVersion()));
+		super(context.getThreadGroup(), String.format("script-(%s, %s)", scriptData.getDefinition().getName(), scriptData.getDefinition().getVersion()));
 		this.engine = engine;
 		this.scriptData = scriptData;
 		
-		classLoader = new HierarchalClassLoader(context.classloader(), scriptData.getContents());
+		classLoader = new HierarchalClassLoader(context.getContextClassLoader(), scriptData.getContents());
 //		 classLoader = new ScriptClassLoader(getClass().getClassLoader(), scriptData.getContents());
 				
 		Class<Script> klass = scriptData.getClass(classLoader, Script.class, scriptData.getDefinition().getKlassName());

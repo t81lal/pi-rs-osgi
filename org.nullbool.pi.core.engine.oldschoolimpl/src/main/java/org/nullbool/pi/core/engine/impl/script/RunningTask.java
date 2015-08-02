@@ -19,7 +19,7 @@ public class RunningTask {
 	public RunningTask(IClientContext<IGameClient> context, ResolvedDefinition definition) throws Exception {
 		this.definition = definition;
 
-		classLoader = new HierarchalClassLoader(context.classloader(), definition.getContents());
+		classLoader = new HierarchalClassLoader(context.getContextClassLoader(), definition.getContents());
 		Class<Task> klass = definition.getClass(classLoader, Task.class, definition.getDefinition().getKlassName());
 		Task taskInstance = klass.newInstance();
 		this.taskInstance = taskInstance;

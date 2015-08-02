@@ -11,23 +11,23 @@ import org.nullbool.topdank.eventbus.api.EventBus;
  * @author Bibl (don't ban me pls)
  * @created 12 Jun 2015 19:31:22
  */
-public abstract interface IClientContext<T extends IGameClient> {
+public interface IClientContext<T extends IGameClient> {
 
-	public abstract ThreadGroup threadGroup();
+	public ThreadGroup getThreadGroup();
 	
-	public abstract EventBus eventBus();
+	public EventBus getEventBus();
 		
-	public abstract T client();
+	public T getClient();
 	
-	public abstract Applet applet();
+	public Applet getApplet();
 	
-	public abstract HierarchalClassLoader classloader();
+	public HierarchalClassLoader getContextClassLoader();
 	
-	public abstract IScriptingEngine scriptingEngine();
+	public IScriptingEngine getScriptingEngine();
 	
-	public abstract void init() throws Throwable;
+	public void init() throws Throwable;
 	
-	public abstract void shutdown();
+	public void shutdown();
 	
-	public abstract boolean active();
+	public boolean active();
 }

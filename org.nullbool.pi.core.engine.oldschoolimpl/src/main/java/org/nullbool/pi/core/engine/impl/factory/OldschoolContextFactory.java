@@ -51,7 +51,7 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 //		}
 		
 		// FIXME: Revision checking
-		int latestVer = 85;
+		int latestVer = 86;
 		
 		/* First we see if there is a straight load 
 		 * and run jar (refactor, deob or transformed).*/
@@ -219,9 +219,7 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 		ServiceReference<EventBus> svcRef = bundleContext.getServiceReference(EventBus.class);
 		EventBus bus = bundleContext.getService(svcRef);
 		
-		BasicResourcePool scriptpool = new BasicResourcePool();
-		BasicResourcePool taskpool = new BasicResourcePool();
-		DefaultScriptingEngine scriptingEngine = new DefaultScriptingEngine(scriptpool, taskpool);
+		DefaultScriptingEngine scriptingEngine = new DefaultScriptingEngine();
 		
 		AppletClientContext<IGameClient> context = new AppletClientContext<IGameClient>(Thread.currentThread().getThreadGroup(), classLoader, bus, scriptingEngine, (IGameClient) gameApplet);
 		scriptingEngine.initContext(context);

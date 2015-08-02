@@ -1,5 +1,6 @@
 package org.nullbool.pi.core.engine.impl;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,6 +15,16 @@ public class ContextDelegateRenderer implements IDelegateRenderer {
 
 	private final Map<ThreadGroup, Set<IRenderer>> delegates = new HashMap<ThreadGroup, Set<IRenderer>>();
 	private final Set<IRenderer> global = new HashSet<IRenderer>();
+	
+	public ContextDelegateRenderer() {
+		attachGlobal(new IRenderer() {
+			@Override
+			public void render(Graphics g) {
+				g.setColor(Color.RED);
+				g.drawString("pi system renderer", 5, 14);
+			}
+		});
+	}
 	
 	void attachGlobal(IRenderer r) {
 		synchronized (global) {

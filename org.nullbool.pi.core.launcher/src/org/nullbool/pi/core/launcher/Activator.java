@@ -2,6 +2,7 @@ package org.nullbool.pi.core.launcher;
 
 import java.net.URL;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import org.nullbool.core.piexternal.game.api.IGameClient;
@@ -87,13 +88,14 @@ public class Activator implements BundleActivator {
 								context.ungetService(cxtSvcRef);
 								cacheContext(clientContext);
 								
-								browser.setApplet(clientContext.applet());
+								browser.setApplet(clientContext.getApplet());
 								clientContext.init();
 								viewer.acceptContext(clientContext);
-								viewer.show(clientContext.applet());
+								viewer.show(clientContext.getApplet());
 								
 							} catch(Throwable t) {
 								t.printStackTrace();
+								fatal(t.getClass().getSimpleName());
 							} finally {
 								// release services
 								context.ungetService(gbfSvcRef);
@@ -132,6 +134,8 @@ public class Activator implements BundleActivator {
 	// TODO: Logger
 	public void fatal(String msg) {
 		System.err.printf("(Fatal): %s.%n", msg);
+		
+		JOptionPane.showMessageDialog(null, msg, "Error", JOptionPane.ERROR_MESSAGE);
 		
 		if(shellSrvRef == null) {
 			shellSrvRef = context.getServiceReference(Shell.class);

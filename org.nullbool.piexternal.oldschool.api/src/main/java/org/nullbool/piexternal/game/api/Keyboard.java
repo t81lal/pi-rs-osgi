@@ -20,11 +20,11 @@ public final class Keyboard {
 		}
 		
 		IClientContext<IGameClient> cxt = OldschoolClient.current();
-		if(tg != cxt.threadGroup()) {
+		if(tg != cxt.getThreadGroup()) {
 			throw new IllegalStateException("ThreadGroups don't match?");
 		}
 		
-		IOldschoolClient client = (IOldschoolClient) cxt.client();
+		IOldschoolClient client = (IOldschoolClient) cxt.getClient();
 		Canvas canvas = client.getCanvas();
 		Keyboard keyboard = new Keyboard(canvas);
 		INSTANCES.put(tg, keyboard);

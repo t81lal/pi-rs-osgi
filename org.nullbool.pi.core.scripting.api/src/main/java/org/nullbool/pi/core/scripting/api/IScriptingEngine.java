@@ -2,9 +2,7 @@ package org.nullbool.pi.core.scripting.api;
 
 import java.util.List;
 
-import org.nullbool.pi.core.scripting.api.loader.RefreshableResourcePool;
 import org.nullbool.pi.core.scripting.api.loader.ResolvedDefinition;
-import org.nullbool.pi.core.scripting.api.loader.RunnableResourceLocation;
 
 /**
  * @author Bibl (don't ban me pls)
@@ -35,10 +33,6 @@ public abstract interface IScriptingEngine {
 	public abstract Script getActiveScript();
 	
 	public abstract List<Task> getActiveTasks();
-	
-	public abstract RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> getScriptPool();
-	
-	public abstract RefreshableResourcePool<ResolvedDefinition, RunnableResourceLocation<ResolvedDefinition>> getTaskPool();
 	
 	public abstract void refresh();
 }

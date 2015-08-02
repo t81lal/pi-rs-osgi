@@ -65,7 +65,7 @@ public class LegacyViewer implements IViewer {
 		if(context == null)
 			return;
 		
-		if(c.equals(context.applet())) {
+		if(c.equals(context.getApplet())) {
 			eventQueue.submit(new Runnable() {
 				@Override
 				public void run() {

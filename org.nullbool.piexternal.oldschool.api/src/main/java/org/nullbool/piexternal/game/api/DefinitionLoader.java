@@ -26,7 +26,7 @@ public class DefinitionLoader implements Runnable {
 		}
 		
 		IClientContext<IGameClient> cxt = OldschoolClient.current();
-		if(tg != cxt.threadGroup()) {
+		if(tg != cxt.getThreadGroup()) {
 			throw new IllegalStateException("ThreadGroups don't match?");
 		}
 		
