@@ -8,31 +8,33 @@ import org.nullbool.pi.core.scripting.api.loader.ResolvedDefinition;
  * @author Bibl (don't ban me pls)
  * @created 25 Jun 2015 03:54:21
  */
-public abstract interface IScriptingEngine {
+public interface IScriptingEngine {
 
-	public abstract Task startTask(ResolvedDefinition taskData);
+	public Task startTask(ResolvedDefinition taskData);
 	
-	public abstract void stopTask(Task task);
+	public void stopTask(Task task);
 	
-	public abstract void stopAllTasks();
+	public void stopAllTasks();
 	
-	public abstract boolean tasksRunning();
+	public boolean tasksRunning();
 	
-	public abstract Script startScript(ResolvedDefinition scriptData);
+	public Script startScript(ResolvedDefinition scriptData);
 	
-	public abstract boolean isScriptRunning();
+	public boolean isScriptRunning();
 	
-	public abstract String[] getActiveScriptData();
+	public void interuptActiveScript(boolean state);
 	
-	public abstract void interuptActiveScript(boolean state);
-	
-	public abstract void interuptActiveScript();
+	public void interuptActiveScript();
 
-	public abstract void stopActiveScript();
+	public void stopActiveScript();
 	
-	public abstract Script getActiveScript();
+	public Script getActiveScript();
 	
-	public abstract List<Task> getActiveTasks();
+	public String[] getActiveScriptData();
 	
-	public abstract void refresh();
+	public List<Task> getActiveTasks();
+	
+	public String[] getActiveTaskData(Task task);
+	
+	public void refresh();
 }

@@ -8,7 +8,11 @@ public class Activator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		bundleContext.registerService(IScriptingPoolModel.class, new ScriptingModelPoolImpl(), null);
+		try {
+			bundleContext.registerService(IScriptingPoolModel.class, new ScriptingModelPoolImpl(), null);
+		} catch(Throwable t) {
+			t.printStackTrace();
+		}
 	}
 
 	@Override

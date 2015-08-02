@@ -156,7 +156,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 
 	@Override
 	public String[] getActiveScriptData() {
-		return this.script != null ? this.script.getFormattedData() : new String[4];
+		return this.script != null ? this.script.getFormattedData() : null;
 	}
 
 	@Override
@@ -246,5 +246,17 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 			// TODO: marker for event call
 			context.getEventBus().dispatch(new ScriptEngineRefresh(this));
 		}
+	}
+	
+	@Override
+	public String[] getActiveTaskData(Task task) {
+		if(task == null)
+			return null;
+		for(RunningTask t : activeTasks) {
+			if(t.getTaskInstance() == task) {
+				return t.getFormattedData();
+			}
+		}
+		return null;
 	}
 }

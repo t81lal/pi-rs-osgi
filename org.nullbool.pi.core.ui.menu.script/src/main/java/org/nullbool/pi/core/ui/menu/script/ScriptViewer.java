@@ -28,6 +28,8 @@ import javax.swing.table.DefaultTableModel;
 
 import org.nullbool.pi.core.engine.api.IClientContext;
 import org.nullbool.pi.core.scripting.api.IScriptingEngine;
+import org.nullbool.pi.core.scripting.api.Script;
+import org.nullbool.pi.core.scripting.api.Task;
 import org.nullbool.pi.core.scripting.api.loader.DescribedManifestResourceLocation;
 import org.nullbool.pi.core.scripting.api.loader.ExternalResourceDefinition;
 import org.nullbool.pi.core.scripting.api.loader.IScriptingPoolModel;
@@ -54,6 +56,7 @@ public class ScriptViewer {
 
 	private final ScriptsView scriptsView;
 	private final LocationsView locationsView;
+	private final ActiveView activeView;
 
 	public ScriptViewer() {
 		window = new JFrame("Script Viewer") {
@@ -79,6 +82,7 @@ public class ScriptViewer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				scriptsView.reload();
+				activeView.reload();
 			}
 		});
 
@@ -94,6 +98,10 @@ public class ScriptViewer {
 		scriptsView = new ScriptsView();
 		tabbedPane.add("Scripts", scriptsView);
 		tabbedPane.addChangeListener(scriptsView);
+
+		activeView = new ActiveView();
+		tabbedPane.add("Active", activeView);
+		tabbedPane.addChangeListener(activeView);
 
 		locationsView = new LocationsView();
 		tabbedPane.add("Locations", locationsView);
@@ -116,22 +124,94 @@ public class ScriptViewer {
 		}
 	}
 
+	// TODO: update with events
+	private class ActiveView extends TableView {
+		private static final long serialVersionUID = -2014261867061146346L;
+
+		public ActiveView() {
+			super(new String[] { "Data", "Context" });
+		}
+
+		public void reload() {
+			table.clearSelection();
+			int rows = model.getRowCount();
+			if (rows > 0) {
+				for (int i = 0; i < rows; i++) {
+					model.removeRow(model.getRowCount() - 1);
+				}
+			}
+			for (IClientContext<?> cxt : Util.contexts()) {
+				IScriptingEngine engine = cxt.getScriptingEngine();
+				if (engine != null) {
+					String[] d = engine.getActiveScriptData();
+					if (d != null) {
+						add(new DataNode(engine.getActiveScript(), d), cxt);
+					}
+					
+					for(Task task : engine.getActiveTasks()) {
+						d = engine.getActiveTaskData(task);
+						add(new DataNode(task, d), cxt);
+					}
+				} else {
+					System.err.println("null scripting engine for " + cxt.getThreadGroup());
+				}
+			}
+		}
+
+		public void add(DataNode dn, IClientContext<?> cxt) {
+			model.addRow(new Object[] { dn, cxt });
+		}
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			Component c = tabbedPane.getSelectedComponent();
+			scriptsView.stopMenuItem.setEnabled(c == this);
+		}
+	}
+
+	private static class DataNode {
+		final Object instance;
+		final String toString;
+
+		DataNode(Object instance, String[] details) {
+			this.instance = instance;
+			toString = Arrays.toString(details);
+		}
+
+		@Override
+		public String toString() {
+			return toString;
+		}
+	}
+
 	private class ScriptsView extends TableView {
 		private static final long serialVersionUID = -8401803159915227029L;
 		private final JMenu runMenu;
 		private final ContextSelectorFrame selector;
+		private final JMenuItem inspectMenuItem;
+		private final JMenuItem startMenuItem;
+		private final JMenuItem interuptMenuItem;
+		private final JMenuItem interuptTrueMenuItem;
+		private final JMenuItem interuptFalseMenuItem;
+		private final JMenuItem stopMenuItem;
 
 		public ScriptsView() {
 			super(new String[] { "Name", "Version", "Description", "Authors", "Location" });
 
-			selector = new ContextSelectorFrame(null);
+			inspectMenuItem = new JMenuItem("Inspect");
+			startMenuItem = new JMenuItem("Start");
+			interuptMenuItem = new JMenuItem("Interupt");
+			interuptTrueMenuItem = new JMenuItem("Interupt(true)");
+			interuptFalseMenuItem = new JMenuItem("Interupt(false)");
+			stopMenuItem = new JMenuItem("Stop");
 
-			JMenuItem inspectMenuItem = new JMenuItem("Inspect");
-			JMenuItem startMenuItem = new JMenuItem("Start");
-			JMenuItem interuptMenuItem = new JMenuItem("Interupt");
-			JMenuItem interuptTrueMenuItem = new JMenuItem("Interupt(true)");
-			JMenuItem interuptFalseMenuItem = new JMenuItem("Interupt(false)");
-			JMenuItem stopMenuItem = new JMenuItem("Stop");
+			// TODO: implement
+			interuptMenuItem.setEnabled(false);
+			interuptTrueMenuItem.setEnabled(false);
+			interuptFalseMenuItem.setEnabled(false);
+			stopMenuItem.setEnabled(false);
+
+			selector = new ContextSelectorFrame(null);
 
 			inspectMenuItem.addActionListener(new ActionListener() {
 				@Override
@@ -182,12 +262,40 @@ public class ScriptViewer {
 								return list.toArray(new IClientContext[list.size()]);
 							}
 						});
-						
+
 						selector.setVisible(true);
 					}
 				}
 			});
 
+			stopMenuItem.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						int selected = activeView.table.getSelectedRow();
+						if(selected == -1) {
+							error("No item selected.");
+						} else {
+							DataNode dn = (DataNode) table.getValueAt(selected, 0);
+							IClientContext<?> cxt = (IClientContext<?>) table.getValueAt(selected, 1);
+							if(dn != null) {
+								Object o = dn.instance;
+								if(o instanceof Script) {
+									cxt.getScriptingEngine().stopActiveScript();
+								} else if(o instanceof Task) {
+									cxt.getScriptingEngine().stopTask((Task) o);
+								} else {
+									throw new RuntimeException(o.toString());
+								}
+							}
+						}
+					} catch(Throwable t) {
+						t.printStackTrace();
+						error(t.getClass().getCanonicalName());
+					}
+				}
+			});
+			
 			runMenu = new JMenu("Execution");
 			runMenu.add(inspectMenuItem);
 			runMenu.add(startMenuItem);
@@ -204,8 +312,8 @@ public class ScriptViewer {
 			table.clearSelection();
 			int rows = model.getRowCount();
 			if (rows > 0) {
-				for (int i = rows - 1; i >= 0; i++) {
-					model.removeRow(i);
+				for (int i = 0; i < rows; i++) {
+					model.removeRow(model.getRowCount() - 1);
 				}
 			}
 
@@ -232,11 +340,9 @@ public class ScriptViewer {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			Component c = tabbedPane.getSelectedComponent();
-			if (this == c) {
-				runMenu.setEnabled(true);
-			} else {
-				runMenu.setEnabled(false);
-			}
+			runMenu.setEnabled(c == this || c == activeView);
+			startMenuItem.setEnabled(c == this);
+			inspectMenuItem.setEnabled(c == this);
 		}
 	}
 
@@ -250,7 +356,7 @@ public class ScriptViewer {
 
 		public LocationsView() {
 			super(new String[] { "Path", "Type" });
-			
+
 			selector = new TypeSelectorFrame();
 
 			locationsMenu = new JMenu("Locations");
@@ -267,35 +373,36 @@ public class ScriptViewer {
 							selector.setCallback(new TypeCallback() {
 								@Override
 								public void chose(ResourceType t) {
-									if(t != null) {
+									if (t != null) {
 										File f = new File(path);
 										FinderStrategy<JarInfo> finder;
-										if(f.isDirectory()) {
+										if (f.isDirectory()) {
 											finder = new JarInfoFolderSearchFinderStrategy(false, f);
 										} else {
 											finder = new FixedFinderStrategy<JarInfo>(new JarInfo(f));
 										}
-										
+
 										DescribedManifestResourceLocation loc = new DescribedManifestResourceLocation(finder);
 										IScriptingPoolModel poolModel = Util.model();
-										
-										if(t == ResourceType.SCRIPT) {
+
+										if (t == ResourceType.SCRIPT) {
 											poolModel.getPersistentScriptPool().add(loc);
-										} else if(t == ResourceType.TASK) {
+										} else if (t == ResourceType.TASK) {
 											poolModel.getPersistentTaskPool().add(loc);
 										} else {
 											throw new IllegalStateException();
 										}
-										
+
 										model.addRow(new Object[] { path, t.name() });
 									} else {
 										error("Null type.");
 									}
 								}
 							});
+							selector.setLocationRelativeTo(LocationsView.this);
 							selector.setVisible(true);
 						}
-					} catch(Throwable t) {
+					} catch (Throwable t) {
 						t.printStackTrace();
 						error("Error");
 					}
@@ -330,7 +437,7 @@ public class ScriptViewer {
 					}
 				}
 			});
-			
+
 			locationsMenu.add(addMenuItem);
 			locationsMenu.add(modifyMenuItem);
 			locationsMenu.add(removeMenuItem);

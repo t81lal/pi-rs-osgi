@@ -122,8 +122,11 @@ public class ContextSelectorFrame extends JFrame {
 
 	private void repopulate() {
 		table.clearSelection();
-		for (int i = model.getRowCount() - 1; i >= 0; i++) {
-			model.removeRow(i);
+		int rows = model.getRowCount();
+		if (rows > 0) {
+			for (int i = 0; i < rows; i++) {
+				model.removeRow(model.getRowCount() - 1);
+			}
 		}
 		for (IClientContext<?> cxt : callback != null ? callback.getContexts() : Util.contexts()) {
 			model.addRow(new Object[] { cxt.getThreadGroup(), cxt });

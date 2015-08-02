@@ -1,9 +1,12 @@
 package org.nullbool.pi.core.engine.impl.script;
 
+import java.util.Arrays;
+
 import org.nullbool.core.piexternal.game.api.IGameClient;
 import org.nullbool.pi.core.engine.api.IClientContext;
 import org.nullbool.pi.core.scripting.api.Task;
 import org.nullbool.pi.core.scripting.api.klassmodel.HierarchalClassLoader;
+import org.nullbool.pi.core.scripting.api.loader.ExternalResourceDefinition;
 import org.nullbool.pi.core.scripting.api.loader.ResolvedDefinition;
 
 /**
@@ -23,6 +26,13 @@ public class RunningTask {
 		Class<Task> klass = definition.getClass(classLoader, Task.class, definition.getDefinition().getKlassName());
 		Task taskInstance = klass.newInstance();
 		this.taskInstance = taskInstance;
+	}
+	
+	public String[] getFormattedData() {
+		if (definition == null)
+			return new String[] { "error", "error", "error", "error" };
+		ExternalResourceDefinition def = definition.getDefinition();
+		return new String[] { Arrays.toString(def.getAuthors()), def.getName(), def.getVersion(), def.getDescription() };
 	}
 
 	public ResolvedDefinition getDefinition() {
