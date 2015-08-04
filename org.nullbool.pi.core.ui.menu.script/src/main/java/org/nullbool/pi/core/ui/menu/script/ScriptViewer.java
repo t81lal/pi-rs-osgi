@@ -66,6 +66,7 @@ public class ScriptViewer {
 			public void setVisible(boolean b) {
 				if (b) {
 					scriptsView.reload();
+					locationsView.reload();
 				}
 				super.setVisible(b);
 			}
@@ -83,6 +84,7 @@ public class ScriptViewer {
 			public void actionPerformed(ActionEvent e) {
 				scriptsView.reload();
 				activeView.reload();
+				locationsView.reload();
 			}
 		});
 
@@ -446,6 +448,25 @@ public class ScriptViewer {
 			locationsMenu.setEnabled(tabbedPane.getSelectedComponent() == this);
 		}
 
+		public void reload() {
+			table.clearSelection();
+			int rows = model.getRowCount();
+			if (rows > 0) {
+				for (int i = 0; i < rows; i++) {
+					model.removeRow(model.getRowCount() - 1);
+				}
+			}
+			// FIXME: Base location
+			/* IScriptingPoolModel model = Util.model();
+			for(RunnableResourceLocation<ResolvedDefinition> loc : model.getPersistentScriptPool().locations()) {
+				this.model.addRow(new Object[]{loc.getLocation().toString(), ResourceType.SCRIPT.name()});
+			}
+			
+			for(RunnableResourceLocation<ResolvedDefinition> loc : model.getPersistentTaskPool().locations()) {
+				this.model.addRow(new Object[]{loc.getLocation().toString(), ResourceType.TASK.name()});
+			} */
+		}
+		
 		protected String attemptAdd() {
 			String loc = ask("Location?");
 			if (loc != null) {
