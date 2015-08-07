@@ -82,10 +82,10 @@ public class Activator implements BundleActivator {
 								IClientContext<IGameClient> clientContext = cf.create(browser);
 								
 								// add it to the registry
-								ServiceReference<IContextRegistry> cxtSvcRef = context.getServiceReference(IContextRegistry.class);
-								IContextRegistry contextRegistry = context.getService(cxtSvcRef);
-								contextRegistry.register(clientContext);
-								context.ungetService(cxtSvcRef);
+//								ServiceReference<IContextRegistry> cxtSvcRef = context.getServiceReference(IContextRegistry.class);
+//								IContextRegistry contextRegistry = context.getService(cxtSvcRef);
+//								contextRegistry.register(clientContext);
+//								context.ungetService(cxtSvcRef);
 								cacheContext(clientContext);
 								
 								browser.setApplet(clientContext.getApplet());
@@ -116,7 +116,6 @@ public class Activator implements BundleActivator {
 	private void cacheContext(IClientContext<IGameClient> c) {
 		ServiceReference<IContextRegistry> cxtRefSvcRef = context.getServiceReference(IContextRegistry.class);
 		IContextRegistry registry = context.getService(cxtRefSvcRef);
-		System.out.println(registry);
 		registry.register(c);
 		context.ungetService(cxtRefSvcRef);
 	}

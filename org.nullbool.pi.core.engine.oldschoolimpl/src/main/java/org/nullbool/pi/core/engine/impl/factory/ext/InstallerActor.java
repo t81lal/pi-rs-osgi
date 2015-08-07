@@ -77,9 +77,6 @@ public class InstallerActor implements IActor<ClassLoader> {
 		String api_key;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.engine.impl.factory.ext.IActor#act(org.topdank.byteengineer.commons.data.JarContents, java.io.File)
-	 */
 	@Override
 	public ClassLoader act(FileSet runningJar, JarContents<ClassNode> contents, File baseDir) throws Exception {
 		if(runningJar == FileSet.VANILLA)
@@ -91,9 +88,6 @@ public class InstallerActor implements IActor<ClassLoader> {
 		return installProvider(f);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.engine.impl.factory.ext.IActor#type()
-	 */
 	@Override
 	public Class<ClassLoader> type() {
 		return null;

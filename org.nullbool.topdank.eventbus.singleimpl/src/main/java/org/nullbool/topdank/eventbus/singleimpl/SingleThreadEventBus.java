@@ -110,6 +110,7 @@ public class SingleThreadEventBus implements EventBus {
 			Class<?> eventKlass = e.getClass();
 			for (CallbackData d : registered) {
 				if (d.same(eventKlass)) {
+					System.out.println(eventKlass + " same as " + d.eventKlass + " " + registered);
 					try {
 						d.invoke(e);
 					} catch (Exception e1) {

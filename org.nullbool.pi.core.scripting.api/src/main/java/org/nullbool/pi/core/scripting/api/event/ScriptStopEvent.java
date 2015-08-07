@@ -7,16 +7,9 @@ import org.nullbool.pi.core.scripting.api.Script;
  * @author Bibl (don't ban me pls)
  * @created a while before 07/08/15 (today)
  */
-public class ScriptInteruptEvent extends ScriptEvent {
+public class ScriptStopEvent extends ScriptEvent {
 
-	private final boolean state;
-
-	public ScriptInteruptEvent(IScriptingEngine engine, Script script, boolean state) {
+	public ScriptStopEvent(IScriptingEngine engine, Script script) {
 		super(engine, script);
-		this.state = state;
-	}
-
-	public boolean isState() {
-		return state;
 	}
 }

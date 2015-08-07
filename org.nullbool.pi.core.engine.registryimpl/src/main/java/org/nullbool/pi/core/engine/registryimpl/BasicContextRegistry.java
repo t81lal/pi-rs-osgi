@@ -1,11 +1,14 @@
 package org.nullbool.pi.core.engine.registryimpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.nullbool.core.piexternal.game.api.IGameClient;
+import org.nullbool.pi.core.engine.api.ContextListener;
 import org.nullbool.pi.core.engine.api.IClientContext;
 import org.nullbool.pi.core.engine.api.IContextRegistry;
 
@@ -16,36 +19,58 @@ import org.nullbool.pi.core.engine.api.IContextRegistry;
 public class BasicContextRegistry implements IContextRegistry {
 
 	private final Map<ThreadGroup, IClientContext<IGameClient>> registered = new HashMap<ThreadGroup, IClientContext<IGameClient>>();
+	private final List<ContextListener> listeners = new ArrayList<ContextListener>();
 	
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.engine.api.IContextRegistry#register(org.nullbool.pi.core.engine.api.IClientContext)
-	 */
 	@Override
 	public synchronized void register(IClientContext<IGameClient> context) {
 		registered.put(context.getThreadGroup(), context);
+		
+		synchronized (listeners) {
+			for(ContextListener listener : listeners) {
+				listener.registered(context);
+			}
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.engine.api.IContextRegistry#unregister(java.lang.ThreadGroup)
-	 */
 	@Override
 	public synchronized void unregister(ThreadGroup tg) {
-		registered.remove(tg);
+		IClientContext<IGameClient> cxt = registered.remove(tg);
+		
+		synchronized (listeners) {
+			for(ContextListener listener : listeners) {
+				listener.unregistered(cxt);
+			}	
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.engine.api.IContextRegistry#retrieve(java.lang.ThreadGroup)
-	 */
 	@Override
 	public synchronized IClientContext<IGameClient> retrieve(ThreadGroup tg) {
 		return registered.get(tg);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.engine.api.IContextRegistry#retrieveAll()
-	 */
 	@Override
 	public Set<IClientContext<IGameClient>> retrieveAll() {
 		return new HashSet<IClientContext<IGameClient>>(registered.values());
+	}
+
+	@Override
+	public void registerListener(ContextListener listener) {
+		synchronized (listeners) {
+			listeners.add(listener);		
+		}
+	}
+
+	@Override
+	public void unregisterListener(ContextListener listener) {
+		synchronized (listeners) {
+			listeners.remove(listener);
+		}
+	}
+
+	@Override
+	public void unregisterAllListeners() {
+		synchronized (listeners) {
+			listeners.clear();
+		}
 	}
 }

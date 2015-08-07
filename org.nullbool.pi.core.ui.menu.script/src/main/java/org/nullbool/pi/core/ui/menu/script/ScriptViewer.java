@@ -11,8 +11,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -26,10 +24,16 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
+import org.nullbool.pi.core.engine.api.ContextListener;
 import org.nullbool.pi.core.engine.api.IClientContext;
+import org.nullbool.pi.core.engine.api.IContextRegistry;
 import org.nullbool.pi.core.scripting.api.IScriptingEngine;
 import org.nullbool.pi.core.scripting.api.Script;
 import org.nullbool.pi.core.scripting.api.Task;
+import org.nullbool.pi.core.scripting.api.event.ScriptStartEvent;
+import org.nullbool.pi.core.scripting.api.event.ScriptStopEvent;
+import org.nullbool.pi.core.scripting.api.event.TaskStartEvent;
+import org.nullbool.pi.core.scripting.api.event.TaskStopEvent;
 import org.nullbool.pi.core.scripting.api.loader.DescribedManifestResourceLocation;
 import org.nullbool.pi.core.scripting.api.loader.ExternalResourceDefinition;
 import org.nullbool.pi.core.scripting.api.loader.IScriptingPoolModel;
@@ -40,13 +44,16 @@ import org.nullbool.pi.core.scripting.api.loader.finder.FixedFinderStrategy;
 import org.nullbool.pi.core.scripting.api.loader.finder.JarInfoFolderSearchFinderStrategy;
 import org.nullbool.pi.core.ui.menu.script.ContextSelectorFrame.SelectorCallback;
 import org.nullbool.pi.core.ui.menu.script.TypeSelectorFrame.TypeCallback;
+import org.nullbool.topdank.eventbus.api.EventTarget;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.topdank.byteengineer.commons.data.JarInfo;
 
 /**
  * @author Bibl (don't ban me pls)
  * @created 26 Jun 2015 11:49:45
  */
-public class ScriptViewer {
+public class ScriptViewer implements ContextListener {
 
 	private final JFrame window;
 
@@ -110,6 +117,13 @@ public class ScriptViewer {
 		tabbedPane.addChangeListener(locationsView);
 
 		window.getContentPane().add(tabbedPane);
+		
+		BundleContext context = Util.context();
+		ServiceReference<IContextRegistry> regSvcRef = context.getServiceReference(IContextRegistry.class);
+		IContextRegistry registry = context.getService(regSvcRef);
+		// TODO: Service tracker
+		registry.registerListener(this);
+		context.ungetService(regSvcRef);
 	}
 
 	private abstract class TableView extends JPanel implements ChangeListener {
@@ -163,7 +177,7 @@ public class ScriptViewer {
 		public void add(DataNode dn, IClientContext<?> cxt) {
 			model.addRow(new Object[] { dn, cxt });
 		}
-
+		
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			Component c = tabbedPane.getSelectedComponent();
@@ -278,8 +292,8 @@ public class ScriptViewer {
 						if(selected == -1) {
 							error("No item selected.");
 						} else {
-							DataNode dn = (DataNode) table.getValueAt(selected, 0);
-							IClientContext<?> cxt = (IClientContext<?>) table.getValueAt(selected, 1);
+							DataNode dn = (DataNode) activeView.table.getValueAt(selected, 0);
+							IClientContext<?> cxt = (IClientContext<?>) activeView.table.getValueAt(selected, 1);
 							if(dn != null) {
 								Object o = dn.instance;
 								if(o instanceof Script) {
@@ -532,10 +546,63 @@ public class ScriptViewer {
 		window.setVisible(true);
 	}
 
-	private JButton makeButton(String name) {
-		ImageIcon icon = new ImageIcon(ScriptViewer.class.getResource("/icons/" + name));
-		JButton button = new JButton(icon);
-		button.setFocusable(false);
-		return button;
+	@Override
+	public void registered(IClientContext<?> cxt) {
+		cxt.getEventBus().register(this);
+		activeView.reload();
+	}
+
+	@Override
+	public void unregistered(IClientContext<?> cxt) {
+		cxt.getEventBus().unregister(this);
+		activeView.reload();
+	}
+	
+	@EventTarget
+	private void onScriptStartEvent(ScriptStartEvent e) {
+		for(IClientContext<?> cxt : Util.contexts()) {
+			if(cxt.getScriptingEngine() == e.getEngine()) {
+				activeView.add(new DataNode(e.get(), e.getEngine().getActiveScriptData()), cxt);
+				return;
+			}
+		}
+	}
+	
+	@EventTarget
+	private void onScriptStopEvent(ScriptStopEvent e) {
+		for(IClientContext<?> cxt : Util.contexts()) {
+			if(cxt.getScriptingEngine() == e.getEngine()) {
+				for(int i=0; i < activeView.model.getRowCount(); i++) {
+					Object o = activeView.model.getValueAt(i, 0);
+					if(o == e.get()) {
+						activeView.model.removeRow(i);
+					}
+				}
+			}
+		}
+	}
+
+	@EventTarget
+	private void onTaskStartEvent(TaskStartEvent e) {
+		for(IClientContext<?> cxt : Util.contexts()) {
+			if(cxt.getScriptingEngine() == e.getEngine()) {
+				activeView.add(new DataNode(e.get(), e.getEngine().getActiveTaskData(e.get())), cxt);
+				return;
+			}
+		}
+	}
+	
+	@EventTarget
+	private void onTaskStopEvent(TaskStopEvent e) {
+		for(IClientContext<?> cxt : Util.contexts()) {
+			if(cxt.getScriptingEngine() == e.getEngine()) {
+				for(int i=0; i < activeView.model.getRowCount(); i++) {
+					Object o = activeView.model.getValueAt(i, 0);
+					if(o == e.get()) {
+						activeView.model.removeRow(i);
+					}
+				}
+			}
+		}
 	}
 }

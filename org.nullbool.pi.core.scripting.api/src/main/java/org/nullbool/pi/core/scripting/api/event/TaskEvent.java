@@ -1,17 +1,15 @@
 package org.nullbool.pi.core.scripting.api.event;
 
+import org.nullbool.pi.core.scripting.api.IScriptingEngine;
 import org.nullbool.pi.core.scripting.api.Task;
-import org.nullbool.topdank.eventbus.api.Event;
 
-public class TaskEvent implements Event {
+/**
+ * @author Bibl (don't ban me pls)
+ * @created a while before 07/08/15 (today)
+ */
+public class TaskEvent extends EngineObjectEvent<Task> {
 
-	private final Task task;
-
-	public TaskEvent(Task task) {
-		this.task = task;
-	}
-
-	public Task getTask() {
-		return task;
+	public TaskEvent(IScriptingEngine engine, Task task) {
+		super(engine, task);
 	}
 }

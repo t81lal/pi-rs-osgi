@@ -18,7 +18,7 @@ import org.osgi.framework.ServiceReference;
 public class Util {
 
 	public static IClientContext<?>[] contexts() {
-		BundleContext bundleContext = FrameworkUtil.getBundle(ScriptMenuDecorator.class).getBundleContext();
+		BundleContext bundleContext = context();
 		ServiceReference<IContextRegistry> cxtSvcRef = bundleContext.getServiceReference(IContextRegistry.class);
 		IContextRegistry contextRegistry = bundleContext.getService(cxtSvcRef);
 		bundleContext.ungetService(cxtSvcRef);
@@ -42,5 +42,10 @@ public class Util {
 		IScriptingPoolModel model = bundleContext.getService(modelSvcRef);
 		bundleContext.ungetService(modelSvcRef);
 		return model;
+	}
+	
+	public static BundleContext context() {
+		BundleContext bundleContext = FrameworkUtil.getBundle(ScriptMenuDecorator.class).getBundleContext();
+		return bundleContext;
 	}
 }
