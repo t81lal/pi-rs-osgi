@@ -13,7 +13,9 @@ public interface ISceneComponent {
 
 	String[] getActions();
 
-	RSTile getPosition();
+	default RSTile getPosition() {
+		return null;
+	}
 
 	default int dist() {
 		return (int) Calculations.distance(getPosition());
