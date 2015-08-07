@@ -20,7 +20,6 @@ import org.nullbool.pi.core.engine.impl.DefaultScriptingEngine;
 import org.nullbool.pi.core.engine.impl.factory.ext.FileSet;
 import org.nullbool.pi.core.engine.impl.factory.ext.IActor;
 import org.nullbool.pi.core.scripting.api.klassmodel.HierarchalClassLoader;
-import org.nullbool.pi.core.scripting.api.loader.BasicResourcePool;
 import org.nullbool.topdank.eventbus.api.EventBus;
 import org.objectweb.asm.tree.ClassNode;
 import org.osgi.framework.BundleContext;
@@ -51,7 +50,7 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 //		}
 		
 		// FIXME: Revision checking
-		int latestVer = 86;
+		int latestVer = 87;
 		
 		/* First we see if there is a straight load 
 		 * and run jar (refactor, deob or transformed).*/

@@ -196,9 +196,6 @@ public class SimpleInjectionActor implements IActor<Void> {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.engine.impl.factory.ext.IActor#type()
-	 */
 	@Override
 	public Class<Void> type() {
 		return Void.TYPE;

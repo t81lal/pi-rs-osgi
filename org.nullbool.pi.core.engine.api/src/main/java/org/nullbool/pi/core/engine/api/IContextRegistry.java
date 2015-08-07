@@ -8,13 +8,19 @@ import org.nullbool.core.piexternal.game.api.IGameClient;
  * @author Bibl (don't ban me pls)
  * @created 25 Jun 2015 03:40:53
  */
-public abstract interface IContextRegistry {
+public interface IContextRegistry {
 
-	public abstract void register(IClientContext<IGameClient> context);
+	public void register(IClientContext<IGameClient> context);
 	
-	public abstract void unregister(ThreadGroup tg);
+	public void unregister(ThreadGroup tg);
 	
-	public abstract IClientContext<IGameClient> retrieve(ThreadGroup tg);
+	public void registerListener(ContextListener listener);
 	
-	public abstract Set<IClientContext<IGameClient>> retrieveAll();
+	public void unregisterListener(ContextListener listener);
+	
+	public void unregisterAllListeners();
+	
+	public IClientContext<IGameClient> retrieve(ThreadGroup tg);
+	
+	public Set<IClientContext<IGameClient>> retrieveAll();
 }

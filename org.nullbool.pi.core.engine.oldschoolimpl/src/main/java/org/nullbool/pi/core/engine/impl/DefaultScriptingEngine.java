@@ -14,7 +14,7 @@ import org.nullbool.pi.core.scripting.api.Task;
 import org.nullbool.pi.core.scripting.api.event.ScriptEngineRefresh;
 import org.nullbool.pi.core.scripting.api.event.ScriptInteruptEvent;
 import org.nullbool.pi.core.scripting.api.event.ScriptStartEvent;
-import org.nullbool.pi.core.scripting.api.event.ScriptStopRequestEvent;
+import org.nullbool.pi.core.scripting.api.event.ScriptStopEvent;
 import org.nullbool.pi.core.scripting.api.event.TaskStartEvent;
 import org.nullbool.pi.core.scripting.api.event.TaskStopEvent;
 import org.nullbool.pi.core.scripting.api.loader.IScriptingPoolModel;
@@ -57,7 +57,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 			}
 			// TODO: marker for event call
 			Task instance = task.getTaskInstance();
-			context.getEventBus().dispatch(new TaskStartEvent(instance));
+			context.getEventBus().dispatch(new TaskStartEvent(this, instance));
 			return instance;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -71,7 +71,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 			activeTasks.remove(task);
 		}
 		// TODO: marker for event call
-		context.getEventBus().dispatch(new TaskStopEvent(task));
+		context.getEventBus().dispatch(new TaskStopEvent(this, task));
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 				RunningTask task = it.next();
 				it.remove();
 				// TODO: marker for event call
-				context.getEventBus().dispatch(new TaskStopEvent(task.getTaskInstance()));
+				context.getEventBus().dispatch(new TaskStopEvent(this, task.getTaskInstance()));
 			}
 		}
 	}
@@ -96,6 +96,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 	public Script startScript(ResolvedDefinition scriptData) {
 		if(scriptData.getType() != ResourceType.SCRIPT)
 			return null;
+		// TODO: dependencies
 		/* 1. If there are no api dependencies, pass.
 		 * 2. If there are, verify them. */
 //		LoadedLibrary[] apis = null;
@@ -136,13 +137,11 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 				this.script.start();
 
 				internalScript = this.script.getActiveScript();
+				context.getEventBus().dispatch(new ScriptStartEvent(this, internalScript));
 				return internalScript;
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
-			} finally {
-				// TODO: marker for event call
-				context.getEventBus().dispatch(new ScriptStartEvent(internalScript));
 			}
 		} else {
 			return null;
@@ -170,7 +169,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 					e.printStackTrace();
 				} finally {
 					// TODO: marker for event call
-					context.getEventBus().dispatch(new ScriptInteruptEvent(internalScript, state));
+					context.getEventBus().dispatch(new ScriptInteruptEvent(this, internalScript, state));
 				}
 			} else {
 				this.script = null;
@@ -190,7 +189,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 					e.printStackTrace();
 				} finally {
 					// TODO: marker for event call
-					context.getEventBus().dispatch(new ScriptInteruptEvent(internalScript, state));
+					context.getEventBus().dispatch(new ScriptInteruptEvent(this, internalScript, state));
 				}
 			} else {
 				this.script = null;
@@ -210,7 +209,7 @@ public class DefaultScriptingEngine implements IScriptingEngine {
 			} catch (RuntimeException e) {
 				e.printStackTrace();
 			} finally {
-				context.getEventBus().dispatch(new ScriptStopRequestEvent(internalScript));
+				context.getEventBus().dispatch(new ScriptStopEvent(this, internalScript));
 				this.script = null;
 			}
 		}

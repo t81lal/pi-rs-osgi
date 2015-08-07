@@ -18,8 +18,8 @@ import java.util.Set;
 // this doesn't feel like a good idea. -Bibl
 public enum FileSet {
 	// TODO: Fix custom jars
-	API         (new Builder(1).relativeName("api.jar")),
-	PAPI         (new Builder(-1).relativeName("papi.jar").optional(true)),
+	PAPI        (new Builder(-1).relativeName("papi.jar").optional(true)),
+	API         (new Builder(1).relativeName("api.jar").actor(new InstallerActor())),
 	LOG         (new Builder(2).relativeName("log.ser")),
 	TRANSLATION (new Builder(3).relativeName("translate.json")),
 	REFACTOR    (new Builder(4).relativeName("refactor.jar").priority(5).runnable(true).actor(new SimpleInjectionActor(true))),

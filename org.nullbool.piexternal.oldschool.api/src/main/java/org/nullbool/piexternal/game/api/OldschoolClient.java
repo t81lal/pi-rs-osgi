@@ -39,31 +39,31 @@ public class OldschoolClient {
 	// FIXME: Possible memory leak/dangling service, 
 	// find a better (but fast) solution.
 	private static IContextRegistry registry;
-	
+
 	private static void init() {
 		BundleContext context = Activator.getContext();
-		// System.out.println("Context: " + context);
-		// System.out.println("Instance hash: " + Activator.class.hashCode());
+		System.out.println("Context: " + context);
+		System.out.println("Instance hash: " + Activator.class.hashCode());
 		ServiceReference<IContextRegistry> cxtRefSvcRef = context.getServiceReference(IContextRegistry.class);
 		registry = context.getService(cxtRefSvcRef);
 		context.ungetService(cxtRefSvcRef);
 	}
-	
+
 	public static IOldschoolClient client() {
 		if(registry == null)
 			init();
-		
+
 		ThreadGroup tg = Thread.currentThread().getThreadGroup();
 		IClientContext<IGameClient> cxt = registry.retrieve(tg);
 		return (IOldschoolClient) cxt.getClient();
 	}
-	
+
 	static IClientContext<IGameClient> current() {
 		ThreadGroup tg = Thread.currentThread().getThreadGroup();
 		IClientContext<IGameClient> cxt = registry.retrieve(tg);
 		return cxt;
 	}
-	
+
 	public static NPC[] getNpcs() {
 		Set<NPC> npcs = new HashSet<NPC>();
 		for(INPC npc : client().getNpcs()) {
@@ -73,7 +73,7 @@ public class OldschoolClient {
 		}
 		return npcs.toArray(new NPC[0]);
 	}
-	
+
 	public static Player[] getPlayers() {
 		Set<Player> players = new HashSet<Player>();
 		for(IPlayer npc : client().getPlayers()) {
@@ -120,7 +120,7 @@ public class OldschoolClient {
 	public static int getSelectionState() {
 		return client().getSelectionState();
 	}
-	
+
 	public static String[] getMenuOptions() {
 		return client().getMenuOptions();
 	}
@@ -188,7 +188,7 @@ public class OldschoolClient {
 	public static int[][][] getTileHeights() {
 		return client().getTileHeights();
 	}
-	
+
 	public static int getMapScale() {
 		return client().getMapScale();
 	}
@@ -208,7 +208,7 @@ public class OldschoolClient {
 	public static int getCameraX() {
 		return client().getCameraX();
 	}
-	
+
 	public static int getCameraY() {
 		return client().getCameraY();
 	}
@@ -252,7 +252,7 @@ public class OldschoolClient {
 	public static int getHoveredRegionTileY() {
 		return client().getHoveredRegionTileY();
 	}
-	
+
 	public static IHashTable getItemTables() {
 		IHashTable _ht = client().getItemTables();
 		if(_ht != null)
@@ -273,7 +273,7 @@ public class OldschoolClient {
 			return new ItemDefinition(_itemDef);
 		return null;
 	}
-	
+
 	public static IWrappedException reportException(Throwable var1, String var2) {
 		IWrappedException _we = client().reportException(var1, var2);
 		if(_we != null)
