@@ -55,9 +55,6 @@ public class OldschoolContextFactory implements IContextFactory<AppletClientCont
 	
 	private static final String[] POSSIBLE_LAUNCH_CLASSES = new String[]{"Client", "client"};
 	
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.game.api.IContextFactory#create(org.nullbool.pi.core.game.api.IVirtualGameBrowser)
-	 */
 	@Override
 	public AppletClientContext<IGameClient> create(IVirtualGameBrowser browser) throws Exception {
 

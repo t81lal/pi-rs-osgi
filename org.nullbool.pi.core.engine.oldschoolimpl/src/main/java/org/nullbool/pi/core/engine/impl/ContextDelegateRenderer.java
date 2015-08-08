@@ -29,6 +29,10 @@ import java.util.Set;
 import org.nullbool.pi.core.painting.api.IDelegateRenderer;
 import org.nullbool.pi.core.painting.api.IRenderer;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public class ContextDelegateRenderer implements IDelegateRenderer {
 
 	private final Map<ThreadGroup, Set<IRenderer>> delegates = new HashMap<ThreadGroup, Set<IRenderer>>();

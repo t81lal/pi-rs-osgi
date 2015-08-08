@@ -21,6 +21,10 @@ package org.nullbool.pi.core.engine.impl.factory.ext;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public final class Builder {
 	private final int id;
 	private String relativeName;

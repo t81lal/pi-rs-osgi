@@ -46,75 +46,48 @@ public class AppletClientContext<T extends IGameClient> implements IClientContex
 		this.client = client;
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.game.api.IClientContext#threadGroup()
-	 */
 	@Override
 	public ThreadGroup getThreadGroup() {
 		return tgroup;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.game.api.IClientContext#client()
-	 */
 	@Override
 	public T getClient() {
 		return client;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.game.api.IClientContext#applet()
-	 */
 	@Override
 	public Applet getApplet() {
 		return (Applet) client;
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.game.api.IClientContext#classloader()
-	 */
 	@Override
 	public HierarchalClassLoader getContextClassLoader() {
 		return classLoader;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.game.api.IClientContext#eventBus()
-	 */
 	@Override
 	public EventBus getEventBus() {
 		return bus;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.engine.api.IClientContext#scriptingEngine()
-	 */
 	@Override
 	public IScriptingEngine getScriptingEngine() {
 		return scriptingEngine;
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.game.api.IClientContext#init()
-	 */
 	@Override
 	public void init() throws Throwable {
 		getApplet().init();
 		getApplet().start();
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.game.api.IClientContext#shutdown()
-	 */
 	@Override
 	public void shutdown() {
 		getApplet().stop();
 		getApplet().destroy();
 	}
-
-	/* (non-Javadoc)
-	 * @see org.nullbool.pi.core.game.api.IClientContext#active()
-	 */
+	
 	@Override
 	public boolean active() {
 		return getApplet().isActive();

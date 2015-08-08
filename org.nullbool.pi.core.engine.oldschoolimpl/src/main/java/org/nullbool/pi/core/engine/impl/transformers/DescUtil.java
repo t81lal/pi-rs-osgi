@@ -28,6 +28,10 @@ import org.nullbool.pi.core.hook.api.HookMap;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public class DescUtil implements Opcodes {
 
 	/** Used for getting the opcode for loading a value on the stack in a method. **/

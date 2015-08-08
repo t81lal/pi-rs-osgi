@@ -29,6 +29,10 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public class DelegateCanvas extends Canvas {
 
 	private final IDelegateRenderer renderer;

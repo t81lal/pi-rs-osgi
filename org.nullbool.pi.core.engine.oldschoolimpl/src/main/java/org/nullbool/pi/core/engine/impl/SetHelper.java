@@ -20,6 +20,10 @@ package org.nullbool.pi.core.engine.impl;
 
 import java.util.Set;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public class SetHelper {
 
 	public static int getLargest(Set<Integer> ints) {

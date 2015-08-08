@@ -28,6 +28,10 @@ import org.nullbool.pi.core.scripting.api.klassmodel.HierarchalClassLoader;
 import org.nullbool.pi.core.scripting.api.loader.ExternalResourceDefinition;
 import org.nullbool.pi.core.scripting.api.loader.ResolvedDefinition;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public class ScriptThread extends Thread {
 
 	private final IScriptingEngine engine;

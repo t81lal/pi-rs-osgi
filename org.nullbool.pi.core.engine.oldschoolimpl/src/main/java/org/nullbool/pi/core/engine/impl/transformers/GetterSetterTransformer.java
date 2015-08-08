@@ -32,6 +32,10 @@ import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public class GetterSetterTransformer extends AbstractTransformer {
 
 	public GetterSetterTransformer(Map<String, ClassNode> classes, HookMap hooks, IAPIHelper helper) {

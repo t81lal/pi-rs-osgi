@@ -28,6 +28,10 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public class CanvasReplacerTransformer extends AbstractTransformer {
 	
 	private static final String NEW_CANVAS_CLASS = DelegateCanvas.class.getCanonicalName().replace(".", "/");;

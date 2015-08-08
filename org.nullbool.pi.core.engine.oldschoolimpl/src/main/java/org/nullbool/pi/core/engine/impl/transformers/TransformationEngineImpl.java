@@ -26,6 +26,10 @@ import org.nullbool.pi.core.engine.api.transform.TransformationEngine;
 import org.nullbool.pi.core.hook.api.HookMap;
 import org.objectweb.asm.tree.ClassNode;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public class TransformationEngineImpl extends TransformationEngine {
 
 	public TransformationEngineImpl(Map<String, ClassNode> classes, HookMap hooks, IAPIHelper helper) {

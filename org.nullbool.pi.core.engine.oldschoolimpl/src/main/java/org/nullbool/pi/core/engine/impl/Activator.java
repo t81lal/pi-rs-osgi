@@ -1,4 +1,5 @@
 /************************************************************************************
+
  * pi rs - a generic framework for loading Java Applets in a contained environment. *
  * Copyright (C) 2015  NullBool                                                     *
  *                                                                                  *
@@ -31,11 +32,7 @@ import org.osgi.framework.BundleContext;
  * @created 6 Jul 2015 07:02:47
  */
 public class Activator implements BundleActivator {
-
 	
-	/* (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
-	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
 		context.registerService(IVirtualGameBrowserFactory.class, new VirtualRunescapeGameBrowserFactory(), null);
@@ -43,9 +40,6 @@ public class Activator implements BundleActivator {
 		context.registerService(IDelegateRenderer.class, new ContextDelegateRenderer(), null);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		

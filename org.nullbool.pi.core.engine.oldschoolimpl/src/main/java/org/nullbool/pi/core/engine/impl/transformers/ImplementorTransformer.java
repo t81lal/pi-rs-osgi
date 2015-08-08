@@ -24,6 +24,10 @@ import org.nullbool.pi.core.engine.api.transform.IAPIHelper;
 import org.nullbool.pi.core.hook.api.HookMap;
 import org.objectweb.asm.tree.ClassNode;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public class ImplementorTransformer extends AbstractTransformer {
 
 	public ImplementorTransformer(Map<String, ClassNode> classes, HookMap hooks, IAPIHelper helper) {

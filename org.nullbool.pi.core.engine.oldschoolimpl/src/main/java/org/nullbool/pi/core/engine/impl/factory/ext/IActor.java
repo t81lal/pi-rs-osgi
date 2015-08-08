@@ -23,6 +23,10 @@ import java.io.File;
 import org.objectweb.asm.tree.ClassNode;
 import org.topdank.byteengineer.commons.data.JarContents;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public interface IActor<T>{
 
 	public T act(FileSet runningJar, JarContents<ClassNode> contents, File baseDir) throws Exception;

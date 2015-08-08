@@ -30,6 +30,10 @@ import java.util.regex.Pattern;
 
 import org.nullbool.pi.core.engine.api.IPageCrawler;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public class OldschoolCrawler implements IPageCrawler {
 	private static final String USER_AGENT = getHttpUserAgent();
 	private static final String PARAM_PATTERN = "<param name=\"?([^\\s]+)\"?\\s+value=\"?([^>]*)\"?>";

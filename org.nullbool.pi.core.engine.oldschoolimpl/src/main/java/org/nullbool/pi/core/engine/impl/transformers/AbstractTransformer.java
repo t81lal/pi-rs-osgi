@@ -27,6 +27,10 @@ import org.nullbool.pi.core.hook.api.HookMap;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public abstract class AbstractTransformer implements ITransformer, Opcodes {
 
 	protected final Map<String, ClassNode> classes;

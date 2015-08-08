@@ -26,6 +26,10 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * @author Bibl (don't ban me pls)
+ * @created some time before 8/8/15
+ */
 public class ResponseChecker implements Runnable {
 
 	private final AtomicInteger i;
