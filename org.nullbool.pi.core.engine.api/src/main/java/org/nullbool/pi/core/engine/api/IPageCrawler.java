@@ -24,9 +24,15 @@ import java.util.Map;
  * @author Bibl (don't ban me pls)
  * @created 12 Jun 2015 22:18:55
  */
-public abstract interface IPageCrawler {
+public interface IPageCrawler {
 
-	public abstract Map<String, String> getGameParameters();
+	/**
+	 * @return A value-pair map of Applet usable parameters.
+	 */
+	public Map<String, String> getGameParameters();
 	
-	public abstract Map<String, String> getAppletParameters();
+	/**
+	 * @return A value-pair map of Applet environment parameters.
+	 */
+	public Map<String, String> getAppletParameters();
 }

@@ -23,22 +23,44 @@ import java.util.Set;
 import org.nullbool.core.piexternal.game.api.IGameClient;
 
 /**
+ * A pair-entry based registry that stores IClientContexts with their
+ * associated ThreadGroups. 
+ * 
  * @author Bibl (don't ban me pls)
  * @created 25 Jun 2015 03:40:53
  */
 public interface IContextRegistry {
 
+	/**
+	 * @param context
+	 */
 	public void register(IClientContext<IGameClient> context);
 	
+	/**
+	 * @param tg
+	 */
 	public void unregister(ThreadGroup tg);
 	
+	/**
+	 * @param listener
+	 */
 	public void registerListener(ContextListener listener);
 	
+	/**
+	 * @param listener
+	 */
 	public void unregisterListener(ContextListener listener);
 	
 	public void unregisterAllListeners();
 	
+	/**
+	 * @param tg
+	 * @return An IClientContext instance or null;
+	 */
 	public IClientContext<IGameClient> retrieve(ThreadGroup tg);
 	
+	/**
+	 * @return A (possibly empty) set of IClientContexts.
+	 */
 	public Set<IClientContext<IGameClient>> retrieveAll();
 }

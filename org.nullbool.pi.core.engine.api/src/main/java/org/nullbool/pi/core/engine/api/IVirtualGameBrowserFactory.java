@@ -22,10 +22,19 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
+ * @see org.nullbool.pi.core.engine.api.IVirtualGameBrowser
+ * 
  * @author Bibl (don't ban me pls)
  * @created 15 Jun 2015 01:33:51
  */
-public abstract interface IVirtualGameBrowserFactory {
+public interface IVirtualGameBrowserFactory {
 
-	public abstract IVirtualGameBrowser create(URL url) throws IOException;
+	/**
+	 * Implementation specific creation method.
+	 * 
+	 * @param url The webpage url.
+	 * @return A browser instance or null.
+	 * @throws IOException
+	 */
+	public IVirtualGameBrowser create(URL url) throws IOException;
 }

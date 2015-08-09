@@ -21,10 +21,19 @@ package org.nullbool.pi.core.engine.api;
 import org.nullbool.core.piexternal.game.api.IGameClient;
 
 /**
+ * @see org.nullbool.pi.core.engine.api.IClientContext
+ * 
  * @author Bibl (don't ban me pls)
  * @created 12 Jun 2015 19:25:34
  */
-public abstract interface IContextFactory<T extends IClientContext<IGameClient>> {
+public interface IContextFactory<T extends IClientContext<IGameClient>> {
 
-	public abstract T create(IVirtualGameBrowser browser) throws Exception;
+	/**
+	 * Implementation specific creation method.
+	 * 
+	 * @param browser
+	 * @return A client context instance or null.
+	 * @throws Exception
+	 */
+	public T create(IVirtualGameBrowser browser) throws Exception;
 }

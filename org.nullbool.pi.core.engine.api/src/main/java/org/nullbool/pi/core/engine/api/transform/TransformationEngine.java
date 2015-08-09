@@ -26,6 +26,12 @@ import java.util.Map;
 import org.objectweb.asm.tree.ClassNode;
 
 /**
+ * A chain-calling transformer visitor for easy, modular modification
+ * of classes.
+ *
+ * @see ITransformer
+ * @see ClassNode
+ * 
  * @author Bibl (don't ban me pls)
  * @created 15 Jun 2015 00:36:07
  */
@@ -35,20 +41,42 @@ public abstract class TransformationEngine {
 	private final List<ITransformer> transformers;
 	private transient Iterator<ClassNode> iterator;
 	
+	/**
+	 * @param classes A Map of classes, mapped name-node.
+	 */
 	public TransformationEngine(Map<String, ClassNode> classes) {
 		this.classes = classes;
 		transformers = new ArrayList<ITransformer>();
 		iterator = classIterator();
 	}
 	
+	/**
+	 * Adds a transformer to the chain.
+	 * 
+	 * @param transformer
+	 * @return true
+	 */
 	public boolean registerTransformer(ITransformer transformer) {
 		return transformers.add(transformer);
 	}
 
+	
+	/**
+	 * Removes a transformer from the chain.
+	 * 
+	 * @param transformer
+	 * @return true
+	 */
 	public boolean unregisterTransformer(ITransformer transformer) {
 		return transformers.remove(transformer);
 	}
 	
+	/**
+	 * Adds an array of transformers to the chain.
+	 * 
+	 * @param transformers
+	 * @return true
+	 */
 	public boolean registerTransformers(ITransformer... transformers) {
 		boolean b = true;
 		for(ITransformer t : transformers) {
@@ -56,7 +84,13 @@ public abstract class TransformationEngine {
 		}
 		return b;
 	}
-	
+
+	/**
+	 * Removes an array of transformers from the chain.
+	 * 
+	 * @param transformers
+	 * @return true
+	 */
 	public boolean unregisterTransformers(ITransformer... transformers) {
 		boolean b = true;
 		for(ITransformer t : transformers) {
@@ -65,6 +99,12 @@ public abstract class TransformationEngine {
 		return b;
 	}
 	
+	/**
+	 * Iterates to the next node in the sequence and attempts to transform it.
+	 * 
+	 * @return Whether a there is a next node in the sequence.
+	 * @throws Throwable
+	 */
 	public boolean step() throws Throwable {
 		if(iterator.hasNext()) {
 			ClassNode cn = iterator.next();
@@ -76,10 +116,20 @@ public abstract class TransformationEngine {
 	}
 	
 
+	/**
+	 * Iterates through every node in the sequence and attempts to transform it.
+	 * @throws Throwable
+	 */
 	public void transformAll() throws Throwable {
 		while(step());
 	}
 	
+	/**
+	 * Attempts to transform a single node.
+	 * 
+	 * @param cn Te node to transform.
+	 * @throws Throwable
+	 */
 	public void transform(ClassNode cn) throws Throwable {
 		for(ITransformer t : transformers) {
 			if(t.accept(cn))
@@ -87,10 +137,19 @@ public abstract class TransformationEngine {
 		}
 	}
 	
+	/**
+	 * A utility method to fetch a node by name.
+	 * 
+	 * @param name
+	 * @return A ClassNode or null.
+	 */
 	public ClassNode findClass(String name) {
 		return classes.get(name);
 	}
 	
+	/**
+	 * @return An iterator that contains all of the nodes in the sequence.
+	 */
 	public Iterator<ClassNode> classIterator() {
 		return classes.values().iterator();
 	}

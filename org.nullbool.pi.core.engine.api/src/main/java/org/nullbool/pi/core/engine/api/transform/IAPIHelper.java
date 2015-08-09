@@ -20,17 +20,22 @@ package org.nullbool.pi.core.engine.api.transform;
 
 import java.util.Collection;
 
-public abstract interface IAPIHelper {
+/**
+ * @author Bibl (don't ban me pls)
+ * @since 1
+ */
+@Deprecated
+public interface IAPIHelper {
 
-	public abstract String accessorBase();
+	public String accessorBase();
 	
-	public abstract void mapSuperInterfaces(String klass, String[] superInterfaces, boolean overwrite);
+	public void mapSuperInterfaces(String klass, String[] superInterfaces, boolean overwrite);
 	
-	public abstract String[] superInterfaces(String klass);
+	public String[] superInterfaces(String klass);
 	
-	public abstract String canonicalName(String klass);
+	public String canonicalName(String klass);
 	
-	public abstract void remapCanonicalname(String klass, String newName);
+	public void remapCanonicalname(String klass, String newName);
 	
-	public abstract Collection<String> simpleNames();
+	public Collection<String> simpleNames();
 }

@@ -30,60 +30,86 @@ import java.util.Enumeration;
 import java.util.Iterator;
 
 /**
+ * Loose specification inheriting from {@link AppletStub} and {@link AppletContext}
+ * for simulating the browser-applet relationship, where the Applet is able to request
+ * resources such as Images and AudioClips. Stream control and simple output is
+ * implementation specific and so although this interface is supposed to emulate a
+ * browser (in the loose sense of the word), some features may not be accessible.
+ * 
+ * @see java.applet.Applet
+ * @see java.applet.AppletStub
+ * @see java.applet.AppletContext
+ * @see java.applet.AudioClip
+ * @see java.awt.Image
+ * 
  * @author Bibl (don't ban me pls)
  * @created 12 Jun 2015 19:27:33
  */
-public abstract interface IVirtualGameBrowser extends AppletStub, AppletContext {
+public interface IVirtualGameBrowser extends AppletStub, AppletContext {
 
-	public abstract void setApplet(Applet applet);
+	/**
+	 * Syncs an Applet with this browser instance. <br>
+	 * Syncing in this case may refer to caching or calls to {@link Applet#setStub(AppletStub)}.
+	 * 
+	 * @param applet The new Applet.
+	 */
+	public void setApplet(Applet applet);
 	
 	@Override
-	public abstract AudioClip getAudioClip(URL url);
+	public AudioClip getAudioClip(URL url);
 
 	@Override
-	public abstract Image getImage(URL url);
+	public Image getImage(URL url);
 
 	@Override
-	public abstract Applet getApplet(String name);
+	public Applet getApplet(String name);
 
 	@Override
-	public abstract Enumeration<Applet> getApplets();
+	public Enumeration<Applet> getApplets();
 
 	@Override
-	public abstract void showDocument(URL url);
+	public void showDocument(URL url);
 
 	@Override
-	public abstract void showDocument(URL url, String target);
+	public void showDocument(URL url, String target);
 
 	@Override
-	public abstract void showStatus(String status);
+	public void showStatus(String status);
 
 	@Override
-	public abstract void setStream(String key, InputStream stream)throws IOException;
+	public void setStream(String key, InputStream stream)throws IOException;
 
 	@Override
-	public abstract InputStream getStream(String key);
+	public InputStream getStream(String key);
 
 	@Override
-	public abstract Iterator<String> getStreamKeys();
+	public Iterator<String> getStreamKeys();
 
 	@Override
-	public abstract boolean isActive();
+	public boolean isActive();
 
 	@Override
-	public abstract URL getDocumentBase();
+	public URL getDocumentBase();
 
 	@Override
-	public abstract URL getCodeBase();
+	public URL getCodeBase();
 
 	@Override
-	public abstract String getParameter(String name);
+	public String getParameter(String name);
 
-	public abstract IPageCrawler getCrawler();
+	/**
+	 * Each virtual game browser is associated with a webpage which embeds the
+	 * Applet that is going to be ran. Therefore a {@link IPageCrawler} is
+	 * needed to parse the parameters for the Applet environment and the
+	 *  Applet itself.
+	 * 
+	 * @return The crawler.
+	 */
+	public IPageCrawler getCrawler();
 	
 	@Override
-	public abstract AppletContext getAppletContext();
+	public AppletContext getAppletContext();
 
 	@Override
-	public abstract void appletResize(int width, int height);
+	public void appletResize(int width, int height);
 }

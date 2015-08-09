@@ -21,12 +21,24 @@ package org.nullbool.pi.core.engine.api.transform;
 import org.objectweb.asm.tree.ClassNode;
 
 /**
+ * A single component that can be chained to modify classes.
+ * 
+ * @see ClassNode
+ * @see TransformationEngine
+ * 
  * @author Bibl (don't ban me pls)
  * @created 15 Jun 2015 00:35:55
  */
-public abstract interface ITransformer {
+public interface ITransformer {
 
-	public abstract boolean accept(ClassNode cn);
+	/**
+	 * @param cn A prospective node to transform.
+	 * @return Whether or not to transform the node.
+	 */
+	public boolean accept(ClassNode cn);
 	
-	public abstract void run(ClassNode cn);
+	/**
+	 * @param cn The node to transform.
+	 */
+	public void run(ClassNode cn);
 }

@@ -20,6 +20,12 @@ package org.nullbool.pi.core.engine.api;
 
 
 /**
+ * A delegate for listening to updates regarding context changes
+ * in a context registry.
+ * 
+ * @see IClientContext
+ * @see IContextRegistry
+ * 
  * @author Bibl (don't ban me pls)
  * @created 7 Aug 2015 01:02:11
  */
