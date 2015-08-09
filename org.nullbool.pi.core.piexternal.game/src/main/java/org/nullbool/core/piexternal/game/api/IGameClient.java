@@ -18,10 +18,15 @@
 
 package org.nullbool.core.piexternal.game.api;
 
-/**
- * @author Bibl (don't ban me pls) <br>
- * @created 17 Apr 2015 at 19:06:59 <br>
- */
-public abstract interface IGameClient {
 
+/**
+ * This class serves as an interface between the game and the client. 
+ * It can be implemented by either a game class or as an implementation class,
+ * however, in each case it must be implemented.
+ * 
+ * @author Bibl (don't ban me pls)
+ * @since 17 Apr 2015 at 19:06:59
+ */
+public interface IGameClient {
+	
 }
